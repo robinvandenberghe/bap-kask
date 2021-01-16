@@ -35,43 +35,25 @@
     <a-scene
       embedded
       vr-mode-ui="enabled: false;"
-      arjs='sourceType: webcam;'
+      renderer="precision: mediump; antialias: false; alpha: true; logarithmicDepthBuffer: true; colorManagement: true;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
     >
       <!-- we use cors proxy to avoid cross-origin problems -->
       <a-assets>
-        <a-asset-item id="tree" src="/assets/models/plaat_laatste.gltf"></a-asset-item>
+        <a-asset-item id="tree" src="/assets/models/plaat107.glb"></a-asset-item>
       </a-assets>
       <a-marker
-        type='pattern'
-        url='/assets/img/pattern.patt'
-        size='1'
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5">
-        <a-entity 
-          gltf-model="#tree"
-          position="1 1 1"
-          scale="2"
-        ></a-entity>
-        <!-- <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-1 1 1"></a-entity> -->
-      </a-marker>
-      <a-marker
-        preset='hiro'
-        size='1'
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
+        type='hiro'
+        size='0.2'
         >
         <a-entity 
           gltf-model="#tree"
-          position="1 1 1"
-          scale="2"
+          scale="0.25 0.25 0.25"
+          position="-1 -1 0"
+          animation-mixer
         ></a-entity>
-        <!-- <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity> -->
       </a-marker>
-      <a-camera></a-camera>
+      <a-entity camera></a-entity>
     </a-scene>
   </body>
 </html>
