@@ -26,52 +26,52 @@
     </style>
   </head>
   <script>
-    AFRAME.registerComponent('video-handler',{
-      init: () => {
-        const $video = document.querySelector(`a-video`);
-        $video.addEventListener(`mouseenter`, ()=>{
-          alert('hey');
-          $video.play();
+    AFRAME.registerComponent('clickhandler', {
+      init: function() {
+        this.el.addEventListener('click', () => {
+            alert('Clicked!')
         });
-      }
-    });
+    }});
   </script>
   <body style="margin : 0px; overflow: hidden;">
     <!-- minimal loader shown until image descriptors are loaded
       renderer="logarithmicDepthBuffer: true;" 
     arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
     -->
-      
     <a-scene
       embedded
       vr-mode-ui="enabled: false;"
       renderer="precision: mediump; antialias: false; alpha: true; logarithmicDepthBuffer: true; colorManagement: true;"
       arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
-    >
+      cursor="fuse: false; rayOrigin: mouse"
+      raycaster="objects: .clickable"
+      >
       <!-- we use cors proxy to avoid cross-origin problems -->
       <a-assets>
         <a-asset-item id="tree" src="/assets/models/plaat107.glb"></a-asset-item>
-        <a-asset-item id="viddy" src="/assets/video/testmov.mp4"></a-asset-item>
+        <a-asset-item id="video" loop="true" src="/assets/video/testmov.mp4" webkit-playsinline autoplay=true></a-asset-item>
       </a-assets>
       <a-marker
         type='hiro'
         size='0.2'
-        >
-        <!-- <a-entity 
+        id="hiroMarker"
+      >
+        <a-entity 
           gltf-model="#tree"
-          scale="0.25 0.25 0.25"
-          position="-1 -1 0"
+          scale="0.15 0.15 0.15"
+          position="-1 0 0"
           animation-mixer
-        ></a-entity> -->
+          clickhandler 
+        ></a-entity>
         <!-- <a-entity 
         video="viddy"
         scale="0.25 0.25 0.25"
         position="-1 -1 0"
         playsinline
       ></a-entity> -->
-        <a-video src="#viddy"     emitevents    video-handler        autoplay playsinline ></a-video>
+        <!-- <a-entity  scale="1 1 1"><a-video id="videoScreen" src="#video" width="1.6" height="0.9"></a-video></a-entity> -->
       </a-marker>
-      <a-entity camera></a-entity>
+      <a-entity camera="userHeight: 1.6" ></a-entity>
     </a-scene>
   </body>
 </html>
