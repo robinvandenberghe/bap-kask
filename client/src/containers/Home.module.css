@@ -1,0 +1,11 @@
+.title {
+  composes: title from "../styles/typo.module.css";
+}
+.titleMini {
+  composes: titleMini from "../styles/typo.module.css";
+}
+
+.priceList {
+  background: var(--primary-color) url("/assets/img/grain.png");
+  padding: 0 2rem 2rem 2rem;
+}

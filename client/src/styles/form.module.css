@@ -1,0 +1,28 @@
+.form {
+  margin-top: 2rem;
+}
+.form label {
+  display: block;
+  font-size: var(--font-base);
+  margin-bottom: 2rem;
+}
+.form_input {
+  display: block;
+  width: 100%;
+  margin-top: .85rem;
+  border-radius: .3rem;
+  border: .1rem solid var(--gray-light-color);
+  font-size: var(--font-base);
+  padding: .7rem;
+}
+.button {
+  composes: button  from "./uiControls.module.css";
+  display: block;
+  width: 100%;
+}
+
+.metaAction {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 1.4rem;
+}

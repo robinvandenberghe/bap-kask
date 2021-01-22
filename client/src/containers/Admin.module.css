@@ -1,0 +1,12 @@
+.admin{
+  composes: content contentNoSpace from "../styles/layout.module.css";
+}
+
+.titleAdd {
+  composes: titleMini from  "../styles/typo.module.css";
+  padding: 2.5rem 2rem .5rem;
+}
+
+.wrapper {
+  border-top: .1rem solid var(--gray-light-color);
+}
