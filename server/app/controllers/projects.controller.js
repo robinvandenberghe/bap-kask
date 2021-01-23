@@ -1,4 +1,3 @@
-const Drink = require('../models/drink.model.js');
 
 exports.create = (req, res) => {
   if (!req.body.title) {

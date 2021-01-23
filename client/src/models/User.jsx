@@ -1,36 +1,31 @@
 import uuid from "uuid";
 import { decorate, observable, action, computed } from "mobx";
 
-class Drink {
-  constructor(name, price, id = uuid.v4()) {
+class User {
+  constructor(name, surname, id = uuid.v4()) {
     this.id = id;
     this.name = name;
-    this.price = price;
+    this.surname = surname;
   }
 
   setId = value => (this.id = value);
   setName = value => (this.name = value);
-  setPrice = value => (this.price = value);
+  setSurname = value => (this.surname = value);
 
   updateFromServer = values => {
     this.setId(values._id);
     this.setName(values.name);
-    this.setPrice(values.price);
+    this.setSurname(values.surname);
   };
-
-  get values() {
-    return { name: this.name, price: this.price };
-  }
 }
 
-decorate(Drink, {
+decorate(User, {
   id: observable,
   name: observable,
-  price: observable,
+  surname: observable,
   setId: action,
   setName: action,
-  setPrice: action,
-  values: computed
+  setSurname: action,
 });
 
-export default Drink;
+export default User;

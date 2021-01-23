@@ -1,12 +1,12 @@
-import OrderStore from "./OrderStore";
-import DrinkStore from "./DrinkStore";
+import ConversationStore from "./ConversationStore";
+import ProjectStore from "./ConversationStore";
 import UiStore from "./UiStore";
 
 class Store {
   constructor() {
     this.uiStore = new UiStore(this);
-    this.orderStore = new OrderStore(this);
-    this.drinkStore = new DrinkStore(this);
+    this.projectStore = new ProjectStore(this);
+    // this.conversationStore = new ConversationStore(this);
   }
 }
 

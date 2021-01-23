@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
-import { ROUTES } from "../../constants";
+import ROUTES from "../../constants";
 import stylesForm from "../../styles/form.module.css";
 
 class RegisterForm extends Component {

@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.model.js');
 
 const checkToken = (req, res, next) => {
   const {token, signature} = req.cookies;
@@ -25,7 +24,10 @@ const checkToken = (req, res, next) => {
 };
 
 const hasRole = role => async (req, res, next) => {
-  const user = await User.findById(req.authUserId);
+  const user = await connection.query('SELECT * FROM `users` WHERE `id` = ?', [ req.authUserId ],  (error, results, fields) => {
+    if (error || results.length || results.length == 0) throw error;
+    return results[0];
+  })
   if (user.roles.includes(role)) {
     next();
   } else {

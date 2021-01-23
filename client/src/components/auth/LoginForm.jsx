@@ -2,7 +2,7 @@ import React from "react";
 import { inject } from "mobx-react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import { ROUTES } from "../../constants";
+import ROUTES from "../../constants";
 import stylesForm from "../../styles/form.module.css";
 
 const LoginForm = ({ uiStore, history }) => {
@@ -24,7 +24,7 @@ const LoginForm = ({ uiStore, history }) => {
           <input type="email" name="email" id="email=" ref={emailInput} className={stylesForm.form_input}/>
         </label>
         <label htmlFor="username">
-          Password
+          Wachtwoord
           <input type="password" name="password" id="password" ref={pwdInput} className={stylesForm.form_input}/>
         </label>
         <input type="submit" value="Login" className={stylesForm.button}/>
