@@ -1,37 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { inject } from "mobx-react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import ROUTES from "../../constants";
 import stylesForm from "../../styles/form.module.css";
+import TextInputField from "../TextInputField";
 
 const LoginForm = ({ uiStore, history }) => {
-  const emailInput = React.createRef();
-  const pwdInput = React.createRef();
+  const [email, setEmail] = useState(``);
+  const [password, setPassword] = useState(``);
 
   const handleSubmit = e => {
     e.preventDefault();
-    uiStore.login(emailInput.current.value, pwdInput.current.value).then(() => {
-      history.push(ROUTES.admin);
+    uiStore.login(email, password).then(() => {
+      history.push(ROUTES.home);
     });
   };
 
   return (
     <>
       <form onSubmit={handleSubmit} className={stylesForm.form}>
-        <label htmlFor="email">
-          Email
-          <input type="email" name="email" id="email=" ref={emailInput} className={stylesForm.form_input}/>
-        </label>
-        <label htmlFor="username">
-          Wachtwoord
-          <input type="password" name="password" id="password" ref={pwdInput} className={stylesForm.form_input}/>
-        </label>
+        <TextInputField  type={`email`} value={email} setValue={setEmail} name={`email`} label={`email`} />
+        <TextInputField  type={`password`} value={password} setValue={setPassword} name={`password`} label={`wachtwoord`} />
         <input type="submit" value="Login" className={stylesForm.button}/>
       </form>
-
       <p className={stylesForm.metaAction}>
-          No account? <Link to={ROUTES.register}>Sign up!</Link>
+          Nog geen account? <Link to={ROUTES.register}>Registreer hier!</Link>
       </p>
     </>
   );

@@ -2,9 +2,9 @@ const ROUTES = {
   home: `/`,
   search: `/zoeken`,
   overview: `/overzicht`,
-  projectDetail :  { path: "/project/:id", to: "/project/" },
-  studentDetail :  { path: "/profiel/:id", to: "/profiel/" },
-  arDetail : { path: "/augmented-reality/:id", to: "/augmented-reality/" },
+  projectDetail :  { path: `/project/:id`, to: `/project/` },
+  studentDetail :  { path: `/profiel/:id`, to: `/profiel/` },
+  arDetail : { path: `/augmented-reality/:id`, to: `/augmented-reality/` },
   admin: `/admin`,
   about: `/about`,
   login: `/login`,
@@ -13,4 +13,4 @@ const ROUTES = {
   savedWorks: `/opgeslagen-werken`,
 };
 
-export default { ROUTES };
+export default ROUTES;

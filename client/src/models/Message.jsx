@@ -1,14 +1,16 @@
-import uuid from "uuid";
-import { decorate, observable, action } from "mobx";
+import { v4 as uuidv4 } from 'uuid';
+import { makeAutoObservable } from "mobx"
 
 class Message {
-  constructor(sender, recipient, message, id = uuid.v4(), sentAt = new Date(), hasRead = false) {
+  constructor(sender, recipient, message, id = uuidv4(), sentAt = new Date(), hasRead = false) {
     this.id = id;
     this.sender = sender;
     this.recipient = recipient;
     this.sentAt = sentAt;
     this.message = message;
     this.hasRead = hasRead;
+    makeAutoObservable(this);
+
   }
 
   setId = value => (this.id = value);
@@ -28,20 +30,5 @@ class Message {
     this.setSentAt(values.sentAt);
   };
 }
-
-decorate(Message, {
-  id: observable,
-  sender: observable,
-  recipient: observable,
-  message: observable,
-  hasRead: observable,
-  sentAt: observable,
-  setId: action,
-  setSender :action,
-  setRecipient: action,
-  setMessage: action,
-  setHasRead: action,
-  setSentAt: action
-});
 
 export default Message;

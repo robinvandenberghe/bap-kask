@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import styles from "./App.module.css";
 
-import Home from "./Home";
-import Admin from "./Admin";
-import About from "./About";
+// import Home from "./Home";
+// import Admin from "./Admin";
+// import About from "./About";
 import ROUTES from "../constants";
 import Login from "./Login";
 import Register from "./Register";

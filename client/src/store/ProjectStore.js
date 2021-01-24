@@ -1,8 +1,6 @@
-import { decorate, observable, configure, action, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import Project from "../models/Project";
 import Api from "../api";
-
-configure({ enforceActions: `observed` });
 class ProjectStore {
   projects = [];
 
@@ -10,6 +8,7 @@ class ProjectStore {
     this.rootStore = rootStore;
     this.api = new Api(`projects`);
     this.getAll();
+    makeAutoObservable(this);
   }
 
   getAll = () => {
@@ -43,12 +42,5 @@ class ProjectStore {
     this.api.delete(Project);
   };
 }
-
-decorate(ProjectStore, {
-  projects: observable,
-  addProject: action,
-  deleteProject: action,
-  updateProject: action
-});
 
 export default ProjectStore;

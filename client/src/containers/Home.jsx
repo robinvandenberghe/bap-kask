@@ -1,24 +1,15 @@
 import React from "react";
-import PriceList from "../components/PriceList";
-import Orders from "../components/Orders";
 import styles from "./Home.module.css";
 import stylesLayout from "../styles/layout.module.css";
 import PageHeader from "../components/PageHeader";
-import TabBar from "../components/TabBar";
 
 const Home = () => {
   return (
     <>
-      <PageHeader title={`Wat wil je bestellen?`} />
+      <PageHeader title={`Digital Graduation Expo`} />
       <section className={styles.priceList}>
-        <h3 className={`visually-hidden`}>Prijslijst</h3>
-        <PriceList />
+        <h3 className={`visually-hidden`}>Digital Graduation Expo</h3>
       </section>
-      <section className={stylesLayout.content}>
-        <h3 className={styles.titleMini}>Bestelling</h3>
-        <Orders />
-      </section>
-      <TabBar></TabBar>
     </>
   );
 };

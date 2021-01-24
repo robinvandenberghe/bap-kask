@@ -1,11 +1,13 @@
-import uuid from "uuid";
-import { decorate, observable, action, computed } from "mobx";
+import { v4 as uuidv4 } from 'uuid';
+import { makeAutoObservable } from "mobx"
 
 class User {
-  constructor(name, surname, id = uuid.v4()) {
+  constructor(name, surname, id = uuidv4()) {
     this.id = id;
     this.name = name;
     this.surname = surname;
+    makeAutoObservable(this);
+
   }
 
   setId = value => (this.id = value);
@@ -18,14 +20,5 @@ class User {
     this.setSurname(values.surname);
   };
 }
-
-decorate(User, {
-  id: observable,
-  name: observable,
-  surname: observable,
-  setId: action,
-  setName: action,
-  setSurname: action,
-});
 
 export default User;
