@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { inject } from "mobx-react";
 import { withRouter } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 import ROUTES from "../../constants";
 import stylesForm from "../../styles/form.module.css";
 import TextInputField from "../TextInputField";
@@ -14,19 +15,20 @@ const RegisterForm = ({ uiStore, history }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    uiStore.register(name, email, pwd).then(() => {
-      history.push(ROUTES.login);
+    const u = {id: uuidv4(), name, surname, email: email.toLowerCase(), password: pwd, role: `user`};
+    uiStore.register(u).then(() => {
+      history.push(ROUTES.home);
     });
   };
-
+ 
   return (
     <>
       <form onSubmit={handleSubmit} className={stylesForm.form}>
         <TextInputField value={name} setValue={setName} name={`name`} label={`voornaam`} />
         <TextInputField value={surname} setValue={setSurname} name={`surname`} label={`familienaam`} />
-        <TextInputField  type={`email`} value={email} setValue={setEmail} name={`email`} label={`e-mailadres`} />
-        <TextInputField  type={`password`} value={pwd} setValue={setPwd} name={`pwd`} label={`e-mailadres`} />
-        <TextInputField  type={`password`} value={pwd2} setValue={setPwd2} name={`pwd2`} label={`e-mailadres`} />
+        <TextInputField type={`email`} value={email} setValue={setEmail} name={`email`} label={`e-mailadres`} />
+        <TextInputField type={`password`} value={pwd} setValue={setPwd} name={`pwd`} label={`wachtwoord`} />
+        <TextInputField type={`password`} value={pwd2} setValue={setPwd2} name={`pwd2`} label={`herhaal wachtwoord`} />
         <input
           type="submit"
           value="Registreer"

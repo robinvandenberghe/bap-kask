@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+
 import Auth from "../api/auth";
 import { getUserFromCookie } from "../utils/index.js";
 import Message from "../models/Message";
@@ -58,7 +59,16 @@ class UiStore {
       });
   };
 
-  register = (name, email, pwd) => this.authService.register(name, email, pwd);
+  register = (userObj) => {
+    return this.authService.register(userObj).then(() => {
+      this.setUser(getUserFromCookie());
+      Promise.resolve();
+    })
+    .catch(() => {
+      this.setUser(null);
+      Promise.reject();
+    });
+  };
 
   logout = () => {
     this.authService.logout().then(() => this.setUser(null));

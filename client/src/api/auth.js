@@ -27,18 +27,13 @@ class Auth {
     });
   };
 
-  register = (name, surname, email, password) => {
+  register = (userObj) => {
     return fetch(`/auth/register`, {
       method: `POST`,
       headers: {
         "content-type": `application/json`
       },
-      body: JSON.stringify({
-        name,
-        surname,
-        email,
-        password
-      })
+      body: JSON.stringify(userObj)
     }).then(res => {
       if (res.status === 200) {
         Promise.resolve();

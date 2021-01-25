@@ -6,6 +6,6 @@
 }
 
 .priceList {
-  background: var(--primary-color) url("/assets/img/grain.png");
+  /* background: var(--primary-color) url("/assets/img/grain.png"); */
   padding: 0 2rem 2rem 2rem;
 }

@@ -7,7 +7,6 @@ class ProjectStore {
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.api = new Api(`projects`);
-    this.getAll();
     makeAutoObservable(this);
   }
 

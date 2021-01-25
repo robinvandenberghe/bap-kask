@@ -12,7 +12,7 @@ const LoginForm = ({ uiStore, history }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    uiStore.login(email, password).then(() => {
+    uiStore.login(email.toLowerCase(), password).then(() => {
       history.push(ROUTES.home);
     });
   };

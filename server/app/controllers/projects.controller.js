@@ -20,10 +20,14 @@ exports.create = (req, res) => {
 
 exports.findAll = async (req, res) => {
   try {
-    const drinks = await Drink.find({userId: req.authUserId});
-    res.send(drinks);
+    const projects = await connection.query('SELECT * FROM `projects`',  (error, results, fields) => {
+      if (error || results.length || results.length == 0) throw error;
+      console.log(results);
+      return results;
+    });
+    res.send(projects);
   } catch (err) {
-    res.status(500).send({err: err.drink || 'Error'});
+    res.status(500).send({err: err.project || 'Error'});
   }
 };
 

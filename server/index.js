@@ -28,8 +28,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-require("./app/routes/auth.routes.js")(app);
-require("./app/routes/projects.routes.js")(app);
+require("./app/routes/auth.routes.js")(app, connection);
+require("./app/routes/projects.routes.js")(app, connection);
 
 app.get('/', (req, res) => {
   res.json({message: 'up and running'});
