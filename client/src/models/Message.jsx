@@ -10,7 +10,6 @@ class Message {
     this.message = message;
     this.hasRead = hasRead;
     makeAutoObservable(this);
-
   }
 
   setId = value => (this.id = value);
@@ -19,7 +18,6 @@ class Message {
   setMessage = value => (this.message = value);
   setHasRead = value => (this.hasRead = value);
   setSentAt = value => (this.sentAt = value);
-
 
   updateFromServer = values => {
     this.setId(values.id);

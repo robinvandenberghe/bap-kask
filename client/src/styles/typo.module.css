@@ -1,9 +1,9 @@
+
 :global(:root){
   --font-base: 1.8rem;
 }
 
 .title {
-  font-family: 'Roboto', serif;
   font-size: 2.6rem;
   font-weight: 700;
   margin-bottom: 1.5rem;

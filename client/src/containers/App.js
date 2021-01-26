@@ -1,21 +1,27 @@
-import React, { Component } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
+import React from "react";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import styles from "./App.module.css";
-
 import Home from "./Home";
-// import Admin from "./Admin";
+import Admin from "./Admin";
+import Account from "./Account";
 // import About from "./About";
 import ROUTES from "../constants";
 import Login from "./Login";
 import Register from "./Register";
+import PageHeader from "../components/PageHeader";
+import Divider from "../components/Divider";
+import { useStores } from "../hooks/useStores";
 
-class App extends Component {
-  render() {
-    return (
+const App = () => {
+  const { uiStore } = useStores();
+  return (
+    <div className={styles.container}>
+      <PageHeader />
+      <Divider />
       <main className={styles.layout}>
         <Switch>
           <Route path={ROUTES.home} exact strict component={Home} />
-          {/* <Route path={ROUTES.about} component={About} /> */}
+          <Route path={ROUTES.account} component={Account}/>
           <Route path={ROUTES.login} component={Login} />
           <Route path={ROUTES.register} component={Register} />
           {/* <Route path={ROUTES.chat} component={Chat} />
@@ -24,13 +30,17 @@ class App extends Component {
           <Route path={ROUTES.overview} component={Overview} />
           <Route path={ROUTES.projectDetail} component={Project} />
           <Route path={ROUTES.studentDetail} component={Student} />
-          <Route path={ROUTES.arDetail} component={ARDetail} />
-          <Route path={ROUTES.admin} component={Admin} />*/}
+          <Route path={ROUTES.arDetail} component={ARDetail} />*/}
+          <Route path={ROUTES.admin} component={Admin} />
 
         </Switch>
       </main>
-    );
-  }
+      <Divider />
+      <footer className={styles.footer}>
+        <p className={styles.footerText}>07.09 - 22.09</p>
+      </footer>
+    </div>
+  );
 }
 
-export default withRouter(App);
+export default App;

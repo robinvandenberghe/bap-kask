@@ -1,11 +1,24 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import ROUTES from "../constants";
+import style from "./PageHeader.module.css";
 
-const PageHeader = ({title}) => {
-
+const PageHeader = () => {
   return (
-    <div>
-      <h1>{title}</h1>
-    </div>
+    <header className={style.container}>
+      <NavLink to={ROUTES.home}>
+        <h1 className={style.logoWrapper}>
+          <img className={style.logoImage} alt='Logo KASK School of Arts' src={`/assets/img/kask-logo.png`} />
+          <p className='visually-hidden'>Digital Graduation Expo - KASK School of Arts</p>
+        </h1>
+      </NavLink>
+      <nav className={style.menu}>
+        <NavLink exact to={ROUTES.home} className={style.menuItem} activeClassName={style.selectedMenuItem} >Home</NavLink>
+        <NavLink to={ROUTES.overview} className={style.menuItem} activeClassName={style.selectedMenuItem} >Overzicht</NavLink>
+        <NavLink to={ROUTES.account} className={style.menuItem} activeClassName={style.selectedMenuItem} >Account</NavLink>
+        <NavLink to={ROUTES.search} className={style.menuItem} activeClassName={style.selectedMenuItem} >Zoeken</NavLink>
+      </nav>
+    </header>
   );
 };
 

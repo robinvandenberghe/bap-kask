@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  display: grid;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+.logoWrapper{
+  height: 100%;
+  width: 100%;
+  max-width: 24rem;
+  max-height: 6rem;
+}
+.logoImage{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.menu{
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  justify-self: flex-end;
+}
+.menuItem{
+  font-size: 2rem;
+}
+.selectedMenuItem{
+  font-weight: 600;
+  text-transform: uppercase;
+}

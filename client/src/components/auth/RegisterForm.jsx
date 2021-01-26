@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { inject } from "mobx-react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import { useStores } from "../../hooks/useStores";
 import ROUTES from "../../constants";
 import stylesForm from "../../styles/form.module.css";
 import TextInputField from "../TextInputField";
 
-const RegisterForm = ({ uiStore, history }) => {
+const RegisterForm = ({  history }) => {
+  const { uiStore } = useStores();
   const [email, setEmail] = useState(``);
   const [pwd, setPwd] = useState(``);
   const [pwd2, setPwd2] = useState(``);
@@ -36,9 +37,12 @@ const RegisterForm = ({ uiStore, history }) => {
           disabled={pwd && pwd !== pwd2}
         />
       </form>
+      <p className={stylesForm.metaAction}>
+          Al een account? <Link to={ROUTES.register}>Log hier in!</Link>
+      </p>
     </>
   );
   
 }
 
-export default inject(`uiStore`)(withRouter(RegisterForm));
+export default withRouter(RegisterForm);

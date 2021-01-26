@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx";
 import Auth from "../api/auth";
 import { getUserFromCookie } from "../utils/index.js";
 import Message from "../models/Message";
-
+import Api from "../api/index";
 class UiStore {
   authUser = null;
   conversations = [];
@@ -12,6 +12,7 @@ class UiStore {
     this.rootStore = rootStore;
     this.authService = new Auth();
     this.setUser(getUserFromCookie());
+    this.messageApi = new Api(`messages`);
     makeAutoObservable(this);
   }
 
@@ -25,13 +26,13 @@ class UiStore {
   };
 
   getAllConversations = () => {
-    this.authService.getAllMessages().then(d => {
+    this.messageApi.getAll().then(d => {
       const recipients = [...new Set(d.map(item => item.recipient))];
       const senders = [...new Set(d.map(item => item.sender))];
       const people = [...new Set([...recipients ,...senders])];
       const convos = people.map((u)=>{
         const messages = d.filter((a)=>a.sender.id===u.id||a.recipient.id===u.id);
-        return { user: u , messages };
+        return { user: u, messages };
       }) 
       this.setConversations(convos);
     } );
@@ -51,6 +52,7 @@ class UiStore {
       .login(username, password)
       .then(() => {
         this.setUser(getUserFromCookie());
+        this.getAllConversations();
         Promise.resolve();
       })
       .catch(() => {

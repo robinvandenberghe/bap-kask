@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { inject } from "mobx-react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import { useStores } from "../../hooks/useStores";
 import ROUTES from "../../constants";
 import stylesForm from "../../styles/form.module.css";
 import TextInputField from "../TextInputField";
 
-const LoginForm = ({ uiStore, history }) => {
+const LoginForm = ({ history }) => {
+  const { uiStore } = useStores()
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
 
@@ -31,4 +32,4 @@ const LoginForm = ({ uiStore, history }) => {
   );
 };
 
-export default inject(`uiStore`)(withRouter(LoginForm));
+export default withRouter(LoginForm);

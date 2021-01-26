@@ -7,6 +7,7 @@ const ROUTES = {
   arDetail : { path: `/augmented-reality/:id`, to: `/augmented-reality/` },
   admin: `/admin`,
   about: `/about`,
+  account: `/account`,
   login: `/login`,
   register: `/registreer`,
   chat: `/conversaties`,
