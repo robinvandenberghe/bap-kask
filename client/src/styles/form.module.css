@@ -1,26 +1,41 @@
-.form {
-  margin-top: 2rem;
+.form{
+  display:grid;
+  gap: 1.6rem;
+}
+.authForm{
+  max-width: 32rem;
 }
 .form label {
-  display: block;
+  display: grid;
   font-size: var(--font-base);
-  margin-bottom: 2rem;
+  gap: .4rem;
 }
 .form_input {
   display: block;
   width: 100%;
-  margin-top: .85rem;
-  border-radius: .3rem;
-  border: .1rem solid var(--gray-light-color);
+  max-width: 32rem;
   font-size: var(--font-base);
-  padding: .7rem;
+  padding: .2rem .8rem;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 0;
+  border: .2rem var(--gray-color) solid;
+}
+.pwIndicator{
+  width: 100%;
+  max-width: 32rem;
+  margin: -.8rem 0;
 }
 .button {
   composes: button  from "./uiControls.module.css";
-  display: block;
-  width: 100%;
 }
-
+.secondaryButton {
+  composes: secondaryButton  from "./uiControls.module.css";
+}
+.subInfo{
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  color: var(--gray-color);
+}
 .metaAction {
   text-align: center;
   margin-top: 1.5rem;

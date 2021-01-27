@@ -1,9 +1,11 @@
 :global(:root){
   --primary-color: #000000;
+  --gray-color: #6D6D6D;
+  --red-color: #e45656;
+
   --dark-color: #444444;
   --light-color: #fff5ea;
   --ultralight-color: #fff;
-  --gray-color: #b2b2b2;
   --gray-light-color: #e3e3e3;
   --success-color:  #93fac5;
 }

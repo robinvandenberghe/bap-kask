@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { useStores } from "../../hooks/useStores";
 import ROUTES from "../../constants";
@@ -13,8 +13,12 @@ const LoginForm = ({ history }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    uiStore.login(email.toLowerCase(), password).then(() => {
-      history.push(ROUTES.home);
+    if(!email || !password){
+
+    }
+    uiStore.login(email.toLowerCase(), password).then((r) => {
+      console.log(r);
+      // history.push(ROUTES.home);
     });
   };
 
@@ -23,11 +27,10 @@ const LoginForm = ({ history }) => {
       <form onSubmit={handleSubmit} className={stylesForm.form}>
         <TextInputField  type={`email`} value={email} setValue={setEmail} name={`email`} label={`email`} />
         <TextInputField  type={`password`} value={password} setValue={setPassword} name={`password`} label={`wachtwoord`} />
-        <input type="submit" value="Login" className={stylesForm.button}/>
+        <input type="submit" value="Aanmelden" className={stylesForm.button}/>
+        <NavLink to={ROUTES.register} className={stylesForm.secondaryButton}>Ik heb nog geen account</NavLink>
       </form>
-      <p className={stylesForm.metaAction}>
-          Nog geen account? <Link to={ROUTES.register}>Registreer hier!</Link>
-      </p>
+
     </>
   );
 };

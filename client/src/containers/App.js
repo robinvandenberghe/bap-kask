@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
 import Home from "./Home";
 import Admin from "./Admin";
@@ -10,10 +10,8 @@ import Login from "./Login";
 import Register from "./Register";
 import PageHeader from "../components/PageHeader";
 import Divider from "../components/Divider";
-import { useStores } from "../hooks/useStores";
 
 const App = () => {
-  const { uiStore } = useStores();
   return (
     <div className={styles.container}>
       <PageHeader />

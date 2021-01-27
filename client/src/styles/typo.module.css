@@ -8,6 +8,11 @@
   font-weight: 700;
   margin-bottom: 1.5rem;
 }
+.sectionTitle{
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+}
 .titleMini {
   display: block;
   text-transform: uppercase;

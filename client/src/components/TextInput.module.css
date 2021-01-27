@@ -1,3 +1,16 @@
 .formInput{
-  display:grid;
+  composes: form_input  from "../styles/form.module.css";
+}
+.formInput:focus{
+  outline: none;
+}
+.errorInput{
+  border: .2rem solid var(--red-color);
+  color: var(--red-color);
+}
+.errorMessage{
+  color: var(--red-color);
+  font-size: 1.4rem;
+  width: max-content;
+  font-weight: 500;
 }
