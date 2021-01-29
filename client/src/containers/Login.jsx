@@ -6,13 +6,13 @@ import KaskContainer from "../components/KaskContainer";
 
 const Login = () => {
   return (
-    <>
+    <div className={stylesLayout.gridLayout}>
       <KaskContainer/>
       <section className={`${stylesLayout.content}`}>
         <h3 className={stylesTypo.sectionTitle}>Aanmelden</h3>
         <LoginForm />
       </section>
-    </>
+    </div>
   );
 };
 

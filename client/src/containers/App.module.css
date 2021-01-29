@@ -10,8 +10,8 @@
 }
 .layout{
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  height: 100%;
+
 }
 .footer{
   width: 100%;

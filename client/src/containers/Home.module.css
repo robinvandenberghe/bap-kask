@@ -4,8 +4,7 @@
 .titleMini {
   composes: titleMini from "../styles/typo.module.css";
 }
-
-.priceList {
-  /* background: var(--primary-color) url("/assets/img/grain.png"); */
-  padding: 0 2rem 2rem 2rem;
+.container{
+  width: 100%;
+  height:100%;
 }

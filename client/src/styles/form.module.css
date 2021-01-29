@@ -28,6 +28,10 @@
 .button {
   composes: button  from "./uiControls.module.css";
 }
+.button:hover{
+  cursor: pointer;
+}
+
 .secondaryButton {
   composes: secondaryButton  from "./uiControls.module.css";
 }

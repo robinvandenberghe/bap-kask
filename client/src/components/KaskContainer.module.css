@@ -3,6 +3,25 @@
   display: grid;
   align-items: center;
   justify-content: center;
+  position: relative;
+  height: 100%;
+}
+.meshCanvas{
+  position: absolute;
+  width:100%;
+  height: 100%;
+  left:0;
+  top:0;
+  z-index: -1;
+  padding: 1rem;
+}
+.meshWaves{
+  background-image: url("raster.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  filter: url("#turbulence");
 }
 .textBlock{
   display:grid;
