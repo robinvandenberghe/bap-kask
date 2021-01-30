@@ -12,6 +12,17 @@
 .searchResults{
   width: 100%;
   height:100%;
+  display: grid;
+  justify-content: center;
+  grid-auto-rows: max-content;
+  grid-template-columns: 1fr;
+  padding: 2rem;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+.searchResults::-webkit-scrollbar {
+  display: none;
 }
 .searchBar{
   width: 100%;

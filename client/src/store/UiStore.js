@@ -58,15 +58,15 @@ class UiStore {
     return r;
   };
 
-  register = (userObj) => {
-    return this.authService.register(userObj).then(() => {
+  register = async (userObj) => {
+    const r = await this.authService.register(userObj);
+    if(r.success){
       this.setUser(getUserFromCookie());
-      Promise.resolve();
-    })
-    .catch(() => {
+      this.getAllConversations();
+    }else{
       this.setUser(null);
-      Promise.reject();
-    });
+    }
+    return r;
   };
 
   logout = () => {

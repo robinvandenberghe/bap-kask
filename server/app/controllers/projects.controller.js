@@ -1,5 +1,5 @@
 
-exports.create = (req, res) => {
+exports.create = (req, res, connection) => {
   const { id, user, study, subject, title, content } = req.body;
   if (!id || !user || !study || !subject || !title || !content) {
     return res.status(400).send({err: 'Er ontbreekt een veld of een veld is iet ingevuld'});
@@ -7,7 +7,7 @@ exports.create = (req, res) => {
   const projectToInsert = { id, userId: user.id, studyId: study.id, subjectId: subject.id, title };
   try {
     connection.query('INSERT INTO projects SET ?', projectToInsert, (error, results, fields) => {
-      if (error || results.length || results.length == 0) throw error;
+      if (error || !results.length || results.length == 0) throw error;
       res.send(results);
     });
   } catch (err) {
@@ -18,10 +18,10 @@ exports.create = (req, res) => {
 
 };
 
-exports.findAll = async (req, res) => {
+exports.findAll = async (req, res, connection) => {
   try {
-    connection.query('SELECT projects.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, s.title AS studyTitle FROM projects JOIN users AS u ON projects.userId = u.id JOIN studyFields AS s ON projects.studyId = s.id',  (error, results, fields) => {
-      if (error || results.length || results.length == 0) throw error;
+    connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, s.title AS studyTitle FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id',  (error, results, fields) => {
+      if (error || !results.length || results.length == 0) throw error;
       res.send(results);
     });
   } catch (err) {
@@ -29,7 +29,7 @@ exports.findAll = async (req, res) => {
   }
 };
 
-exports.findOne = async (req, res) => {
+exports.findOne = async (req, res, connection) => {
   try {
     const drink = await Drink.findOne({
       _id: req.params.bookId,
@@ -48,7 +48,7 @@ exports.findOne = async (req, res) => {
   }
 };
 
-exports.update = async (req, res) => {
+exports.update = async (req, res, connection) => {
   if (!req.body.title) {
     return res.status(400).send('title mag niet leeg zijn');
   }

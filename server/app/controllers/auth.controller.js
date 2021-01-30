@@ -123,27 +123,31 @@ exports.register = async (req, res, connection) => {
   try {
     connection.query('INSERT INTO `users`SET ?', userToInsert,  (error, result, fields) => {
       if (error) throw error;
-      const user = result.length && result.length == 0? undefined :result[0];
-      if(user){
-        const {id, name, surname, role} = user;
-        const token = jwt.sign({id, name, surname, role}, process.env.SECRET, {
-          expiresIn: '24h'
-        });
-        const parts = token.split('.');
-        const signature = parts.splice(2);
-        res
-          .cookie('token', parts.join('.'), tokenCookie)
-          .cookie('signature', signature, signatureCookie)
-          .sendStatus(200);
-      }else{
-        res
-        .status(500)
-        .send({
-          success: false,
-          message: 'Internal error, please try again',
-          error
-        });
-      }
+      connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], async (err, result, fields) => {
+        if(err)throw error(err);
+        const user = result.length && result.length == 0? undefined :result[0];
+        if(!user){
+          res.status(401).send({
+            success: false,
+            error:{
+              name: `email`,
+              id: `NO_USER`,
+              message: `Er bestaat geen gebruiker met deze id.`
+            }
+          });
+        } else {
+          const {id, name, surname, role} = user;
+          const token = jwt.sign({id, name, surname, role}, process.env.SECRET, {
+            expiresIn: '24h'
+          });
+          const parts = token.split('.');
+          const signature = parts.splice(2);
+          res
+            .cookie('token', parts.join('.'), tokenCookie)
+            .cookie('signature', signature, signatureCookie)
+            .sendStatus(200);
+        }
+      });
     });
   } catch (error) {
     res

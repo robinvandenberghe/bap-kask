@@ -78,8 +78,12 @@ const RegisterForm = ({  history }) => {
       }
     }else{
       const u = {id: uuidv4(), name, surname, email: email.toLowerCase(), password: pwd, role: `user`};
-      uiStore.register(u).then(() => {
-        history.push(ROUTES.home);
+      uiStore.register(u).then((r) => {
+        if(r.success){
+          history.push(ROUTES.account);
+        }else{
+          setError(r.error);
+        }
       });
     }
   };

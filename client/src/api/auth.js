@@ -26,20 +26,19 @@ class Auth {
     });
   };
 
-  register = (userObj) => {
-    return fetch(`/auth/register`, {
+  register = async (userObj) => {
+    const r = await fetch(`/auth/register`, {
       method: `POST`,
       headers: {
         "content-type": `application/json`
       },
       body: JSON.stringify(userObj)
-    }).then(res => {
-      if (res.status === 200) {
-        Promise.resolve();
-      } else {
-        Promise.reject();
-      }
     });
+    if(r.status === 200){
+      return { success: true };
+    }else{
+      return await r.json();
+    }
   };
 
   getAllConversations = async id => {

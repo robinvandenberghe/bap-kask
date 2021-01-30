@@ -11,6 +11,7 @@ import Register from "./Register";
 import Search from "./Search";
 import PageHeader from "../components/PageHeader";
 import Divider from "../components/Divider";
+import ProjectDetail from "./ProjectDetail";
 
 const App = () => {
   return (
@@ -24,10 +25,11 @@ const App = () => {
           <Route path={ROUTES.login} component={Login} />
           <Route path={ROUTES.register} component={Register} />
           <Route path={ROUTES.search} component={Search} />
+          <Route path={ROUTES.projectDetail.path} component={ProjectDetail} />
           {/* <Route path={ROUTES.chat} component={Chat} />
           <Route path={ROUTES.savedWorks} component={SavedWorks} />
           <Route path={ROUTES.overview} component={Overview} />
-          <Route path={ROUTES.projectDetail} component={Project} />
+          
           <Route path={ROUTES.studentDetail} component={Student} />
           <Route path={ROUTES.arDetail} component={ARDetail} />*/}
           <Route path={ROUTES.admin} component={Admin} />

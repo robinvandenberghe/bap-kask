@@ -33,7 +33,7 @@ const LoginForm = ({ history }) => {
     }else{
       uiStore.login(email.toLowerCase(), password).then((r) => {
         if(r.success){
-          history.push(ROUTES.home);
+          history.push(ROUTES.account);
         }else{
           setError(r.error);
         }

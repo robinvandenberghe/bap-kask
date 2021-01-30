@@ -1,0 +1,26 @@
+.container{
+  width: 90%;
+  background-color: #FEF0BB;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+}
+.coverImage{
+  width: 100%;
+  max-width: 20rem;
+  object-fit: cover;
+}
+.infoContainer{
+  padding: 2rem;
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+}
+.infoContainer h4{
+  font-size: 2rem;
+  font-weight: 500;
+  font-style: italic;
+}
+.infoContainer p {
+  font-size: 1.6rem;
+}

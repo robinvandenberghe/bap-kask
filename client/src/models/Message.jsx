@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeAutoObservable } from "mobx"
 
 class Message {
-  constructor(sender, recipient, message, id = uuidv4(), sentAt = new Date(), hasRead = false) {
+  constructor(sender = undefined, recipient = undefined, message = undefined, id = uuidv4(), sentAt = new Date(), hasRead = false) {
     this.id = id;
     this.sender = sender;
     this.recipient = recipient;
