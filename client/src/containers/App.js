@@ -8,6 +8,7 @@ import Account from "./Account";
 import ROUTES from "../constants";
 import Login from "./Login";
 import Register from "./Register";
+import Search from "./Search";
 import PageHeader from "../components/PageHeader";
 import Divider from "../components/Divider";
 
@@ -22,9 +23,9 @@ const App = () => {
           <Route path={ROUTES.account} component={Account}/>
           <Route path={ROUTES.login} component={Login} />
           <Route path={ROUTES.register} component={Register} />
+          <Route path={ROUTES.search} component={Search} />
           {/* <Route path={ROUTES.chat} component={Chat} />
           <Route path={ROUTES.savedWorks} component={SavedWorks} />
-          <Route path={ROUTES.search} component={Search} />
           <Route path={ROUTES.overview} component={Overview} />
           <Route path={ROUTES.projectDetail} component={Project} />
           <Route path={ROUTES.studentDetail} component={Student} />

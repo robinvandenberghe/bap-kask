@@ -7,13 +7,13 @@ import KaskContainer from "../components/KaskContainer";
 
 const Register = () => {
   return (
-    <>
+    <div className={stylesLayout.gridLayout}>
       <KaskContainer />
       <section className={`${stylesLayout.content}`}>
         <h3 className={stylesTypo.sectionTitle}>Registreren</h3>
         <RegisterForm />
       </section>
-    </>
+    </div>
   );
 };
 

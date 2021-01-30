@@ -1,0 +1,31 @@
+.title {
+  composes: title from "../styles/typo.module.css";
+}
+.titleMini {
+  composes: titleMini from "../styles/typo.module.css";
+}
+.container{
+  width: 100%;
+  height:100%;
+  border-left: solid .2rem var(--primary-color);
+}
+.searchResults{
+  width: 100%;
+  height:100%;
+}
+.searchBar{
+  width: 100%;
+  border: .2rem var(--primary-color);
+  border-style: none solid solid none;
+  padding: 2rem;
+  display: flex;
+  flex-flow: row;
+  gap: 2rem;
+}
+.searchBar input{
+  font-size: 1.8rem;
+  border: none;
+}
+.searchBar input:focus{
+  outline: none;
+}

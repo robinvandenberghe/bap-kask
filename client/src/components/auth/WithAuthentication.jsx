@@ -11,7 +11,7 @@ const withAuthentication = ComponentToProtect => {
     if (!uiStore.authUser) {
       return <Redirect to={ROUTES.login} />;
     }
-    return <ComponentToProtect {...props} authUser={props.uiStore.authUser} />;
+    return <ComponentToProtect {...props} authUser={uiStore.authUser} />;
   };
 
   return observer(WithAuth);

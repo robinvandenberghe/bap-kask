@@ -47,18 +47,15 @@ class UiStore {
       .then(projectValues => newMessage.updateFromServer(projectValues));
   };
 
-  login = (username, password) => {
-    return this.authService
-      .login(username, password)
-      .then(() => {
-        this.setUser(getUserFromCookie());
-        this.getAllConversations();
-        Promise.resolve();
-      })
-      .catch(() => {
-        this.setUser(null);
-        Promise.reject();
-      });
+  login = async (username, password) => {
+    const r = await this.authService.login(username, password);
+    if(r.success){
+      this.setUser(getUserFromCookie());
+      this.getAllConversations();
+    }else{
+      this.setUser(null);
+    }
+    return r;
   };
 
   register = (userObj) => {

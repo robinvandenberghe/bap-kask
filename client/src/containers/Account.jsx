@@ -1,13 +1,15 @@
 import React from "react";
-import { observer } from "mobx-react";
 import withAuthentication from "../components/auth/WithAuthentication";
+import { useStores } from "../hooks/useStores";
 
 const Account = () => {
+  const { uiStore } = useStores();
+
   return (
     <section>
-
+      <h3>{uiStore.authUser.name+ ` `+ uiStore.authUser.surname}</h3>
     </section>
   );
 };
 
-export default (withAuthentication(observer(Account)));
+export default (withAuthentication(Account));

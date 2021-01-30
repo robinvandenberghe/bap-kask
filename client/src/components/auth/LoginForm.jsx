@@ -32,8 +32,11 @@ const LoginForm = ({ history }) => {
       }
     }else{
       uiStore.login(email.toLowerCase(), password).then((r) => {
-        console.log(r);
-        // history.push(ROUTES.home);
+        if(r.success){
+          history.push(ROUTES.home);
+        }else{
+          setError(r.error);
+        }
       });
     }
   };

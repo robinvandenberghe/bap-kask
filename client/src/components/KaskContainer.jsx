@@ -2,8 +2,6 @@ import React from "react";
 import style from './KaskContainer.module.css';
 
 const KaskContainer = () => {
-
-
   return (
     <section className={style.container}>
       <div className={style.meshCanvas}>

@@ -1,6 +1,6 @@
 class Auth {
-  login = (email, password) => {
-    return fetch(`/auth/login`, {
+  login = async (email, password) => {
+    const r = await fetch(`/auth/login`, {
       method: `POST`,
       headers: {
         "content-type": `application/json`
@@ -9,13 +9,12 @@ class Auth {
         email,
         password
       })
-    }).then(res => {
-      if (res.status === 200) {
-        Promise.resolve();
-      } else {
-        Promise.reject();
-      }
     });
+    if(r.status === 200){
+      return { success: true };
+    }else{
+      return await r.json();
+    }
   };
 
   logout = () => {

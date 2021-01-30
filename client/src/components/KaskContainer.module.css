@@ -17,7 +17,7 @@
 }
 .meshWaves{
   background-image: url("raster.svg");
-  background-size: contain;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   height: 100%;
   width: 100%;
