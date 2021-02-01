@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 
 const checkToken = (req, res, next) => {
   const {token, signature} = req.cookies;
-
   if (!token) {
     res.status(401).send({
       success: false,
@@ -23,17 +22,25 @@ const checkToken = (req, res, next) => {
   }
 };
 
-const hasRole = role => async (req, res, next) => {
-  const user = await connection.query('SELECT * FROM `users` WHERE `id` = ?', [ req.authUserId ],  (error, results, fields) => {
-    if (error || results.length || results.length == 0) throw error;
-    return results[0];
-  })
-  if (user.roles.includes(role)) {
-    next();
-  } else {
-    res.status(403).send({
+const hasRole = (role) => (req, res, connection, next) => {
+  try{
+    connection.query('SELECT * FROM `users` WHERE `id` = ?', [ req.authUserId ],  (error, results, fields) => {
+      if (error || results.length || results.length == 0) throw error;
+      const user = results[0];
+      if (user.role.includes(role)) {
+        next();
+      } else {
+        res.status(403).send({
+          success: false,
+          message: 'Unauthorized'
+        });
+      }
+    });
+  }catch (error){
+    res.status(500).send({
       success: false,
-      message: 'Unauthorized'
+      message: 'Internal error, please try again',
+      error
     });
   }
 };

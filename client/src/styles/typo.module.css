@@ -13,13 +13,6 @@
   font-weight: 600;
   margin-bottom: 1.2rem;
 }
-.titleMini {
-  display: block;
-  text-transform: uppercase;
-  font-size: 1.3rem;
-  font-weight: 300;
-  margin-bottom: .7rem;
-}
 .paragraphs {
   font-size: var(--font-base);
   line-height: 1.3;

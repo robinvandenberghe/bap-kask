@@ -7,7 +7,7 @@ import Api from "../api/index";
 class UiStore {
   authUser = null;
   conversations = [];
-
+  savedWorks = [];
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.authService = new Auth();
@@ -46,6 +46,20 @@ class UiStore {
       .createMessage(newMessage)
       .then(projectValues => newMessage.updateFromServer(projectValues));
   };
+
+  saveWork = async (id) => {
+    const r = await this.authService.saveWork(this.authUser.id, id);
+    if(r.success){
+      const index = this.savedWorks.indexOf(id);
+      if(index!==-1){
+        this.savedWorks.splice(index,1);
+        return { success:true, saved:false };
+      }else{
+        this.savedWorks.push(id);
+        return { success:true, saved:true };
+      }
+    }
+  }
 
   login = async (username, password) => {
     const r = await this.authService.login(username, password);

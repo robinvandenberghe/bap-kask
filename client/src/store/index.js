@@ -5,6 +5,7 @@ class RootStore {
   constructor() {
     this.uiStore = new UiStore(this);
     this.projectStore = new ProjectStore(this);
+    this.projectStore.getAll();
   }
 }
 

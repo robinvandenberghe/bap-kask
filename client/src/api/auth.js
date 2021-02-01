@@ -41,10 +41,10 @@ class Auth {
     }
   };
 
-  getAllConversations = async id => {
+  saveWork = async (userId, workId) => {
     const r = await fetch(
-      `/auth/messages`, 
-    this.getOptions(`get`, {id: id})
+      `/auth/save-work`,
+      this.getOptions(`post`, {userId, workId})
     );
     return await r.json();
   };

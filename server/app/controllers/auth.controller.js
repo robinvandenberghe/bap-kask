@@ -35,7 +35,7 @@ exports.login = async (req, res, connection) => {
   }
   try {
     connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], async (err, result, fields) => {
-      if(err)throw error(err);
+      if(err)throw err;
       const user = result.length && result.length == 0? undefined :result[0];
       if(!user){
         res.status(401).send({
@@ -82,6 +82,73 @@ exports.login = async (req, res, connection) => {
   }
 };
 
+exports.saveWork = async (req, res, connection) => {
+  const { userId, workId } = req.body;
+  if (!userId || !workId) {
+    res
+      .status(400)
+      .send({
+        success: false,
+        error:{
+          id: `NO_DATA`,
+          message: `Er werd niet genoeg data aangeleverd.`
+        }
+      });
+  }
+  try {
+    connection.query('SELECT * FROM `savedProjects` WHERE `userId` = ? AND `projectId` = ?', [ userId, workId ], async (err, result, fields) => {
+      if(err)throw err;
+      if(result.length == 0){
+        try {
+          connection.query('INSERT INTO `savedProjects` SET ?', { userId, projectId: workId }, async (err, result, fields) => {
+            if(err)throw err;
+            res
+              .status(200)
+              .send({
+                success: true,
+              });
+          });
+        } catch (error) {
+          res
+            .status(500)
+            .send({
+              success: false,
+              message: 'Internal error, please try again',
+              error
+            });
+        }
+      } else {
+        try {
+          connection.query('DELETE FROM `savedProjects` WHERE `userId` = ? AND `projectId` = ?', [ userId, workId ], async (err, result, fields) => {
+            if(err)throw err;
+            res
+              .status(200)
+              .send({
+                success: true,
+              });
+          });
+        } catch (error) {
+          res
+            .status(500)
+            .send({
+              success: false,
+              message: 'Internal error, please try again',
+              error
+            });
+        }
+      }
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({
+        success: false,
+        message: 'Internal error, please try again',
+        error
+      });
+  }
+}
+
 exports.logout = (req, res) => {
   res
     .clearCookie('token', tokenCookie)
@@ -93,7 +160,7 @@ exports.register = async (req, res, connection) => {
   const { id, email, password, name, surname, role} = req.body;
   try{
     connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], async (err, result, fields) => {
-      if(err)throw error(err);
+      if(err)throw err;
       const user = result.length && result.length == 0? undefined :result[0];
       if(user){
         res.status(401).send({
@@ -124,7 +191,7 @@ exports.register = async (req, res, connection) => {
     connection.query('INSERT INTO `users`SET ?', userToInsert,  (error, result, fields) => {
       if (error) throw error;
       connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], async (err, result, fields) => {
-        if(err)throw error(err);
+        if(err)throw err;
         const user = result.length && result.length == 0? undefined :result[0];
         if(!user){
           res.status(401).send({

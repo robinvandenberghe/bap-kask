@@ -25,9 +25,16 @@
   flex-flow: row wrap;
   gap: 1rem;
   justify-self: flex-end;
+  align-items: center;
 }
 .menuItem{
   font-size: 2rem;
+}
+.menuIcon{
+  border: solid .2rem var(--primary-color);
+  padding: .4rem;
+  width: 3.2rem;
+  height: 3.2rem;
 }
 .selectedMenuItem{
   font-weight: 600;

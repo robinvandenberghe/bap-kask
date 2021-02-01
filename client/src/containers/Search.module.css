@@ -24,6 +24,12 @@
 .searchResults::-webkit-scrollbar {
   display: none;
 }
+.noResults{
+  font-size: 1.8rem;
+  color: var(--gray-color);
+  font-weight: 300;
+  text-align: center;
+}
 .searchBar{
   width: 100%;
   border: .2rem var(--primary-color);
@@ -33,9 +39,11 @@
   flex-flow: row;
   gap: 2rem;
 }
-.searchBar input{
+.searchBar input{ 
+  width: 100%;
   font-size: 1.8rem;
   border: none;
+  font-family: 'Poppins', sans-serif;
 }
 .searchBar input:focus{
   outline: none;

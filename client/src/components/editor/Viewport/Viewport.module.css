@@ -1,0 +1,28 @@
+.toolbox{
+  border: .2rem solid var(--primary-color);
+  background-color: white;
+  width: max-content;
+  padding: 1rem;
+  gap: 1rem;
+  display: grid;
+  position: sticky;
+  top:2rem;
+  left:0;
+  z-index: 99;
+}
+.toolbox .divider{
+  width: 100%;
+  display:block;
+  height: .2rem;
+  background-color: var(--primary-color);
+}
+.toolbox .items{
+  display: grid;
+  gap: 1rem;
+}
+.toolbox .toolItem{
+  display: block;
+}
+.toolbox .toolItem:hover{
+  cursor: hover;
+}

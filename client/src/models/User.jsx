@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { makeAutoObservable } from "mobx"
 
-class User {
+class User {  
   constructor(id = uuidv4(), name = undefined, surname = undefined, email = undefined, password = undefined, role = `user`) {
     this.id = id;
     this.name = name;

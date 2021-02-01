@@ -16,7 +16,7 @@ const PageHeader = () => {
         <NavLink exact to={ROUTES.home} className={style.menuItem} activeClassName={style.selectedMenuItem} >Home</NavLink>
         <NavLink to={ROUTES.overview} className={style.menuItem} activeClassName={style.selectedMenuItem} >Overzicht</NavLink>
         <NavLink to={ROUTES.account} className={style.menuItem} activeClassName={style.selectedMenuItem} >Account</NavLink>
-        <NavLink to={ROUTES.search} className={style.menuItem} activeClassName={style.selectedMenuItem} >Zoeken</NavLink>
+        <NavLink to={ROUTES.search} className={style.menuItem} activeClassName={style.selectedMenuItem} ><img className={style.menuIcon} alt={`search icon`} src={`/assets/img/search.svg`} /></NavLink>
       </nav>
     </header>
   );
