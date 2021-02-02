@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEditor } from '@craftjs/core';
-import styled from 'styled-components';
 import {ReactComponent as Save} from './../icons/save.svg';
 import {ReactComponent as Back} from './../icons/back.svg';
 import {ReactComponent as Edit} from './../icons/edit.svg';
 import {ReactComponent as Chat} from './../icons/chatWhiteFill.svg';
 import {ReactComponent as Bookmark} from './../icons/bookmark.svg';
+import {ReactComponent as Bookmarked} from './../icons/bookmarkFillWhite.svg';
 import style from './Viewport.module.css';
 import { useStores } from '../../../hooks/useStores';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
-export const Header = () => {
-  const {
-    enabled,
-    actions: { setOptions },
-  } = useEditor((state) => ({
-    enabled: state.options.enabled,
-  }));
+export const Header = ({project}) => {
+  const { enabled, actions: { setOptions } } = useEditor((state) => ({ enabled: state.options.enabled }));
+  const { id } = project;
   const { uiStore } = useStores();
   const history = useHistory();
+  const [ saved, setSaved ] = useState(uiStore.savedWorks.find(i=>i===id)?true:false);
+  
+  const handleSave = async () => {
+    const r = await uiStore.saveWork(id);
+    if(r.success){
+      setSaved(r.saved);
+    }
+  }
 
   return (
     <section
@@ -48,9 +52,9 @@ export const Header = () => {
           <span>chatten</span>
         </div>
         }     
-        <div className={style.headerButton}>
-          <Bookmark className={style.headerIcon}/>
-          <span>opslaan</span>
+        <div className={classNames(style.headerButton, saved? style.inverted :null)} onClick={handleSave}>
+          {saved?<Bookmarked className={style.headerIcon}/>:<Bookmark className={style.headerIcon}/>}
+          <span>{saved? `opgeslagen`:`opslaan`}</span>
         </div>
         </>
         }

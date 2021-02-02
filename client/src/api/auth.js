@@ -49,6 +49,11 @@ class Auth {
     return await r.json();
   };
 
+  getAllSavedWorks = async () => {
+    const r = await fetch( `/auth/saved-works` );
+    return await r.json();
+  };
+
   create = async entity => {
     const r = await fetch(
       `/api/${this.entity}`,

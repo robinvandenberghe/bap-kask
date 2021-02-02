@@ -17,30 +17,16 @@ import style from './ProjectDetail.module.css';
 const ProjectDetail = () => {
   const { slug } = useParams();
   const { projectStore, uiStore } = useStores();
-  const { id, user, study, title, subject, content} = projectStore.projects.find((item)=>item.slug===slug);
+  const project = projectStore.projects.find((item)=>item.slug===slug);
+  const { id, user, study, title, subject, content} = project;
   const [ query, setQuery ] = useState();
-  const [ saved, setSaved ] = useState(uiStore.savedWorks.find(i=>i===id)?true:false);
   const [enabled] = useState(false);
   const uint8array = lz.decodeBase64(content);
   const json = lz.decompress(uint8array);
 
-  const handleSave = async () => {
-    const r = await uiStore.saveWork(id);
-    if(r.success){
-      setSaved(r.saved);
-    }
-  }
 
   return (
     <section className={stylesLayout.layout}>
-        <div className={style.searchSave}>
-          {uiStore.authUser?
-          <div className={classNames(style.saveWork, saved ? style.saved : null)} onClick={handleSave}>
-            {saved ? <img alt={`save icon`} src={`/assets/img/bookmark.svg`}/> : <img alt={`save icon`} src={`/assets/img/save.svg`}/>}
-            <span>{saved? `Opgeslagen` : `Opslaan`}</span>
-          </div>
-          :null}
-        </div>
         <Editor
           resolver={{
             Container,
@@ -57,7 +43,7 @@ const ProjectDetail = () => {
           enabled={enabled}
           onRender={RenderNode}
         >
-          <Viewport>
+          <Viewport project={project}>
             <div className={style.infoContainer}>
               <h4>{user.name + ` ` + user.surname}</h4>
               <p className={style.subjectTitle}>{study.title + ` - ` + subject.title}</p>

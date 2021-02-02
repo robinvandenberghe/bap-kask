@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
 
 const tokenCookie = {
   maxAge: 1800000,
@@ -16,7 +16,7 @@ exports.login = async (req, res, connection) => {
   if (!email) {
     return res.status(400).send({
       success: false,
-      error:{
+      error: {
         name: `email`,
         id: `NO_EMAIL`,
         message: `E-mailadres is vereist.`
@@ -26,7 +26,7 @@ exports.login = async (req, res, connection) => {
   if (!password) {
     return res.status(400).send({
       success: false,
-      error:{
+      error: {
         name: `password`,
         id: `NO_PASSWORD`,
         message: `Wachtwoord is vereist.`
@@ -35,12 +35,12 @@ exports.login = async (req, res, connection) => {
   }
   try {
     connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], async (err, result, fields) => {
-      if(err)throw err;
-      const user = result.length && result.length == 0? undefined :result[0];
-      if(!user){
+      if (err) throw err;
+      const user = result.length && result.length === 0 ? undefined : result[0];
+      if (!user) {
         res.status(401).send({
           success: false,
-          error:{
+          error: {
             name: `email`,
             id: `NO_USER`,
             message: `Er bestaat geen gebruiker met dit e-mailadres.`
@@ -62,7 +62,7 @@ exports.login = async (req, res, connection) => {
         } else {
           res.status(401).send({
             success: false,
-            error:{
+            error: {
               name: `email`,
               id: `WRONG_CREDENTIALS`,
               message: `Foutief e-mailadres of wachtwoord.`
@@ -83,13 +83,13 @@ exports.login = async (req, res, connection) => {
 };
 
 exports.saveWork = async (req, res, connection) => {
-  const { userId, workId } = req.body;
+  const {userId, workId} = req.body;
   if (!userId || !workId) {
     res
       .status(400)
       .send({
         success: false,
-        error:{
+        error: {
           id: `NO_DATA`,
           message: `Er werd niet genoeg data aangeleverd.`
         }
@@ -97,11 +97,11 @@ exports.saveWork = async (req, res, connection) => {
   }
   try {
     connection.query('SELECT * FROM `savedProjects` WHERE `userId` = ? AND `projectId` = ?', [ userId, workId ], async (err, result, fields) => {
-      if(err)throw err;
-      if(result.length == 0){
+      if (err) throw err;
+      if (result.length === 0) {
         try {
-          connection.query('INSERT INTO `savedProjects` SET ?', { userId, projectId: workId }, async (err, result, fields) => {
-            if(err)throw err;
+          connection.query('INSERT INTO `savedProjects` SET ?', {userId, projectId: workId}, async (err, result, fields) => {
+            if (err) throw err;
             res
               .status(200)
               .send({
@@ -120,7 +120,7 @@ exports.saveWork = async (req, res, connection) => {
       } else {
         try {
           connection.query('DELETE FROM `savedProjects` WHERE `userId` = ? AND `projectId` = ?', [ userId, workId ], async (err, result, fields) => {
-            if(err)throw err;
+            if (err) throw err;
             res
               .status(200)
               .send({
@@ -147,7 +147,25 @@ exports.saveWork = async (req, res, connection) => {
         error
       });
   }
-}
+};
+
+
+exports.getAllSavedWorks = async (req, res, connection) => {
+  try {
+    connection.query('SELECT * FROM `savedProjects` WHERE `userId` = ?', [req.authUserId], async (err, result, fields) => {
+      if (err) throw err;
+      res.send(result);
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({
+        success: false,
+        message: 'Internal error, please try again',
+        error
+      });
+  }
+};
 
 exports.logout = (req, res) => {
   res
@@ -157,15 +175,15 @@ exports.logout = (req, res) => {
 };
 
 exports.register = async (req, res, connection) => {
-  const { id, email, password, name, surname, role} = req.body;
-  try{
+  const {id, email, password, name, surname, role} = req.body;
+  try {
     connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], async (err, result, fields) => {
-      if(err)throw err;
-      const user = result.length && result.length == 0? undefined :result[0];
-      if(user){
+      if (err) throw err;
+      const user = result.length && result.length === 0 ? undefined : result[0];
+      if (user) {
         res.status(401).send({
           success: false,
-          error:{
+          error: {
             name: `email`,
             id: `USER_ALREADY_EXISTS`,
             message: `Er bestaat al een gebruiker met dit e-mailadres.`
@@ -173,7 +191,7 @@ exports.register = async (req, res, connection) => {
         });
       }
     });
-  }catch (error) {
+  } catch (error) {
     res.status(500).send({
       success: false,
       message: 'Internal error, please try again',
@@ -181,22 +199,21 @@ exports.register = async (req, res, connection) => {
     });
   }
   const hashedPass = await hashPassword(password);
-  if(!hashedPass)res.status(500).send({
+  if (!hashedPass)res.status(500).send({
     success: false,
-    message: 'Internal error, please try again',
-    error
+    message: 'Internal error, please try again'
   });
-  const userToInsert = { id, name, surname, email, password: hashedPass, role };
+  const userToInsert = {id, name, surname, email, password: hashedPass, role};
   try {
     connection.query('INSERT INTO `users`SET ?', userToInsert,  (error, result, fields) => {
       if (error) throw error;
       connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], async (err, result, fields) => {
-        if(err)throw err;
-        const user = result.length && result.length == 0? undefined :result[0];
-        if(!user){
+        if (err) throw err;
+        const user = result.length && result.length === 0 ? undefined : result[0];
+        if (!user) {
           res.status(401).send({
             success: false,
-            error:{
+            error: {
               name: `email`,
               id: `NO_USER`,
               message: `Er bestaat geen gebruiker met deze id.`
@@ -227,5 +244,5 @@ exports.register = async (req, res, connection) => {
   }
 };
 
-const hashPassword = async (password) => await bcrypt.hash(password, 12 );
+const hashPassword = async password => await bcrypt.hash(password, 12);
 const validPassword = (password, dbPass) => bcrypt.compare(password, dbPass);

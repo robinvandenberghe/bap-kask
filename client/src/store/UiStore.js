@@ -13,11 +13,16 @@ class UiStore {
     this.authService = new Auth();
     this.setUser(getUserFromCookie());
     this.messageApi = new Api(`messages`);
+    if(this.authUser){
+      this.getAllSavedWorks();
+      this.getAllConversations();
+    }
     makeAutoObservable(this);
   }
 
   setUser = value => (this.authUser = value);
   setConversations = value => (this.conversations = value);
+  setSavedWorks = value => (this.savedWorks = value);
 
   updateMessage = message => {
     this.authService
@@ -37,6 +42,13 @@ class UiStore {
       this.setConversations(convos);
     } );
   };
+
+  getAllSavedWorks =  () => {
+    this.authService.getAllSavedWorks().then(d => {
+      const w = d.map((item)=>item.projectId);
+      this.setSavedWorks(w);
+    })
+  }
 
   newMessage = data => {
     const newMessage = new Message();
@@ -65,6 +77,7 @@ class UiStore {
     const r = await this.authService.login(username, password);
     if(r.success){
       this.setUser(getUserFromCookie());
+      this.getAllSavedWorks();
       this.getAllConversations();
     }else{
       this.setUser(null);
@@ -84,12 +97,22 @@ class UiStore {
   };
 
   logout = () => {
-    this.authService.logout().then(() => this.setUser(null));
+    this.authService.logout().then(() => {
+      this.setSavedWorks([]);
+      this.setConversations([]);
+      this.setUser(null);
+    });
   };
 
   get conversationLength() {
     if (this.conversations) {
       return this.conversations.length
+    }
+    return 0;
+  }
+  get savedWorksLength() {
+    if (this.savedWorks) {
+      return this.savedWorks.length
     }
     return 0;
   }

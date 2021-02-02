@@ -55,7 +55,61 @@
 }
 .titleContainer .studentClass{
   background-color: var(--green-color);
+  color: white;
 }
 .titleContainer .adminClass{
   background-color: var(--blue-color);
+  color: white;
+}
+.profileButtons{
+  display:grid;
+  gap: .8rem;
+}
+.profileButtons .editButton{
+  background-color: var(--primary-color);
+  color: white;
+  padding: .8rem 1.6rem;
+  font-weight: 500;
+  font-size: 1.6rem;
+  width: max-content;
+}
+.editButton:hover, .navButton:hover{
+  cursor: pointer;
+}
+.pageButtons{
+  display: flex;
+  gap: 1rem;
+  flex-flow: row wrap;
+  margin: 2rem 0;
+}
+.navButton{
+  color: var(--primary-color);
+  background-color: white;
+  border: .2rem solid var(--primary-color);
+  display: flex;
+  align-items: center;
+  padding: .6rem 1.2rem;
+  font-weight: 500;
+  font-size: 1.6rem;
+  width: max-content;
+  gap: .8rem
+}
+.navButton.active{
+  font-weight: 500;
+  background-color: var(--primary-color);
+  color:white;
+}
+.savedLabel{
+  padding: .4rem .8rem;
+  display: grid;
+  gap: .4rem;
+  background-color: white;
+  align-items: center;
+  grid-template-columns: 1fr max-content;
+  color: var(--primary-color);
+}
+.savedLabel img{
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
 }
