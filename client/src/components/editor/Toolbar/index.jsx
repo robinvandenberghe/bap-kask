@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEditor } from '@craftjs/core';
+import style from "./Toolbar.module.css";
 export * from './ToolbarItem';
 export * from './ToolbarSection';
 export * from './ToolbarTextInput';
@@ -23,11 +24,9 @@ export const Toolbar = () => {
             fontSize: `11px`,
           }}
         >
-          <h2 className="pb-1">Click on a component to start editing.</h2>
-          <h2>
-            You could also double click on the layers below to edit their names,
-            like in Photoshop
-          </h2>
+          <span className={style.toolbarText}>
+            Click on a component to start editing.<br/>You could also double click on the layers below to edit their names, like in photoshop.
+          </span>
         </div>
       )}
     </div>

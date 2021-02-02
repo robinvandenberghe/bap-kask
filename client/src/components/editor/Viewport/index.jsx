@@ -4,6 +4,7 @@ import { useEditor } from '@craftjs/core';
 import { Toolbox } from './Toolbox';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import style from './Viewport.module.css';
 import {
   Button as MaterialButton,
   Dialog,
@@ -18,31 +19,7 @@ export const Viewport = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const [mouseEnabled, setMouseEnabled] = useState(false);
   const [dialog, setDialog] = useState(false);
-
-  let unmounted = false;
-  // animations with setTimeouts. I know, don't judge me! :p
-  useEffect(() => {
-    setTimeout(() => {
-      if (!unmounted) setLoaded(true);
-      setTimeout(() => {
-        if (
-          localStorage &&
-          localStorage.getItem(`craftjs-demo-notice`) !== `set`
-        ) {
-          setDialog(true);
-          localStorage.setItem(`craftjs-demo-notice`, `set`);
-        }
-        setTimeout(() => {
-          if (!unmounted) setMouseEnabled(true);
-        }, 200);
-      }, 400);
-    }, 1000);
-
-    return () => {
-      unmounted = true;
-    };
-  }, []);
-
+  
   return (
     <div
       className={cx([`viewport`], {
@@ -83,45 +60,9 @@ export const Viewport = ({ children }) => {
         </DialogActions>
       </Dialog>
       <Header />
-      <div
-        style={{ paddingTop: `59px` }}
-        className={cx([
-          `flex h-full overflow-hidden flex-row w-full`,
-          {
-            'h-full': !enabled,
-            fixed: enabled,
-            relative: !enabled,
-          },
-        ])}
-      >
+      <div>
         <Toolbox />
-        <div className="flex-1 h-full">
-          <div className="w-full h-full">
-            <div
-              className={cx([
-                `craftjs-renderer h-full w-full transition pb-8`,
-                {
-                  'overflow-auto': enabled,
-                  'bg-renderer-gray': enabled,
-                },
-              ])}
-              ref={(ref) =>
-                connectors.select(connectors.hover(ref, null), null)
-              }
-            >
-              <div
-                className={cx([
-                  `relative flex-col flex items-center`,
-                  {
-                    'pt-8': enabled,
-                  },
-                ])}
-              >
-                {children}
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className={cx(`craftjs-renderer`, style.layout)}>{children}</div>
         <Sidebar />
       </div>
     </div>

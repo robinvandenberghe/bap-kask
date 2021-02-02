@@ -14,9 +14,11 @@ const PageHeader = () => {
       </NavLink>
       <nav className={style.menu}>
         <NavLink exact to={ROUTES.home} className={style.menuItem} activeClassName={style.selectedMenuItem} >Home</NavLink>
+        <NavLink to={ROUTES.planning} className={style.menuItem} activeClassName={style.selectedMenuItem} >Planning</NavLink>
         <NavLink to={ROUTES.overview} className={style.menuItem} activeClassName={style.selectedMenuItem} >Overzicht</NavLink>
-        <NavLink to={ROUTES.account} className={style.menuItem} activeClassName={style.selectedMenuItem} >Account</NavLink>
-        <NavLink to={ROUTES.search} className={style.menuItem} activeClassName={style.selectedMenuItem} ><img className={style.menuIcon} alt={`search icon`} src={`/assets/img/search.svg`} /></NavLink>
+        <NavLink to={ROUTES.chat} className={style.menuItem} activeClassName={style.selectedMenuItem} ><img className={style.menuIcon} alt={`search icon`} src={`/assets/img/icons/chat.svg`} /></NavLink>
+        <NavLink to={ROUTES.account} className={style.menuItem} activeClassName={style.selectedMenuItem} ><img className={style.menuIcon} alt={`account icon`} src={`/assets/img/icons/profile.svg`} /></NavLink>
+        <NavLink to={ROUTES.search} className={style.menuItem} activeClassName={style.selectedMenuItem} ><img className={style.menuIcon} alt={`search icon`} src={`/assets/img/icons/search.svg`} /></NavLink>
       </nav>
     </header>
   );

@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
+import lz from 'lzutf8';
+import { Editor, Frame, Element } from '@craftjs/core';
+import { Container, Text } from '../components/selectors';
+import { RenderNode, Viewport } from '../components/editor';
+import { Custom1, OnlyButtons } from '../components/selectors/Custom1';
+import { Custom2, Custom2VideoDrop } from '../components/selectors/Custom2';
+import { Custom3, Custom3BtnDrop } from '../components/selectors/Custom3';
+import { Button } from '../components/selectors/Button';
+import { Video } from '../components/selectors/Video';
 import { useStores } from "../hooks/useStores";
 import stylesLayout from "../styles/layout.module.css";
 import style from './ProjectDetail.module.css';
@@ -8,9 +17,12 @@ import style from './ProjectDetail.module.css';
 const ProjectDetail = () => {
   const { slug } = useParams();
   const { projectStore, uiStore } = useStores();
-  const { id, user, study, title, subject, brief} = projectStore.projects.find((item)=>item.slug===slug);
+  const { id, user, study, title, subject, content} = projectStore.projects.find((item)=>item.slug===slug);
   const [ query, setQuery ] = useState();
   const [ saved, setSaved ] = useState(uiStore.savedWorks.find(i=>i===id)?true:false);
+  const [enabled] = useState(false);
+  const uint8array = lz.decodeBase64(content);
+  const json = lz.decompress(uint8array);
 
   const handleSave = async () => {
     const r = await uiStore.saveWork(id);
@@ -20,16 +32,8 @@ const ProjectDetail = () => {
   }
 
   return (
-    <div className={stylesLayout.gridLayout}>
-      <section >
-
-      </section>
-      <section className={style.container}>
+    <section className={stylesLayout.layout}>
         <div className={style.searchSave}>
-          <label className={style.searchBar}>
-            <img alt={`search icon`} src={`/assets/img/search.svg`}/>
-            <input placeholder={`Zoeken`} value={query} onChange={(e)=>setQuery(e.target.value)} />
-          </label>
           {uiStore.authUser?
           <div className={classNames(style.saveWork, saved ? style.saved : null)} onClick={handleSave}>
             {saved ? <img alt={`save icon`} src={`/assets/img/bookmark.svg`}/> : <img alt={`save icon`} src={`/assets/img/save.svg`}/>}
@@ -37,14 +41,34 @@ const ProjectDetail = () => {
           </div>
           :null}
         </div>
+        <Editor
+          resolver={{
+            Container,
+            Text,
+            Custom1,
+            Custom2,
+            Custom2VideoDrop,
+            Custom3,
+            Custom3BtnDrop,
+            OnlyButtons,
+            Button,
+            Video,
+          }}
+          enabled={enabled}
+          onRender={RenderNode}
+        >
+          <Viewport>
+            <div className={style.infoContainer}>
+              <h4>{user.name + ` ` + user.surname}</h4>
+              <p className={style.subjectTitle}>{study.title + ` - ` + subject.title}</p>
+            </div>
+            <Frame data={json}>
 
-        <div className={style.infoContainer}>
-          <h4>{user.name + ` ` + user.surname}</h4>
-          <p className={style.subjectTitle}>{subject.title}</p>
-          <p className={style.projectBrief}>{brief}</p>
-        </div>
-      </section>
-    </div>
+            </ Frame>
+          </Viewport>
+        </Editor>
+
+    </section>
   );
 };
 

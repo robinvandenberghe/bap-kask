@@ -6,9 +6,9 @@ import { Text } from '../../selectors/Text';
 import { Video } from '../../selectors/Video';
 import { Button } from '../../selectors/Button';
 import style from './Viewport.module.css';
-import {ReactComponent as SquareSvg} from './../icons/toolbox/rectangle.svg';
+import {ReactComponent as SquareSvg} from './../icons/toolbox/container.svg';
 import {ReactComponent as TypeSvg} from './../icons/toolbox/text.svg';
-import {ReactComponent as YoutubeSvg} from './../icons/toolbox/video-line.svg';
+import {ReactComponent as YoutubeSvg} from './../icons/toolbox/video.svg';
 import {ReactComponent as ButtonSvg} from './../icons/toolbox/button.svg';
 import {ReactComponent as UndoSvg} from './../icons/toolbox/undo.svg';
 import {ReactComponent as RedoSvg} from './../icons/toolbox/redo.svg';
@@ -86,21 +86,21 @@ export const Toolbox = () => {
           }
         >
           <Tooltip title="Text" placement="right">
-            <Item className="m-2 pb-2 cursor-pointer block" move>
+            <Item className={style.toolItem} move>
               <TypeSvg />
             </Item>
           </Tooltip>
         </div>
         <div ref={(ref) => create(ref, <Button />)}>
           <Tooltip title="Button" placement="right">
-            <Item className="m-2 pb-2 cursor-pointer block" move>
+            <Item className={style.toolItem} move>
               <ButtonSvg />
             </Item>
           </Tooltip>
         </div>
         <div ref={(ref) => create(ref, <Video />)}>
           <Tooltip title="Video" placement="right">
-            <Item className="m-2 pb-2 cursor-pointer block" move>
+            <Item className={style.toolItem} move>
               <YoutubeSvg />
             </Item>
           </Tooltip>
@@ -111,7 +111,7 @@ export const Toolbox = () => {
         <div>
           <Tooltip title="Undo" placement="right">
             <Item
-              className="m-2 pb-2 cursor-pointer block"
+              className={style.toolItem}
               disabled={!canUndo}
               onClick={() => actions.history.undo()}
             >
@@ -122,7 +122,7 @@ export const Toolbox = () => {
         <div>
           <Tooltip title="Redo" placement="right">
             <Item
-              className="m-2 pb-2 cursor-pointer block"
+              className={style.toolItem}
               disabled={!canRedo}
               onClick={() => actions.history.redo()}
             >

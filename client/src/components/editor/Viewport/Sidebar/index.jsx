@@ -3,6 +3,7 @@ import { Layers } from '@craftjs/layers';
 import { Toolbar } from '../../Toolbar';
 import { SidebarItem } from './SidebarItem';
 import styled from 'styled-components';
+import style from './../Viewport.module.css';
 import {ReactComponent as CustomizeIcon} from './../../icons/customize.svg';
 import {ReactComponent as LayerIcon} from './../../icons/layers.svg';
 import { useEditor } from '@craftjs/core';
@@ -21,10 +22,8 @@ export const Sidebar = () => {
   }));
 
   return (
-    <SidebarDiv enabled={enabled} className="sidebar transition bg-white w-2">
-      <div className="flex flex-col h-full">
+    <SidebarDiv enabled={enabled} className={style.sidebarLayout}>
         <SidebarItem
-          icon={CustomizeIcon}
           title="Customize"
           height={!layersVisible ? `full` : `55%`}
           visible={toolbarVisible}
@@ -33,7 +32,6 @@ export const Sidebar = () => {
           <Toolbar />
         </SidebarItem>
         <SidebarItem
-          icon={LayerIcon}
           title="Layers"
           height={!toolbarVisible ? `full` : `45%`}
           visible={layersVisible}
@@ -43,7 +41,6 @@ export const Sidebar = () => {
             <Layers expandRootOnLoad={true} />
           </div>
         </SidebarItem>
-      </div>
     </SidebarDiv>
   );
 };

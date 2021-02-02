@@ -12,6 +12,10 @@ import Search from "./Search";
 import PageHeader from "../components/PageHeader";
 import Divider from "../components/Divider";
 import ProjectDetail from "./ProjectDetail";
+import Overview from "./Overview";
+import Planning from "./Planning";
+import Chat from "./Chat";
+import { useStores } from "../hooks/useStores";
 
 const App = () => {
   return (
@@ -22,13 +26,17 @@ const App = () => {
         <Switch>
           <Route path={ROUTES.home} exact strict component={Home} />
           <Route path={ROUTES.account} component={Account}/>
+          <Route path={ROUTES.chat} component={Chat} />
           <Route path={ROUTES.login} component={Login} />
           <Route path={ROUTES.register} component={Register} />
           <Route path={ROUTES.search} component={Search} />
           <Route path={ROUTES.projectDetail.path} component={ProjectDetail} />
+          <Route path={ROUTES.overview} component={Overview} />
+          <Route path={ROUTES.planning} component={Planning} />
+
           {/* <Route path={ROUTES.chat} component={Chat} />
           <Route path={ROUTES.savedWorks} component={SavedWorks} />
-          <Route path={ROUTES.overview} component={Overview} />
+          
           
           <Route path={ROUTES.studentDetail} component={Student} />
           <Route path={ROUTES.arDetail} component={ARDetail} />*/}

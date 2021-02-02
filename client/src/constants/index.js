@@ -2,6 +2,7 @@ const ROUTES = {
   home: `/`,
   search: `/zoeken`,
   overview: `/overzicht`,
+  planning: `/planning`,
   projectDetail: { path: `/project/:slug`, to: `/project/` },
   studentDetail: { path: `/profiel/:slug`, to: `/profiel/` },
   arDetail : { path: `/augmented-reality/:id`, to: `/augmented-reality/` },

@@ -1,65 +1,15 @@
 import React from 'react';
 import { useEditor } from '@craftjs/core';
 import styled from 'styled-components';
-import {ReactComponent as Checkmark} from './../icons/check.svg';
-import {ReactComponent as Customize} from './../icons/customize.svg';
-import cx from 'classnames';
-
-const HeaderDiv = styled.div`
-  width: ${(props) => (props.enabled ? `100%` : `800px`)};
-  z-index: 99999;
-  position: fixed;
-  transform: translateX(-50%);
-  left: 50%;
-
-  ${(props) =>
-    !props.enabled
-      ? `
-    backdrop-filter: blur(12px);
-    background: #ccccccc2;
-    color:#2d2d2d;
-  `
-      : ``}
-`;
-
-const Link = styled.a`
-  padding: 20px 0px;
-  margin-right: 35px;
-  font-size: 13px;
-  position: relative;
-  opacity: ${(props) => (props.selected ? 1 : 0.8)};
-  cursor: pointer;
-  &:hover {
-    opacity: 1;
-  }
-  &:after {
-    content: ' ';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: #fff;
-    bottom: ${(props) => (props.selected ? 0 : `-2`)}px;
-    opacity: ${(props) => (props.selected ? 1 : 0)};
-    left: 0;
-    position: absolute;
-  }
-`;
-
-const Btn = styled.a`
-  display: flex;
-  align-items: center;
-  padding: 5px 15px;
-  border-radius: 3px;
-  color: #fff;
-  font-size: 13px;
-  svg {
-    margin-right: 6px;
-    width: 12px;
-    height: 12px;
-    fill: #fff;
-    opacity: 0.9;
-  }
-`;
+import {ReactComponent as Save} from './../icons/save.svg';
+import {ReactComponent as Back} from './../icons/back.svg';
+import {ReactComponent as Edit} from './../icons/edit.svg';
+import {ReactComponent as Chat} from './../icons/chatWhiteFill.svg';
+import {ReactComponent as Bookmark} from './../icons/bookmark.svg';
+import style from './Viewport.module.css';
+import { useStores } from '../../../hooks/useStores';
+import classNames from 'classnames';
+import { useHistory } from 'react-router-dom';
 
 export const Header = () => {
   const {
@@ -68,37 +18,46 @@ export const Header = () => {
   } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
+  const { uiStore } = useStores();
+  const history = useHistory();
 
   return (
-    <HeaderDiv
+    <section
       enabled={enabled}
-      className="header bg-light-gray-1 text-white transition w-full"
+      className={style.headerContainer}
     >
-      <div className="items-center flex w-full px-4 ">
-        <div className="flex-1">
-          <h2 className="mr-5 text-xl">craft.js</h2>
-        </div>
-        <div className="flex items-end justify-end">
-          <Link href="https://github.com/prevwong/craft.js">Github</Link>
-        </div>
-        <div className="flex">
-          <Btn
-            className={cx([
-              `transition cursor-pointer`,
-              {
-                'bg-green-400': enabled,
-                'bg-primary': !enabled,
-              },
-            ])}
-            onClick={() => {
-              setOptions((options) => (options.enabled = !enabled));
-            }}
-          >
-            {enabled ? <Checkmark /> : <Customize />}
-            {enabled ? `Finish Editing` : `Edit`}
-          </Btn>
-        </div>
+      <div className={style.headerButton} onClick={()=>history.goBack()}>
+        <Back className={style.headerIcon}/>
+        <span>terug</span>
       </div>
-    </HeaderDiv>
+      {uiStore.authUser? 
+      <div className={style.rightContainer}>
+      {enabled?
+        <div className={style.headerButton} onClick={() => {setOptions((options) => (options.enabled = !enabled));}}>
+          <Save className={style.headerIcon}/>
+          <span>opslaan</span>
+        </div>:
+        <>
+        {uiStore.authUser.role === `student`?
+        <div className={style.headerButton} onClick={() => {setOptions((options) => (options.enabled = !enabled));}}>
+          <Edit className={style.headerIcon}/>
+          <span>bewerken</span>
+        </div>:
+        <div className={classNames(style.headerButton, style.inverted)} onClick={() => {setOptions((options) => (options.enabled = !enabled));}}>
+          <Chat className={style.headerIcon}/>
+          <span>chatten</span>
+        </div>
+        }     
+        <div className={style.headerButton}>
+          <Bookmark className={style.headerIcon}/>
+          <span>opslaan</span>
+        </div>
+        </>
+        }
+
+      </div>:null}
+
+
+    </section>
   );
 };

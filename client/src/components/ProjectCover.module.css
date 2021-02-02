@@ -1,0 +1,32 @@
+.container{
+  width: 100%;
+  position: relative;
+}
+.coverImage{
+  width: 100%;
+  height: ;
+  object-fit: cover;
+  filter: grayscale(1);
+  transition: .2s ease-in-out filter;
+}
+.container:hover .coverImage{
+  filter: grayscale(0);
+  transition: .2s ease-in-out filter;
+}
+.overlay{
+  padding: 1rem;
+  position: absolute;
+  left:0;
+  bottom:0;
+  background-color: white;
+  opacity: 0;
+  transition: .2s ease-in-out opacity;
+}
+.overlay.active{
+  opacity: 1;
+  transition: .2s ease-in-out opacity;
+
+}
+.overlay h4{
+  font-size: 2rem;
+}

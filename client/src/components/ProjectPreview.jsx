@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import style from "./ProjectPreview.module.css";
 
 const ProjectPreview = ({project}) => {
-  const { id, user, title, coverUrl, slug } = project;
+  const { id, user, title, coverUrl, slug, subject } = project;
   return (
     <NavLink to={`/project/${slug}`} >
       <article className={style.container}>
@@ -11,6 +11,7 @@ const ProjectPreview = ({project}) => {
         <div className={style.infoContainer}>
           <h4>{title}</h4>
           <p>{user.name + ` ` + user.surname}</p>
+          <span className={style.subject}>{subject.title}</span>
         </div>
       </article>
     </NavLink>

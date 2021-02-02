@@ -6,6 +6,7 @@ import {
   Grid,
   Divider,
 } from '@material-ui/core';
+import style from "./Toolbar.module.css";
 import { useNode } from '@craftjs/core';
 import { makeStyles } from '@material-ui/core/styles';
 const usePanelStyles = makeStyles((_) => ({
@@ -52,26 +53,18 @@ export const ToolbarSection = ({ title, props, summary, children }) => {
   return (
     <ExpansionPanel classes={panelClasses}>
       <ExpansionPanelSummary classes={summaryClasses}>
-        <div className="px-6 w-full">
-          <Grid container direction="row" alignItems="center" spacing={3}>
-            <Grid item xs={4}>
-              <h5 className="text-sm text-light-gray-1 text-left font-medium text-dark-gray">
-                {title}
-              </h5>
-            </Grid>
+        <div className={style.propGrid}>
+            <h5 className={style.propTitle}>{title}</h5>
             {summary && props ? (
-              <Grid item xs={8}>
-                <h5 className="text-light-gray-2 text-sm text-right text-dark-blue">
+                <span className={style.propSummary}>
                   {summary(
                     props.reduce((acc, key) => {
                       acc[key] = nodeProps[key];
                       return acc;
                     }, {})
                   )}
-                </h5>
-              </Grid>
+                </span>
             ) : null}
-          </Grid>
         </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails style={{ padding: `0px 24px 20px` }}>

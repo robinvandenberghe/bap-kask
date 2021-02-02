@@ -1,0 +1,19 @@
+.overview{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.sectionGrid{
+  gap: 2rem;
+}
+.allWorks{
+  display: grid;
+  gap: 1rem;
+}
+.allWorks h3{
+  border-bottom: solid .2rem var(--primary-color);
+  padding-bottom: 1rem;
+  font-weight: 600;
+  font-size: 2rem;
+  width: max-content;
+}

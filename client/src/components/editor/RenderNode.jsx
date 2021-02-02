@@ -88,11 +88,11 @@ export const RenderNode = ({ render }) => {
       .querySelector(`.craftjs-renderer`)
       .addEventListener(`scroll`, scroll);
 
-    return () => {
-      document
-        .querySelector(`.craftjs-renderer`)
-        .removeEventListener(`scroll`, scroll);
-    };
+    // return () => {
+    //   document
+    //     .querySelector(`.craftjs-renderer`)
+    //     .removeEventListener(`scroll`, scroll);
+    // };
   }, [scroll]);
 
   return (

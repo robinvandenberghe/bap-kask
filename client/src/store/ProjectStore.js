@@ -8,6 +8,7 @@ class ProjectStore {
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.api = new Api(`projects`);
+    this.getAll();
     makeAutoObservable(this);
   }
 
@@ -17,11 +18,11 @@ class ProjectStore {
 
 
   addProject = data => {
-    const { id, userId, userName, userSurname, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, title, brief, coverUrl, slug } = data;
+    const { id, userId, userName, userSurname, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, title, brief, coverUrl, slug, content } = data;
     const user = new User();
     user.updateFromServer({id: userId, name: userName, surname: userSurname, profileUrl: userProfileUrl});
     const newProject = new Project();
-    newProject.updateFromServer({id, user, title, brief, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug });
+    newProject.updateFromServer({id, user, title, brief, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug, content });
     this.projects.push(newProject);
     this.api
       .create(newProject)
@@ -29,11 +30,11 @@ class ProjectStore {
   };
 
   _addProject = values => {
-    const { id, userId, userName, userSurname, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, title, brief,  coverUrl, slug } = values;
+    const { id, userId, userName, userSurname, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, title, brief,  coverUrl, slug, content } = values;
     const user = new User();
     user.updateFromServer({id: userId, name: userName, surname: userSurname, profileUrl: userProfileUrl});
     const project = new Project();
-    project.updateFromServer({id, user, title, brief, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug });
+    project.updateFromServer({id, user, title, brief, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug, content });
     this.projects.push(project);
   };
 

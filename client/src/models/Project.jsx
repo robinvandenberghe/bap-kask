@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeAutoObservable } from "mobx";
 
 class Project {
-  constructor(user = undefined, study = undefined, title = undefined, brief = undefined, coverUrl = undefined, subject = undefined, content = [], id = uuidv4(), slug = ``) {
+  constructor(user = undefined, study = undefined, title = undefined, brief = undefined, coverUrl = undefined, subject = undefined, content = ``, id = uuidv4(), slug = ``) {
     this.id = id;
     this.user = user;
     this.study = study;

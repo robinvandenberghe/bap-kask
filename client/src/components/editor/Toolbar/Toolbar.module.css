@@ -1,0 +1,19 @@
+.toolbarText{
+  font-size: 1.4rem;
+  color: var(--primary-color);
+  text-align: center;
+  margin: 2rem auto;
+}
+.propGrid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+}
+.propTitle{
+  font-size: 1.4rem;
+  text-decoration: underline;
+}
+.propSummary{
+  font-size: 1.4rem;
+
+}
