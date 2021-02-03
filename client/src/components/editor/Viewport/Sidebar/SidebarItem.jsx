@@ -27,13 +27,10 @@ export const SidebarItem = ({
   height,
   onChange,
 }) => {
+  
   return (
     <SidebarItemDiv visible={visible} height={height} className={style.sidebarItem}>
-      <HeaderDiv
-        onClick={() => {
-          if (onChange) onChange(!visible);
-        }}
-      >
+      <HeaderDiv onClick={() => {if (onChange) onChange(!visible);}} >
         <h2 className={style.title}>{title}</h2>
       </HeaderDiv>
       {visible ? (

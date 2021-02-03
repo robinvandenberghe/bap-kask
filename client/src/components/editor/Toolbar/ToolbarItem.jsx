@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Slider, RadioGroup } from '@material-ui/core';
+import style from './Toolbar.module.css';
 import { useNode } from '@craftjs/core';
 import { ToolbarTextInput } from './ToolbarTextInput';
 import { ToolbarDropdown } from './ToolbarDropdown';
 import { withStyles } from '@material-ui/styles';
-const iOSBoxShadow =
-  `0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)`;
+const iOSBoxShadow = `0 3px 1px rgba(0,0,0,0.1),0 4px 8px rgba(0,0,0,0.13),0 0 0 1px rgba(0,0,0,0.02)`;
 
 const SliderStyled = withStyles({
   root: {
@@ -59,7 +59,6 @@ const SliderStyled = withStyles({
   },
 })(Slider);
 
-
 export const ToolbarItem = ({
   full = false,
   propKey,
@@ -78,7 +77,7 @@ export const ToolbarItem = ({
 
   return (
     <Grid item xs={full ? 12 : 6}>
-      <div className="mb-2">
+      <div>
         {[`text`, `color`, `bg`, `number`].includes(type) ? (
           <ToolbarTextInput
             {...props}
@@ -97,7 +96,7 @@ export const ToolbarItem = ({
         ) : type === `slider` ? (
           <>
             {props.label ? (
-              <h4 className="text-sm text-light-gray-2">{props.label}</h4>
+              <h4 className={style.toolbarItemLabel}>{props.label}</h4>
             ) : null}
             <SliderStyled
               value={parseInt(value) || 0}
@@ -119,7 +118,7 @@ export const ToolbarItem = ({
         ) : type === `radio` ? (
           <>
             {props.label ? (
-              <h4 className="text-sm text-light-gray-2">{props.label}</h4>
+              <h4 className={style.toolbarItemLabel}>{props.label}</h4>
             ) : null}
             <RadioGroup
               value={value || 0}

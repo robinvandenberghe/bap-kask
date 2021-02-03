@@ -7,26 +7,21 @@ const useStyles = makeStyles({
   root: {
     padding: 0,
     width: `100%`,
-    // background:"#efeff1",
-    borderRadius: `100px`,
+    borderRadius: `50%`,
     border: `none`,
     margin: 0,
-    marginTop: 7,
+    marginTop: 8,
     position: `relative`,
   },
   input: {
     background: `#efeff1`,
     borderRadius: `100px`,
-    fontSize: `12px`,
-    paddingLeft: `28px`,
-    paddingBottom: `8px`,
-    paddingTop: `8px`,
+    fontSize: `1.2rem`,
+    paddingLeft: `1.6rem`,
+    paddingBottom: `.8rem`,
+    paddingTop: `.8rem`,
     margin: 0,
-  }, // a style rule
-  // notchedOutline: {
-  //   borderColor:'transparent',
-  //   borderRadius: "100px"
-  // }
+  }
 });
 
 const useLabelStyles = makeStyles({
@@ -34,14 +29,10 @@ const useLabelStyles = makeStyles({
     color: `rgb(128,128,128)`,
   },
   formControl: {
-    fontSize: `18px`,
-    borderRadius: `100px`,
-    paddingLeft: `0px`,
-    paddingTop: `3px`,
-    marginBottom: `3px`,
+    fontSize: `1.6rem`,
     position: `relative`,
-    left: `-12px`,
-  }, // a style rule
+    left: `-.8rem`,
+  }
 });
 
 export const ToolbarTextInput = ({

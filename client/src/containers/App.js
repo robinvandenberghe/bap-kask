@@ -33,8 +33,8 @@ const App = () => {
           <Route path={ROUTES.projectDetail.path} component={ProjectDetail} />
           <Route path={ROUTES.overview} component={Overview} />
           <Route path={ROUTES.planning} component={Planning} />
-
-          {/* <Route path={ROUTES.chat} component={Chat} />
+          <Route path={ROUTES.chat} component={Chat} />
+          {/*
           <Route path={ROUTES.savedWorks} component={SavedWorks} />
           
           
@@ -46,7 +46,7 @@ const App = () => {
       </main>
       <Divider />
       <footer className={styles.footer}>
-        <p className={styles.footerText}>07.09 - 22.09</p>
+        <p className={styles.footerText}>Digital Graduation Expo 07.09 - 22.09</p>
       </footer>
     </div>
   );

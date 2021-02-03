@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from 'react-router-dom';
+import { observer } from "mobx-react-lite"
 import classNames from 'classnames';
 import lz from 'lzutf8';
 import { Editor, Frame, Element } from '@craftjs/core';
@@ -10,6 +11,7 @@ import { Custom2, Custom2VideoDrop } from '../components/selectors/Custom2';
 import { Custom3, Custom3BtnDrop } from '../components/selectors/Custom3';
 import { Button } from '../components/selectors/Button';
 import { Video } from '../components/selectors/Video';
+import { Image } from '../components/selectors/Image';
 import { useStores } from "../hooks/useStores";
 import stylesLayout from "../styles/layout.module.css";
 import style from './ProjectDetail.module.css';
@@ -18,44 +20,53 @@ const ProjectDetail = () => {
   const { slug } = useParams();
   const { projectStore, uiStore } = useStores();
   const project = projectStore.projects.find((item)=>item.slug===slug);
-  const { id, user, study, title, subject, content} = project;
-  const [ query, setQuery ] = useState();
   const [enabled] = useState(false);
-  const uint8array = lz.decodeBase64(content);
-  const json = lz.decompress(uint8array);
 
+  if(project){
+    const { id, user, study, title, subject, content} = project;
+    const uint8array = lz.decodeBase64(content);
+    const json = lz.decompress(uint8array);
+    return (
+      <section className={stylesLayout.layout}>
+          <Editor
+            resolver={{
+              Container,
+              Text,
+              Custom1,
+              Custom2,
+              Custom2VideoDrop,
+              Custom3,
+              Custom3BtnDrop,
+              OnlyButtons,
+              Button,
+              Video,
+              Image,
+            }}
+            enabled={enabled.toString()}
+            onRender={RenderNode}
+          >
+            <Viewport project={project}>
+              <div className={style.infoContainer}>
+                <h4>{user.name + ` ` + user.surname}</h4>
+                <p className={style.subjectTitle}>{study.title + ` - ` + subject.title}</p>
+              </div>
+              <Frame data={json} />
+            </Viewport>
+          </Editor>
 
-  return (
-    <section className={stylesLayout.layout}>
-        <Editor
-          resolver={{
-            Container,
-            Text,
-            Custom1,
-            Custom2,
-            Custom2VideoDrop,
-            Custom3,
-            Custom3BtnDrop,
-            OnlyButtons,
-            Button,
-            Video,
-          }}
-          enabled={enabled}
-          onRender={RenderNode}
-        >
-          <Viewport project={project}>
-            <div className={style.infoContainer}>
-              <h4>{user.name + ` ` + user.surname}</h4>
-              <p className={style.subjectTitle}>{study.title + ` - ` + subject.title}</p>
-            </div>
-            <Frame data={json}>
+      </section>
+    );
+  }else{
+    return(
+      <section className={stylesLayout.layout}>
+        <div className={style.loadingContainer}>
+          <h3>Project laden...</h3>
+          <img alt={`Laadanimatie`} src={`/assets/img/loading.svg`} />
+        </div>
+      </section>
+    )
+  }
 
-            </ Frame>
-          </Viewport>
-        </Editor>
-
-    </section>
-  );
 };
 
 const slugify = (string)  => {
@@ -68,4 +79,4 @@ const slugify = (string)  => {
       .replace(/\s+/g, `-`) // separator
 }
 
-export default ProjectDetail;
+export default observer(ProjectDetail);

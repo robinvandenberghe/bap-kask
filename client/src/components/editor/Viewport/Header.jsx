@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEditor } from '@craftjs/core';
+import lz from 'lzutf8';
 import {ReactComponent as Save} from './../icons/save.svg';
 import {ReactComponent as Back} from './../icons/back.svg';
 import {ReactComponent as Edit} from './../icons/edit.svg';
@@ -12,17 +13,26 @@ import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
 export const Header = ({project}) => {
-  const { enabled, actions: { setOptions } } = useEditor((state) => ({ enabled: state.options.enabled }));
+  const { enabled, actions: { setOptions }, query } = useEditor((state) => ({ enabled: state.options.enabled }));
   const { id } = project;
-  const { uiStore } = useStores();
+  const { uiStore, projectStore } = useStores();
   const history = useHistory();
   const [ saved, setSaved ] = useState(uiStore.savedWorks.find(i=>i===id)?true:false);
-  
-  const handleSave = async () => {
+   
+  const handleBookmark = async () => {
     const r = await uiStore.saveWork(id);
     if(r.success){
       setSaved(r.saved);
     }
+  }
+
+  const handleSave = async () =>{
+    const serialized = query.serialize();
+    const compressed = lz.compress(serialized);
+    const base64 = lz.encodeBase64(compressed);
+    project.setContent(base64);
+    projectStore.updateProject(project);
+    setOptions((options) => (options.enabled = !enabled));
   }
 
   return (
@@ -37,7 +47,7 @@ export const Header = ({project}) => {
       {uiStore.authUser? 
       <div className={style.rightContainer}>
       {enabled?
-        <div className={style.headerButton} onClick={() => {setOptions((options) => (options.enabled = !enabled));}}>
+        <div className={style.headerButton} onClick={handleSave}>
           <Save className={style.headerIcon}/>
           <span>opslaan</span>
         </div>:
@@ -52,7 +62,7 @@ export const Header = ({project}) => {
           <span>chatten</span>
         </div>
         }     
-        <div className={classNames(style.headerButton, saved? style.inverted :null)} onClick={handleSave}>
+        <div className={classNames(style.headerButton, saved? style.inverted :null)} onClick={handleBookmark}>
           {saved?<Bookmarked className={style.headerIcon}/>:<Bookmark className={style.headerIcon}/>}
           <span>{saved? `opgeslagen`:`opslaan`}</span>
         </div>

@@ -1,0 +1,23 @@
+<svg
+  width="34"
+  height="34"
+  viewBox="0 0 34 34"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+<rect
+    x="1.5"
+    y="1.5"
+    width="31"
+    height="31"
+    stroke="black"
+    stroke-width="3"
+    fill="none"
+  />
+<path
+    d="M12.2553 13.6754L3 32H32V19.6963L24.966 7L18.6723 23.4921L12.2553 13.6754Z"
+    fill="black"
+    stroke="black"
+    stroke-width="3"
+  />
+</svg>

@@ -4,12 +4,16 @@ import { Tooltip } from '@material-ui/core';
 import { Container } from '../../selectors/Container';
 import { Text } from '../../selectors/Text';
 import { Video } from '../../selectors/Video';
+import { Image } from '../../selectors/Image';
 import { Button } from '../../selectors/Button';
 import style from './Viewport.module.css';
 import {ReactComponent as SquareSvg} from './../icons/toolbox/container.svg';
-import {ReactComponent as TypeSvg} from './../icons/toolbox/text.svg';
-import {ReactComponent as YoutubeSvg} from './../icons/toolbox/video.svg';
-import {ReactComponent as ButtonSvg} from './../icons/toolbox/button.svg';
+import {ReactComponent as TypeSvg} from './../icons/toolbox/titleFill.svg';
+import {ReactComponent as YoutubeSvg} from './../icons/toolbox/videoFill.svg';
+import {ReactComponent as ButtonSvg} from './../icons/toolbox/buttonFill.svg';
+import {ReactComponent as AudioSvg} from './../icons/toolbox/audioFill.svg';
+import {ReactComponent as ImageSvg} from './../icons/toolbox/imageFill.svg';
+import {ReactComponent as WebsiteSvg} from './../icons/toolbox/websiteFill.svg';
 import {ReactComponent as UndoSvg} from './../icons/toolbox/undo.svg';
 import {ReactComponent as RedoSvg} from './../icons/toolbox/redo.svg';
 
@@ -80,6 +84,27 @@ export const Toolbox = () => {
             </Item>
           </Tooltip>
         </div>
+        <div ref={(ref) => create(ref, <Image />)}>
+          <Tooltip title="Image" placement="right">
+            <Item className={style.toolItem} move>
+              <ImageSvg />
+            </Item>
+          </Tooltip>
+        </div>
+        <div ref={(ref) => create(ref, <Video />)}>
+          <Tooltip title="Video" placement="right">
+            <Item className={style.toolItem} move>
+              <YoutubeSvg />
+            </Item>
+          </Tooltip>
+        </div>
+        <div ref={(ref) => create(ref, <Video />)}>
+          <Tooltip title="Audio" placement="right">
+            <Item className={style.toolItem} move>
+              <AudioSvg />
+            </Item>
+          </Tooltip>
+        </div>
         <div
           ref={(ref) =>
             create(ref, <Text fontSize="12" textAlign="left" text="Hi there" />)
@@ -98,10 +123,10 @@ export const Toolbox = () => {
             </Item>
           </Tooltip>
         </div>
-        <div ref={(ref) => create(ref, <Video />)}>
-          <Tooltip title="Video" placement="right">
+        <div ref={(ref) => create(ref, <Button />)}>
+          <Tooltip title="Website" placement="right">
             <Item className={style.toolItem} move>
-              <YoutubeSvg />
+              <WebsiteSvg />
             </Item>
           </Tooltip>
         </div>

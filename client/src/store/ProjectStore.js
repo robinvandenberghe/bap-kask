@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, action } from "mobx";
 import Project from "../models/Project";
 import User from "../models/User";
 import Api from "../api";
@@ -13,7 +13,9 @@ class ProjectStore {
   }
 
   getAll = () => {
-    this.api.getAll().then(d => d.forEach(this._addProject));
+    this.api.getAll().then(action(
+      d => d.forEach(this._addProject)
+    ));
   };
 
 
@@ -23,10 +25,7 @@ class ProjectStore {
     user.updateFromServer({id: userId, name: userName, surname: userSurname, profileUrl: userProfileUrl});
     const newProject = new Project();
     newProject.updateFromServer({id, user, title, brief, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug, content });
-    this.projects.push(newProject);
-    this.api
-      .create(newProject)
-      .then(projectValues => newProject.updateFromServer(projectValues));
+    this.api.create(newProject).then(projectValues => this._addProject(projectValues));
   };
 
   _addProject = values => {
@@ -38,10 +37,12 @@ class ProjectStore {
     this.projects.push(project);
   };
 
-  updateProject = project => {
-    this.api
-      .update(project)
-      .then(projectValues => project.updateFromServer(projectValues));
+  updateProject = async (project) => {
+    const values = await this.api.update(project);
+    const { id, userId, userName, userSurname, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, title, brief,  coverUrl, slug, content } = values;
+    const user = new User();
+    user.updateFromServer({id: userId, name: userName, surname: userSurname, profileUrl: userProfileUrl});
+    project.updateFromServer({id, user, title, brief, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug, content });
   };
 
   deleteProject = Project => {

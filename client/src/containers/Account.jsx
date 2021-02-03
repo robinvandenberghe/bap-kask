@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { observer } from "mobx-react-lite"
 import withAuthentication from "../components/auth/WithAuthentication";
+import ProjectCover from "../components/ProjectCover";
 import { useStores } from "../hooks/useStores";
 import stylesLayout from "../styles/layout.module.css";
 import style from "./Account.module.css";
 import cx from 'classnames';
 
 const Account = () => {
-  const { uiStore } = useStores();
+  const { uiStore, projectStore } = useStores();
   const { name, surname, profileUrl, role } = uiStore.authUser;
   const [ page, setPage ] = useState(`works`);
   let roleClass = null;
@@ -57,12 +59,12 @@ const Account = () => {
       </div>
 
       {page===`works`?
-        <article>
-
-        </article>
+        <ul className={style.savedWorks}>
+          {projectStore.projects.filter((item)=>uiStore.savedWorks.indexOf(item.id)!==-1).map((project,key)=><ProjectCover project={project} key={key} />)}
+        </ul>
       :null}
     </section>
   );
 };
 
-export default (withAuthentication(Account));
+export default (withAuthentication(observer(Account)));

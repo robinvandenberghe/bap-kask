@@ -11,7 +11,7 @@ class Api {
   create = async entity => {
     const r = await fetch(
       `/api/${this.entity}`,
-      this.getOptions(`post`, entity.values)
+      this.getOptions(`post`, entity)
     );
     return await r.json();
   };
@@ -19,7 +19,7 @@ class Api {
   update = async entity => {
     const r = await fetch(
       `/api/${this.entity}/${entity.id}`,
-      this.getOptions(`put`, entity.values)
+      this.getOptions(`put`, entity)
     );
     return await r.json();
   };

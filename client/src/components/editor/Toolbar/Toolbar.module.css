@@ -15,5 +15,16 @@
 }
 .propSummary{
   font-size: 1.4rem;
-
+}
+.placeholderContainer{
+  padding: 1rem;
+  display: grid;
+  align-self: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+.toolbarItemLabel{
+  font-size: 1.2rem;
+  color: var(--gray-color);
 }

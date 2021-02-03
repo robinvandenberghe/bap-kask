@@ -1,3 +1,14 @@
+.loadingContainer{
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-weight: 500;
+  font-size: 1.8rem;
+  grid-auto-rows: max-content;
+  text-align: center;
+  align-self: center;
+}
 .container{
   display:grid;
   width: 100%;

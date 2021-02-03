@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback } from 'react';
+import style from './RenderNode.module.css';
 import { useNode, useEditor } from '@craftjs/core';
 import styled from 'styled-components';
 import {ReactComponent as ArrowUp} from './icons/arrow-up.svg';
@@ -33,7 +34,7 @@ const Btn = styled.a`
 `;
 
 export const RenderNode = ({ render }) => {
-  const { actions, query, connectors } = useEditor();
+  const { actions, query } = useEditor();
   const {
     id,
     isActive,
@@ -76,7 +77,6 @@ export const RenderNode = ({ render }) => {
 
   const scroll = useCallback(() => {
     const { current: currentDOM } = currentRef;
-
     if (!currentDOM) return;
     const { top, left } = getPos(dom);
     currentDOM.style.top = top;
@@ -84,15 +84,8 @@ export const RenderNode = ({ render }) => {
   }, [dom]);
 
   useEffect(() => {
-    document
-      .querySelector(`.craftjs-renderer`)
-      .addEventListener(`scroll`, scroll);
+    window.addEventListener(`scroll`, scroll);
 
-    // return () => {
-    //   document
-    //     .querySelector(`.craftjs-renderer`)
-    //     .removeEventListener(`scroll`, scroll);
-    // };
   }, [scroll]);
 
   return (
@@ -101,32 +94,29 @@ export const RenderNode = ({ render }) => {
         ? ReactDOM.createPortal(
             <IndicatorDiv
               ref={currentRef}
-              className="px-2 py-2 text-white bg-primary fixed flex items-center"
+              className={style.indicatorDiv}
               style={{
                 left: getPos(dom).left,
                 top: getPos(dom).top,
                 zIndex: 9999,
               }}
             >
-              <h2 className="flex-1 mr-4">{name}</h2>
+              <h2>{name}</h2>
               {moveable ? (
-                <Btn className="mr-2 cursor-move" ref={drag}>
+                <Btn className={style.moveButton} ref={drag}>
                   <Move />
                 </Btn>
               ) : null}
               {id !== ROOT_NODE && (
                 <Btn
-                  className="mr-2 cursor-pointer"
-                  onClick={() => {
-                    actions.selectNode(parent);
-                  }}
-                >
+                  className={style.editButton}
+                  onClick={() => actions.selectNode(parent)}>
                   <ArrowUp />
                 </Btn>
               )}
               {deletable ? (
                 <Btn
-                  className="cursor-pointer"
+                  className={style.editButton}
                   onMouseDown={(e) => {
                     e.stopPropagation();
                     actions.delete(id);

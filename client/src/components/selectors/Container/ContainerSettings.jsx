@@ -1,5 +1,6 @@
 import React from 'react';
 import { ToolbarSection, ToolbarItem } from '../../editor';
+import style  from '../Selectors.module.css';
 import { ToolbarRadio } from '../../editor/Toolbar/ToolbarRadio';
 
 export const ContainerSettings = () => {
@@ -21,20 +22,11 @@ export const ContainerSettings = () => {
         summary={({ background, color }) => {
           return (
             <div className="flex flex-row-reverse">
-              <div
-                style={{
-                  background:
-                    background && `rgba(${Object.values(background)})`,
-                }}
-                className="shadow-md flex-end w-6 h-6 text-center flex items-center rounded-full bg-black"
-              >
-                <p
-                  style={{
-                    color: color && `rgba(${Object.values(color)})`,
-                  }}
-                  className="text-white w-full text-center"
-                >
-                  T
+              <div style={{background: background && `rgba(${Object.values(background)})`}}
+                className={style.textPlaceholder}>
+                <p style={{color: color && `rgba(${Object.values(color)})`}}
+                  className={style.textPlaceholderText}>
+                  Text
                 </p>
               </div>
             </div>

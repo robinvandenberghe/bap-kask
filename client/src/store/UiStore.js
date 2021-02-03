@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, action } from "mobx";
 
 import Auth from "../api/auth";
 import { getUserFromCookie } from "../utils/index.js";
@@ -44,10 +44,10 @@ class UiStore {
   };
 
   getAllSavedWorks =  () => {
-    this.authService.getAllSavedWorks().then(d => {
+    this.authService.getAllSavedWorks().then(action(d => {
       const w = d.map((item)=>item.projectId);
       this.setSavedWorks(w);
-    })
+    }))
   }
 
   newMessage = data => {

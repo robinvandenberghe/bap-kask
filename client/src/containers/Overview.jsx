@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { observer } from "mobx-react-lite"
 import { useStores } from "../hooks/useStores";
 import stylesLayout from "../styles/layout.module.css";
 import style from "./Overview.module.css";
@@ -7,13 +8,15 @@ import classNames from 'classnames';
 
 const Overview = () => {
   const { projectStore } = useStores();
+
+
   return (
     <div className={classNames(stylesLayout.layout, style.sectionGrid)} >
 
       <section className={style.allWorks}>    
-        <h3>Alle werken</h3>
+        <h3>All works</h3>
         <ul className={style.overview}>
-          {projectStore.projects.map(project=><ProjectCover project={project}/>)}
+          {projectStore.projects.map((project, key)=><ProjectCover project={project} key={key}/>)}
         </ul>
       </section>
     </div>
@@ -21,4 +24,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default observer(Overview);

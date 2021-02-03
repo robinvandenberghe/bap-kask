@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     height: 15,
     background: `transparent`,
     position: `relative`,
-    padding: `3px`,
+    padding: `.4rem`,
     border: `2px solid rgb(142, 142, 142)`,
     transition: `0.4s cubic-bezier(0.19, 1, 0.22, 1)`,
   },
@@ -28,7 +28,6 @@ const useStyles = makeStyles({
   },
 });
 
-// Inspired by blueprintjs
 function StyledRadio(props) {
   const classes = useStyles({});
 
@@ -47,7 +46,7 @@ function StyledRadio(props) {
 
 const useLabelStyles = makeStyles({
   label: {
-    fontSize: `15px`,
+    fontSize: `1.4rem`,
   },
 });
 

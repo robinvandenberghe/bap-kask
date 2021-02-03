@@ -19,17 +19,18 @@ const Indicators = styled.div`
   width: 100%;
   height: 100%;
   pointer-events: none;
+  border: 1px solid #0245F0;
   span {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 1rem;
+    height: 1rem;
     background: #fff;
     border-radius: 100%;
     display: block;
-    box-shadow: 0px 0px 12px -1px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 12px -0 rgba(0, 0, 0, 0.25);
     z-index: 99999;
     pointer-events: none;
-    border: 2px solid #36a9e0;
+    border: 2px solid #0245F0;
     &:nth-child(1) {
       ${(props) =>
         props.bound

@@ -51,15 +51,13 @@ export const TextSettings = () => {
         props={[`color`, `shadow`]}
         summary={({ color, shadow }) => {
           return (
-            <div className="fletext-right">
+            <div>
               <p
                 style={{
                   color: color && `rgba(${Object.values(color)})`,
-                  textShadow: `0px 0px 2px rgba(0, 0, 0, ${shadow / 100})`,
-                }}
-                className="text-white text-right"
+                  textShadow: `0 0 2px rgba(0, 0, 0, ${shadow / 100})` }}
               >
-                T
+                Text
               </p>
             </div>
           );
