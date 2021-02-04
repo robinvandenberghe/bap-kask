@@ -1,18 +1,19 @@
 const ROUTES = {
   home: `/`,
-  search: `/zoeken`,
-  overview: `/overzicht`,
-  planning: `/planning`,
+  search: `/search`,
+  overview: `/overview`,
+  planning: `/schedule/`,
   projectDetail: { path: `/project/:slug`, to: `/project/` },
-  studentDetail: { path: `/profiel/:slug`, to: `/profiel/` },
+  studentDetail: { path: `/profile/:slug`, to: `/profile/` },
+  scheduleDetail: { path: `/schedule/:id`, to: `/schedule/` },
   arDetail : { path: `/augmented-reality/:id`, to: `/augmented-reality/` },
   admin: `/admin`,
   about: `/about`,
   account: `/account`,
   login: `/login`,
-  register: `/registreer`,
-  chat: `/conversaties`,
-  savedWorks: `/opgeslagen-werken`,
+  register: `/register`,
+  chat: `/conversations`,
+  savedWorks: `/saved-projects`,
 };
 
 export default ROUTES;

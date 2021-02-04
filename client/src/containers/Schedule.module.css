@@ -1,0 +1,82 @@
+.eventDetail{
+  border-left: solid .2rem var(--primary-color);
+  width: 100%;
+  height: 100%;
+}
+.eventOverview{
+  display:grid;
+  gap: 2rem;
+  width: 100%;
+  height: 100%;
+  grid-auto-rows: max-content;
+  padding: 2rem 1rem 0 0;
+}
+.eventList{
+  display:grid;
+  grid-auto-rows: max-content;
+  position: relative;
+}
+.filterButton{
+  display: flex;
+  flex-flow: row;
+  gap: 1rem;
+  padding: 1rem;
+  border: solid .2rem var(--primary-color);
+  width: max-content;
+  align-items: center;
+  position: relative;
+}
+.filterButton:hover{
+  cursor: pointer;
+}
+.filterButton span{
+  font-weight: 500;
+  font-size: 1.8rem;
+}
+.filterIcon{
+  width: 2.4rem;
+}
+.filterList{
+  position: absolute;
+  top:0;
+  left:100%;
+  margin-left: -.2rem;
+  width: max-content;
+  border: .2rem solid var(--primary-color);
+  z-index: 99;
+  background-color: var(--white-color);
+  visibility: hidden;
+}
+.filterList.active{
+  visibility: visible;
+}
+.filterWrapper{
+  width: max-content;
+  position: relative;
+}
+.topicItem{
+  padding: 1rem;
+  border-bottom: .2rem solid var(--primary-color);
+  display:grid;
+  grid-template-columns: 1.4rem 1fr 1.6rem;
+  align-items: center;
+  gap: .8rem;
+  font-size: 1.8rem;
+}
+.topicItem:hover{
+  cursor: pointer;
+}
+.topicItem:nth-last-child(1){
+  border-bottom: none;
+}
+.filterLabel{
+  display:block;
+  width: 1.4rem;
+  height:1.4rem;
+  border-radius: 50%;
+}
+.checkMark{
+  width: 1.6rem;
+  height:1.6rem;
+  object-fit: contain;
+}

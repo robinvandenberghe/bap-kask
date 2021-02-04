@@ -14,16 +14,16 @@ import { Video } from '../components/selectors/Video';
 import { Image } from '../components/selectors/Image';
 import { useStores } from "../hooks/useStores";
 import stylesLayout from "../styles/layout.module.css";
-import style from './ProjectDetail.module.css';
+import style from './EventDetail.module.css';
 
-const ProjectDetail = () => {
-  const { slug } = useParams();
-  const { projectStore, uiStore } = useStores();
-  const project = projectStore.projects.find((item)=>item.slug===slug);
+const EventDetail = ({inputEvent}) => {
+  const { id } = useParams();
+  const { eventStore } = useStores();
+  const event = inputEvent?inputEvent:eventStore.events.find((item)=>item.id===id);
   const [enabled] = useState(false);
 
-  if(project){
-    const { id, user, study, title, subject, content} = project;
+  if(event){
+    const {topic, title, subline, content, startEndHour, address, ticketInfo} = event;
     const uint8array = lz.decodeBase64(content);
     const json = lz.decompress(uint8array);
     return (
@@ -45,23 +45,46 @@ const ProjectDetail = () => {
             enabled={enabled.toString()}
             onRender={RenderNode}
           >
-            <Viewport object={{item:project, type:`project`}}>
+            <Viewport object={{item: event, type: `event`}}>
               <div className={style.infoContainer}>
-                <h4>{user.name + ` ` + user.surname}</h4>
-                <p className={style.subjectTitle}>{study.title + ` - ` + subject.title}</p>
+                <h2>{title}</h2>
+                <div className={style.topicLabel} style={{backgroundColor: `#${topic.labelColor}`}}>
+                  <span className={style.bol}/>
+                  <span>{topic.title}</span>
+                </div>
+                <div>
+                  <img alt={`Clock icon`} src={`/assets/img/icons/clock.svg`}/>
+                  <span>{startEndHour}</span>
+                </div>
+                <div>
+                  <img alt={`Pin icon`} src={`/assets/img/icons/pin.svg`}/>
+                  <span>{address}</span>
+                </div>
+                <div>
+                  <img alt={`Ticket icon`} src={`/assets/img/icons/ticket.svg`}/>
+                  <span>{ticketInfo}</span>
+                </div>
               </div>
               <Frame data={json} />
             </Viewport>
           </Editor>
-
       </section>
     );
   }else{
+    if(id || inputEvent){
+      return(
+        <section className={stylesLayout.layout}>
+          <div className={style.loadingContainer}>
+            <h3>Event laden...</h3>
+            <img alt={`Laadanimatie`} src={`/assets/img/loading.svg`} />
+          </div>
+        </section>
+      )
+    }
     return(
       <section className={stylesLayout.layout}>
         <div className={style.loadingContainer}>
-          <h3>Project laden...</h3>
-          <img alt={`Laadanimatie`} src={`/assets/img/loading.svg`} />
+          <h3>Selecteer een evenement...</h3>
         </div>
       </section>
     )
@@ -79,4 +102,4 @@ const slugify = (string)  => {
       .replace(/\s+/g, `-`) // separator
 }
 
-export default observer(ProjectDetail);
+export default observer(EventDetail);

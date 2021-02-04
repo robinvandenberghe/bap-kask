@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogActions,
 } from '@material-ui/core';
-export const Viewport = ({ children, project }) => {
+export const Viewport = ({ children, object }) => {
   const { enabled, connectors } = useEditor((state) => ({
     enabled: state.options.enabled,
   }));
@@ -59,7 +59,7 @@ export const Viewport = ({ children, project }) => {
           </MaterialButton>
         </DialogActions>
       </Dialog>
-      <Header project={project} />
+      <Header object={object} />
       <div>
         <Toolbox />
         <div className={cx(`craftjs-renderer`, style.layout)}>{children}</div>

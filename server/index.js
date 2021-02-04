@@ -31,6 +31,7 @@ app.use(bodyParser.json());
 require("./app/routes/auth.routes.js")(app, connection);
 require("./app/routes/messages.routes.js")(app, connection);
 require("./app/routes/projects.routes.js")(app, connection);
+require("./app/routes/events.routes.js")(app, connection);
 
 app.get('/', (req, res) => {
   res.json({message: 'up and running'});

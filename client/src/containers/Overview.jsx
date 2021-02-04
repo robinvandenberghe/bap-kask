@@ -12,7 +12,6 @@ const Overview = () => {
 
   return (
     <div className={classNames(stylesLayout.layout, style.sectionGrid)} >
-
       <section className={style.allWorks}>    
         <h3>All works</h3>
         <ul className={style.overview}>

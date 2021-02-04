@@ -13,11 +13,11 @@ import PageHeader from "../components/PageHeader";
 import Divider from "../components/Divider";
 import ProjectDetail from "./ProjectDetail";
 import Overview from "./Overview";
-import Planning from "./Planning";
+import Schedule from "./Schedule";
 import Chat from "./Chat";
-import { useStores } from "../hooks/useStores";
 
 const App = () => {
+
   return (
     <div className={styles.container}>
       <PageHeader />
@@ -25,14 +25,14 @@ const App = () => {
       <main className={styles.layout}>
         <Switch>
           <Route path={ROUTES.home} exact strict component={Home} />
-          <Route path={ROUTES.account} component={Account}/>
-          <Route path={ROUTES.chat} component={Chat} />
-          <Route path={ROUTES.login} component={Login} />
-          <Route path={ROUTES.register} component={Register} />
-          <Route path={ROUTES.search} component={Search} />
-          <Route path={ROUTES.projectDetail.path} component={ProjectDetail} />
-          <Route path={ROUTES.overview} component={Overview} />
-          <Route path={ROUTES.planning} component={Planning} />
+          <Route exact path={ROUTES.chat} component={Chat} />
+          <Route exact path={ROUTES.account} component={Account}/>
+          <Route exact path={ROUTES.login} component={Login} />
+          <Route exact path={ROUTES.register} component={Register} />
+          <Route exact path={ROUTES.search} component={Search} />
+          <Route exact path={ROUTES.projectDetail.path} component={ProjectDetail} />
+          <Route exact path={ROUTES.overview} component={Overview} />
+          <Route path={ROUTES.planning} component={Schedule}/>
           <Route path={ROUTES.chat} component={Chat} />
           {/*
           <Route path={ROUTES.savedWorks} component={SavedWorks} />

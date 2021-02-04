@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeAutoObservable } from "mobx";
 
 class Project {
-  constructor(user = undefined, study = undefined, title = undefined, brief = undefined, coverUrl = undefined, subject = undefined, content = ``, id = uuidv4(), slug = ``) {
+  constructor(user = undefined, study = undefined, title = undefined, coverUrl = undefined, subject = undefined, content = ``, id = uuidv4(), slug = ``) {
     this.id = id;
     this.user = user;
     this.study = study;
@@ -11,7 +11,6 @@ class Project {
     this.coverUrl = coverUrl;
     this.slug = slug;
     this.subject = subject;
-    this.brief = brief;
     makeAutoObservable(this);
   }
 
@@ -23,7 +22,6 @@ class Project {
   setCover = value => (this.coverUrl = value);
   setSlug = value => (this.slug = value);
   setSubject = value => (this.subject = value);
-  setBrief = value => (this.brief = value);
 
   updateFromServer = values => {
     this.setId(values.id);
@@ -34,7 +32,6 @@ class Project {
     this.setCover(values.coverUrl);
     this.setSlug(values.slug);
     this.setSubject(values.subject);
-    this.setBrief(values.brief);
   };
 }
 

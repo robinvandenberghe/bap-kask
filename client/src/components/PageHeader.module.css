@@ -30,6 +30,9 @@
 .menuItem{
   font-size: 2rem;
 }
+.textLink{
+  margin-right: 3rem;
+}
 .menuIcon{
   border: solid .2rem var(--primary-color);
   padding: .4rem;
