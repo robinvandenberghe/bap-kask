@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom';
 
 export const Header = ({object}) => {
   const { enabled, actions: { setOptions }, query } = useEditor((state) => ({ enabled: state.options.enabled }));
-  const { item, type } = object;
+  const { item, type, split } = object;
   const { uiStore, projectStore, eventStore } = useStores();
   const history = useHistory();
   const [ saved, setSaved ] = useState(uiStore.savedWorks.find(i=>i===item.id)?true:false);
@@ -49,29 +49,29 @@ export const Header = ({object}) => {
       <>
         <div className={style.headerButton} onClick={()=>history.goBack()}>
           <Back className={style.headerIcon}/>
-          <span>terug</span>
+          <span>back</span>
         </div>
         {uiStore.authUser? 
         <div className={style.rightContainer}>
         {enabled?
           <div className={style.headerButton} onClick={handleSave}>
             <Save className={style.headerIcon}/>
-            <span>opslaan</span>
+            <span>save</span>
           </div>:
           <>
           {uiStore.authUser.role === `student`?
           <div className={style.headerButton} onClick={() => {setOptions((options) => (options.enabled = !enabled));}}>
             <Edit className={style.headerIcon}/>
-            <span>bewerken</span>
+            <span>edit</span>
           </div>:
           <div className={classNames(style.headerButton, style.inverted)} onClick={() => {setOptions((options) => (options.enabled = !enabled));}}>
             <Chat className={style.headerIcon}/>
-            <span>chatten</span>
+            <span>chat</span>
           </div>
           }     
           <div className={classNames(style.headerButton, saved? style.inverted :null)} onClick={handleBookmark}>
             {saved?<Bookmarked className={style.headerIcon}/>:<Bookmark className={style.headerIcon}/>}
-            <span>{saved? `opgeslagen`:`opslaan`}</span>
+            <span>{saved? `saved`:`save`}</span>
           </div>
           </>
           }
@@ -80,10 +80,28 @@ export const Header = ({object}) => {
       </>
       :null}
       {type===`event`?
-        <div className={style.headerButton} onClick={handleSave}>
-          <Save className={style.headerIcon}/>
-          <span>opslaan</span>
-        </div>
+        <>
+          {split?
+          <div/>
+          :
+          <div className={style.headerButton} onClick={()=>history.goBack()}>
+            <Back className={style.headerIcon}/>
+            <span>back</span>
+          </div>
+          }
+          {uiStore.authUser&&uiStore.authUser.role===`admin`?
+            enabled?
+            <div className={style.headerButton} onClick={handleSave}>
+              <Save className={style.headerIcon}/>
+              <span>save</span>
+            </div>
+            :
+            <div className={style.headerButton} onClick={() => {setOptions((options) => (options.enabled = !enabled));}}>
+              <Edit className={style.headerIcon}/>
+              <span>edit</span>
+            </div>
+          :null}
+        </>
       :null}
     </section>
   );

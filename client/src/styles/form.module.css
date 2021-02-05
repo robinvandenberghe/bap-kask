@@ -1,9 +1,11 @@
 .form{
   display:grid;
-  gap: 1.6rem;
+  width: 100%;
+  max-width: 36rem;
+  gap: 2.4rem;
 }
 .authForm{
-  max-width: 32rem;
+  max-width: 36rem;
 }
 .form label {
   display: grid;
@@ -13,16 +15,20 @@
 .form_input {
   display: block;
   width: 100%;
-  max-width: 32rem;
+  max-width: 36rem;
   font-size: var(--font-base);
   padding: .2rem .8rem;
   font-family: 'Poppins', sans-serif;
   border-radius: 0;
   border: .2rem var(--gray-color) solid;
 }
+.form_input::placeholder{
+  font-size: 1.6rem;
+  font-weight: 300;
+}
 .pwIndicator{
   width: 100%;
-  max-width: 32rem;
+  max-width: 36rem;
   margin: -.8rem 0;
 }
 .button {

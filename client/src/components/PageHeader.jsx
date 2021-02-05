@@ -15,7 +15,7 @@ const PageHeader = () => {
       </NavLink>
       <nav className={style.menu}>
         <NavLink exact to={ROUTES.home} className={cx(style.menuItem, style.textLink)} activeClassName={style.selectedMenuItem} >home</NavLink>
-        <NavLink to={ROUTES.planning} className={cx(style.menuItem, style.textLink)} activeClassName={style.selectedMenuItem} >schedule</NavLink>
+        <NavLink to={ROUTES.schedule} className={cx(style.menuItem, style.textLink)} activeClassName={style.selectedMenuItem} >schedule</NavLink>
         <NavLink to={ROUTES.overview} className={cx(style.menuItem, style.textLink)} activeClassName={style.selectedMenuItem} >overview</NavLink>
         <NavLink to={ROUTES.chat} className={style.menuItem} activeClassName={style.selectedMenuItem} ><img className={style.menuIcon} alt={`search icon`} src={`/assets/img/icons/chat.svg`} /></NavLink>
         <NavLink to={ROUTES.account} className={style.menuItem} activeClassName={style.selectedMenuItem} ><img className={style.menuIcon} alt={`account icon`} src={`/assets/img/icons/profile.svg`} /></NavLink>

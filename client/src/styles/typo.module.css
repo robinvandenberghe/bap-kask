@@ -10,8 +10,11 @@
 }
 .sectionTitle{
   font-size: 2.4rem;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 1.2rem;
+  justify-self: flex-start;
+  border-bottom: solid .2rem var(--primary-color);
+  padding-bottom: .4rem;
 }
 .paragraphs {
   font-size: var(--font-base);

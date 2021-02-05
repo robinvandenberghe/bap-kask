@@ -4,7 +4,7 @@ exports.create = (req, res, connection) => {
   if (!id || !title || !content || !topic || !startDate || !endDate || !ticketInfo || !address) {
     return res.status(400).send({err: 'Er ontbreekt een veld of een veld is iet ingevuld'});
   }
-  const eventToInsert = {id, topicId: topic.id, title, content, startDate, endDate, ticketInfo, address};
+  const eventToInsert = {id, topicId: topic.id, title, content, startDate: convertToDb(startDate), endDate: convertToDb(endDate), ticketInfo, address};
   try {
     connection.query('INSERT INTO `events` SET ?', eventToInsert, (error, results, fields) => {
       if (error) throw error;
@@ -60,7 +60,7 @@ exports.update = (req, res, connection) => {
     connection.query('SELECT `events`.*, t.title AS topicTitle, t.labelColor FROM `events` INNER JOIN topics AS t ON `events`.topicId = t.id WHERE `events`.id = ?', [ id ], (error, results, fields) => {
       if (error) throw error;
       if (!results.length || results.length === 0)res.status(404).send('No project found');
-      const eventToUpdate = {id, topicId: topic.id, title, content, startDate, endDate, ticketInfo, address};
+      const eventToUpdate = {id, topicId: topic.id, title, content, startDate: convertToDb(startDate), endDate: convertToDb(endDate), ticketInfo, address};
       try {
         connection.query('UPDATE `events` SET ? WHERE id = ?', [ eventToUpdate, id ], (error, results, fields) => {
           if (error) throw error;          
@@ -96,3 +96,4 @@ exports.delete = (req, res, connection) => {
   }
 };
 
+const convertToDb = date => new Date(date).toISOString().slice(0, 19).replace('T', ' ');

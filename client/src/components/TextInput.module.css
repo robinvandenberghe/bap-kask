@@ -11,6 +11,6 @@
 .errorMessage{
   color: var(--red-color);
   font-size: 1.4rem;
-  width: max-content;
+  width: 100%;
   font-weight: 300;
 }

@@ -2,11 +2,18 @@
   display: grid;
   align-items: center;
   justify-content: center;
+  align-content: center;
   gap: 1rem;
   font-weight: 500;
   font-size: 1.8rem;
   grid-auto-rows: max-content;
   text-align: center;
+  align-self: center;
+  width: 100%;
+  height:100%;
+}
+
+.centered{
   align-self: center;
 }
 .container{
@@ -19,7 +26,7 @@
 .infoContainer{
   padding: 2rem;
   display:grid;
-  gap: 1rem;
+  gap: 1.6rem;
 }
 .infoContainer h2{
   font-size: 2.4rem;
@@ -42,4 +49,16 @@
   height: 1.4rem;
   border-radius: 50%;
   background-color: var(--white-color);
+}
+.infoLine{
+  display:grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap:.8rem;
+  align-items: center;
+  font-size: 1.8rem;
+}
+.infoLine img{
+  width:1.6rem;
+  height:1.6rem;
+  object-fit: contain;
 }

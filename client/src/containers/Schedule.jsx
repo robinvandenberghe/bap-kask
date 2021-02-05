@@ -1,47 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useStores } from "../hooks/useStores";
 import { observer } from 'mobx-react-lite';
-import { observe, set } from 'mobx';
-import { Route, useHistory, Switch } from "react-router-dom";
+import { observe } from 'mobx';
+import { useHistory, useParams } from "react-router-dom";
 import stylesLayout from "../styles/layout.module.css";
 import style from "./Schedule.module.css";
 import classNames from 'classnames';
 import EventPreview from "../components/EventPreview";
 import EventDetail from "./EventDetail";
-import ROUTES from "../constants";
 
 const Schedule = () => {
   const { eventStore } = useStores();
+  const { id } = useParams();
   const history = useHistory();
-  const result = [];
-  const map = new Map();
-  for (const item of eventStore.events.map((i)=>{return {...i.topic, selected:false}})) {
-      if(!map.has(item.id)){
-        map.set(item.id, true);
-        result.push(item);
-      }
-  }
-  const [ selectedEvent, setEvent] = useState();
+  const [ selectedEvent, setEvent] = useState(id?eventStore.events.find((item)=>item.id===id):undefined);
   const [ filterOpen, setFilterOpen] = useState(false);
   const [ split, setSplit ] = useState(true);
-  const [ topicFilter, setFilter] = useState(result);
-
+  const [ topicFilter, setFilter] = useState(getDistinctTopics(eventStore.events));
   observe(eventStore.events, arr => {
-    const map = new Map();
-    const res = [];
-    for (const item of arr.object.map((i)=>{return {...i.topic, selected:false}})) {
-        if(!map.has(item.id)){
-          map.set(item.id, true);
-          res.push(item);
-        }
+    if(id&&arr.object.find((item)=>item.id===id)){
+      setEvent(arr.object.find((item)=>item.id===id));
     }
-    setFilter(res);
+    setFilter(getDistinctTopics(arr.object))
   });
-
+  
   useEffect(()=>{
+    if(!id&&selectedEvent){
+      setEvent();
+    }
     check();
     window.addEventListener(`resize`, check);
-  })
+  }, [id])
 
   const filterItemClicked = (item) => {
     const obj = [...topicFilter];
@@ -75,49 +64,55 @@ const Schedule = () => {
   }
 
   return (
-
     <section className={stylesLayout.gridLayout} >
-      <Switch> 
-        {!split?
-          <Route path={ROUTES.scheduleDetail.path}>
-            <EventDetail inputEvent={selectedEvent} />
-          </Route>
-        :null}
-        <Route path={`/`}>
-          <div className={style.eventOverview}>
-            <div className={style.filterWrapper}>
-              <div className={style.filterButton} onClick={()=>setFilterOpen((previous)=>!previous)}>
-                <img alt={`filter knop`} src={`/assets/img/icons/filter.svg`} className={style.filterIcon}/>
-                <span>Filter</span>
+      {!split&&id?
+        <EventDetail event={selectedEvent} split={split} />
+      :<>
+        <div className={style.eventOverview}>
+          <div className={style.filterWrapper}>
+            <div className={style.filterButton} onClick={()=>setFilterOpen((previous)=>!previous)}>
+              <img alt={`filter knop`} src={`/assets/img/icons/filter.svg`} className={style.filterIcon}/>
+              <span>Filter</span>
+            </div>
+            <div className={classNames(style.filterList, filterOpen? style.active : null)}>
+                <ul className={style.filterTopics}>
+                  {topicFilter.map((item, index)=>{
+                    return(
+                      <li key={index} className={style.topicItem} onClick={()=>filterItemClicked(item)}>
+                        <span className={style.filterLabel} style={{backgroundColor: `#${item.labelColor}`}}/>
+                        <span>{item.title}</span>
+                        {item.selected? <img alt={`Checkmark`} src={`/assets/img/icons/check.svg`} className={style.checkMark} /> :null}
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
-              <div className={classNames(style.filterList, filterOpen? style.active : null)}>
-                  <ul className={style.filterTopics}>
-                    {topicFilter.map((item, index)=>{
-                      return(
-                        <li key={index} className={style.topicItem} onClick={()=>filterItemClicked(item)}>
-                          <span className={style.filterLabel} style={{backgroundColor: `#${item.labelColor}`}}/>
-                          <span>{item.title}</span>
-                          {item.selected? <img alt={`Checkmark`} src={`/assets/img/icons/check.svg`} className={style.checkMark} /> :null}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-            </div>
-            <ul className={style.eventList}>
-              {eventStore.events.filter(filterEvents).map((event, index)=><EventPreview event={event} key={index} isActive={event===selectedEvent} onClick={handleClick}/>)}
-            </ul>
           </div>
-          {split?
-            <div className={style.eventDetail}>
-              <EventDetail inputEvent={selectedEvent} />
-            </div>
-          :null}
-        </Route>
-      </Switch>
-    </section>
+          <ul className={style.eventList}>
+            {eventStore.events.filter(filterEvents).map((event, index)=><EventPreview event={event} key={index} isActive={event===selectedEvent} onClick={handleClick}/>)}
+          </ul>
+        </div>
+        {split?
+          <div className={style.eventDetail}>
+            <EventDetail event={selectedEvent} split={split} />
+          </div>
+        :null}
+      </>}
 
+    </section>
   );
 };
 
 export default observer(Schedule);
+
+const getDistinctTopics = (array) => {
+  const result = [];
+  const map = new Map();
+  for (const item of array.map((i)=>{return {...i.topic, selected:false}})) {
+      if(!map.has(item.id)){
+        map.set(item.id, true);
+        result.push(item);
+      }
+  }
+  return result;
+}

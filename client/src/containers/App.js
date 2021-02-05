@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
-import Home from "./Home";
+import Home from "./Home/";
 import Admin from "./Admin";
 import Account from "./Account";
-// import About from "./About";
+import ARDetail from "./ARDetail";
+import ProfileDetail from "./ProfileDetail";
 import ROUTES from "../constants";
 import Login from "./Login";
 import Register from "./Register";
@@ -32,16 +33,12 @@ const App = () => {
           <Route exact path={ROUTES.search} component={Search} />
           <Route exact path={ROUTES.projectDetail.path} component={ProjectDetail} />
           <Route exact path={ROUTES.overview} component={Overview} />
-          <Route path={ROUTES.planning} component={Schedule}/>
-          <Route path={ROUTES.chat} component={Chat} />
-          {/*
-          <Route path={ROUTES.savedWorks} component={SavedWorks} />
-          
-          
-          <Route path={ROUTES.studentDetail} component={Student} />
-          <Route path={ROUTES.arDetail} component={ARDetail} />*/}
-          <Route path={ROUTES.admin} component={Admin} />
-
+          <Route exact path={ROUTES.scheduleDetail.path} component={Schedule}/>
+          <Route path={ROUTES.schedule} component={Schedule}/>
+          <Route exact path={ROUTES.chat} component={Chat} />
+          <Route exact path={ROUTES.profileDetail.path} component={ProfileDetail} />          
+          <Route exact path={ROUTES.arDetail} component={ARDetail} />
+          <Route exact path={ROUTES.admin} component={Admin} />
         </Switch>
       </main>
       <Divider />

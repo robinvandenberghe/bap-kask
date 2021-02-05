@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { observer } from "mobx-react-lite"
 import { useStores } from "../hooks/useStores";
 import stylesLayout from "../styles/layout.module.css";
@@ -8,7 +8,6 @@ import classNames from 'classnames';
 
 const Overview = () => {
   const { projectStore } = useStores();
-
 
   return (
     <div className={classNames(stylesLayout.layout, style.sectionGrid)} >

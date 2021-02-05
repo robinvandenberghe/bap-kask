@@ -23,7 +23,7 @@ const ProjectDetail = () => {
   const [enabled] = useState(false);
 
   if(project){
-    const { id, user, study, title, subject, content} = project;
+    const {  user, study, title, subject, content} = project;
     const uint8array = lz.decodeBase64(content);
     const json = lz.decompress(uint8array);
     return (
@@ -42,15 +42,14 @@ const ProjectDetail = () => {
               Video,
               Image,
             }}
-            enabled={enabled.toString()}
+            enabled={enabled}
             onRender={RenderNode}
           >
-            <Viewport object={{item:project, type:`project`}}>
+            <Viewport object={{item:project, type:`project`, json}}>
               <div className={style.infoContainer}>
                 <h4>{user.name + ` ` + user.surname}</h4>
                 <p className={style.subjectTitle}>{study.title + ` - ` + subject.title}</p>
               </div>
-              <Frame data={json} />
             </Viewport>
           </Editor>
 
