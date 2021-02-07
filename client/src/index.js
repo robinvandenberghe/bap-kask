@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./containers/App";
 import * as serviceWorker from "./serviceWorker";
 import "./styles/index.css";
+require(`dotenv`).config();
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,7 +12,6 @@ ReactDOM.render(
       <App />
     </BrowserRouter>
   </React.StrictMode>
-
   ,
   document.getElementById(`root`)
 )

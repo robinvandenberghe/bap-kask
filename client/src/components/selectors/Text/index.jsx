@@ -27,7 +27,7 @@ export const Text = ({
       onChange={(e) => {setProp((prop) => (prop.text = e.target.value), 500);}}
       tagName="h2"
       style={{
-        width: `100%`,
+        width: `max-content`,
         margin: `${margin[0]}px ${margin[1]}px ${margin[2]}px ${margin[3]}px`,
         color: `rgba(${Object.values(color)})`,
         fontSize: `${fontSize}px`,

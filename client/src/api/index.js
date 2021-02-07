@@ -32,6 +32,19 @@ class Api {
     return r.json();
   };
 
+  uploadFile = async entity => {
+    const formData = new FormData();
+    formData.append(`data`, JSON.stringify(entity.data));
+    formData.append(`uploadedFile`, entity.file);
+    const r = await fetch(
+      `/api/${this.entity}/upload-file`, { 
+        method: `POST`,
+
+        body: formData });
+
+    return await r.json();
+  };
+
   getOptions = (method, body = null) => {
     const options = {
       method: method.toUpperCase(),

@@ -1,11 +1,7 @@
 import React from 'react';
 import { Element, useEditor } from '@craftjs/core';
 import { Tooltip } from '@material-ui/core';
-import { Container } from '../../selectors/Container';
-import { Text } from '../../selectors/Text';
-import { Video } from '../../selectors/Video';
-import { Image } from '../../selectors/Image';
-import { Button } from '../../selectors/Button';
+import { Container, Text, Video, Image, Button, Website, Audio } from '../../selectors';
 import style from './Viewport.module.css';
 import {ReactComponent as SquareSvg} from './../icons/toolbox/container.svg';
 import {ReactComponent as TypeSvg} from './../icons/toolbox/titleFill.svg';
@@ -63,21 +59,7 @@ export const Toolbox = () => {
       className={style.toolbox}
     >
       <div className={style.items}>
-        <div
-          ref={(ref) =>
-            create(
-              ref,
-              <Element
-                canvas
-                is={Container}
-                background={{ r: 78, g: 78, b: 78, a: 1 }}
-                color={{ r: 0, g: 0, b: 0, a: 1 }}
-                height="150px"
-                width="150px"
-              ></Element>
-            )
-          }
-        >
+        <div ref={(ref) => create(ref, <Element canvas is={Container} /> )}>
           <Tooltip title="Container" placement="right">
             <Item className={style.toolItem} move>
               <SquareSvg />
@@ -98,7 +80,7 @@ export const Toolbox = () => {
             </Item>
           </Tooltip>
         </div>
-        <div ref={(ref) => create(ref, <Video />)}>
+        <div ref={(ref) => create(ref, <Audio />)}>
           <Tooltip title="Audio" placement="right">
             <Item className={style.toolItem} move>
               <AudioSvg />
@@ -123,7 +105,7 @@ export const Toolbox = () => {
             </Item>
           </Tooltip>
         </div>
-        <div ref={(ref) => create(ref, <Button />)}>
+        <div ref={(ref) => create(ref, <Website />)}>
           <Tooltip title="Website" placement="right">
             <Item className={style.toolItem} move>
               <WebsiteSvg />

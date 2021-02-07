@@ -5,11 +5,49 @@
   align-items: center;
   justify-content: center;
   grid-template-columns: max-content;
-  color: white;
+  color: var(--white-color);
   align-self: flex-end;
   padding: .4rem;
   border-radius: 1.6rem;
 }
 .textPlaceholderText{
-  color: white;
+  color: var(--white-color);
+}
+.audioBlock{
+  padding: 1.6rem;
+  border: solid .2rem var(--primary-color);
+  display:grid;
+  gap: .8rem;
+  width: 100%;
+  height: 100%;
+  max-width:100%;
+}
+.controlBox{
+  display:flex;
+  gap: .8rem;
+  align-items: center;
+}
+.controlIcon{
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+.controlIcon:hover{
+  cursor: pointer;
+}
+.controlDuration{
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size:1.8rem;
+  margin-left: .8rem;
+}
+.progressContainer{
+  border: solid .2rem var(--primary-color);
+  height: 2rem;
+}
+.progressBar{
+  height:100%;
+  display:block;
+  width: 50%;
+  border-right: solid .2rem var(--primary-color);
 }

@@ -10,7 +10,7 @@ const Overview = () => {
   const { projectStore } = useStores();
 
   return (
-    <div className={classNames(stylesLayout.layout, style.sectionGrid)} >
+    <div className={classNames(stylesLayout.layout, style.sectionGrid, stylesLayout.scrollLayout)} >
       <section className={style.allWorks}>    
         <h3>All works</h3>
         <ul className={style.overview}>

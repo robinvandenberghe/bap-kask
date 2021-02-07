@@ -5,7 +5,7 @@ import { observe } from 'mobx';
 import { useHistory, useParams } from "react-router-dom";
 import stylesLayout from "../styles/layout.module.css";
 import style from "./Schedule.module.css";
-import classNames from 'classnames';
+import cx from 'classnames';
 import EventPreview from "../components/EventPreview";
 import EventDetail from "./EventDetail";
 
@@ -64,7 +64,7 @@ const Schedule = () => {
   }
 
   return (
-    <section className={stylesLayout.gridLayout} >
+    <section className={cx(stylesLayout.gridLayout, stylesLayout.scrollLayout)} >
       {!split&&id?
         <EventDetail event={selectedEvent} split={split} />
       :<>
@@ -74,7 +74,7 @@ const Schedule = () => {
               <img alt={`filter knop`} src={`/assets/img/icons/filter.svg`} className={style.filterIcon}/>
               <span>Filter</span>
             </div>
-            <div className={classNames(style.filterList, filterOpen? style.active : null)}>
+            <div className={cx(style.filterList, filterOpen? style.active : null)}>
                 <ul className={style.filterTopics}>
                   {topicFilter.map((item, index)=>{
                     return(

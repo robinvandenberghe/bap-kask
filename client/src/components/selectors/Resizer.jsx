@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { Resizable } from 're-resizable';
 import { useNode, useEditor } from '@craftjs/core';
-import cx from 'classnames';
 import {
   isPercentage,
   pxToPercent,
@@ -176,7 +175,6 @@ export const Resizer = ({ propKey, children, ...props }) => {
   useEffect(() => {
     const listener = debounce(updateInternalDimensionsWithOriginal, 1);
     window.addEventListener(`resize`, listener);
-
     return () => {
       window.removeEventListener(`resize`, listener);
     };
@@ -197,12 +195,6 @@ export const Resizer = ({ propKey, children, ...props }) => {
         acc[key] = active && inNodeContext;
         return acc;
       }, {})}
-      className={cx([
-        {
-          'm-auto': isRootNode,
-          flex: true,
-        },
-      ])}
       ref={(ref) => {
         if (ref) {
           resizable.current = ref;
@@ -226,11 +218,8 @@ export const Resizer = ({ propKey, children, ...props }) => {
         const dom = resizable.current.resizable;
         let { width, height } = getUpdatedDimensions(d.width, d.height);
         if (isPercentage(nodeWidth))
-          width =
-            pxToPercent(width, getElementDimensions(dom.parentElement).width) +
-            `%`;
-        else width = `${width}px`;
-
+          width =  pxToPercent(width, getElementDimensions(dom.parentElement).width)<=100? pxToPercent(width, getElementDimensions(dom.parentElement).width) + `%`: `100%`;
+        else width = width<=getElementDimensions(dom.parentElement).width?`${width}px`:`${getElementDimensions(dom.parentElement).width}px`;
         if (isPercentage(nodeHeight))
           height =
             pxToPercent(
@@ -242,7 +231,6 @@ export const Resizer = ({ propKey, children, ...props }) => {
         if (isPercentage(width) && dom.parentElement.style.width === `auto`) {
           width = editingDimensions.current.width + d.width + `px`;
         }
-
         if (isPercentage(height) && dom.parentElement.style.height === `auto`) {
           height = editingDimensions.current.height + d.height + `px`;
         }

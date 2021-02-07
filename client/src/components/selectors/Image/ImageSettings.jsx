@@ -1,11 +1,24 @@
 import React from 'react';
 import { ToolbarSection, ToolbarItem } from '../../editor';
-import style  from '../Selectors.module.css';
 import { ToolbarRadio } from '../../editor/Toolbar/ToolbarRadio';
 
 export const ImageSettings = () => {
   return (
     <React.Fragment>
+      <ToolbarSection
+        title="Image"
+        props={[`imgSrc`]}
+      >
+        <ToolbarItem full propKey="imgSrc" type="image" label="Image" />
+        <ToolbarItem
+          propKey="objectFit"
+          type="radio"
+          label="Object Fit"
+        >
+          <ToolbarRadio value="cover" label="Cover" />
+          <ToolbarRadio value="contain" label="Contain" />
+        </ToolbarItem>
+      </ToolbarSection> 
       <ToolbarSection
         title="Dimensions"
         props={[`width`, `height`]}

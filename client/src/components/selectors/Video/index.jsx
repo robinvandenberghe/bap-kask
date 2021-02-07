@@ -3,11 +3,13 @@ import { useNode, useEditor } from '@craftjs/core';
 import { VideoSettings } from './VideoSettings';
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
+import Vimeo from '@u-wave/react-vimeo';
 const YoutubeDiv = styled.div`
   width: 100%;
   height: 100%;
   > div {
     height: 100%;
+    width:100%;
   }
   iframe {
     pointer-events: ${(props) => (props.enabled ? `none` : `auto`)};

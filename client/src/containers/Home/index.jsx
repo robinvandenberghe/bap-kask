@@ -8,14 +8,10 @@ import stylesLayout from "../../styles/layout.module.css";
 const Home = () => {
   const videoRef = useRef();
 
-  useEffect(()=>{
-    videoRef.current.play();
-  })
-
   return (
     <>
       <section className={cx(stylesLayout.gridLayout, style.container)}>
-        <video playsinline autoplay muted loop id="bgvid" poster={`/assets/img/raster.png`} className={style.background} ref={videoRef}>
+        <video playsInline autoPlay muted loop id="bgvid" poster={`/assets/img/raster.png`} className={style.background} ref={videoRef}>
           <source src="/assets/video/raster.webm" type="video/webm"/>
           <source src="/assets/video/raster.mp4" type="video/mp4"/>
         </video>
@@ -27,7 +23,6 @@ const Home = () => {
           </div>
           <NavLink to={ROUTES.overview} className={style.goToButton}>Discover the graduates</NavLink>
         </div>
-
       </section>
     </>
   );

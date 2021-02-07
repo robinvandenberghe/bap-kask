@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { useEditor, Frame } from '@craftjs/core';
+
 import { Toolbox } from './Toolbox';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
@@ -18,13 +19,13 @@ export const Viewport = ({ children, object }) => {
   const [dialog, setDialog] = useState(false);
   const { actions: {deserialize}} = useEditor();
 
-
   return (
     <div
       className={cx([`viewport`], {
         loaded: loaded,
         'mouse-enabled': mouseEnabled,
       })}
+      onLoad={()=>setLoaded(true)}
     >
       <Dialog
         open={dialog}
@@ -63,8 +64,10 @@ export const Viewport = ({ children, object }) => {
         <Toolbox />
         <div className={cx(`craftjs-renderer`, style.layout)}>
           {children}
+          <Frame data={loaded&&object.json?deserialize(object.json):undefined}>
+            {object.template}
+          </Frame>
         </div>
-        <Frame data={deserialize(object.json)} />
         <Sidebar />
       </div>
     </div>

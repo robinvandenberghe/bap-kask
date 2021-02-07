@@ -16,7 +16,7 @@ const TextInputField = ({ value, setValue, label, type = `text`, name, error = u
   return (
     <label htmlFor={name} className={style.inputWrapper} {...restProps}>
       {label? <span>{label}</span>: null}
-      <input type={type} name={name}  value={value} onChange={handleChange}  className={classNames(style.formInput, error && error.name === name ?  style.errorInput : null )} placeholder={placeholder}/>
+      <input type={type} name={name}  value={value} onChange={handleChange}  className={classNames(style.formInput, error && error.name === name ?  style.errorInput : null )} placeholder={placeholder} autoComplete={type===`password`?`current-password`:null}/>
       {error && error.name === name ? <span className={style.errorMessage}>{error.message}</span> : null}
     </label>
   );

@@ -1,30 +1,38 @@
 import React from 'react';
 import { ToolbarSection, ToolbarItem } from '../../editor';
 import { ToolbarRadio } from '../../editor/Toolbar/ToolbarRadio';
+import style  from '../Selectors.module.css';
 
 export const ButtonSettings = () => {
   return (
     <React.Fragment>
       <ToolbarSection
+        title="URL"
+        props={[`url`]}
+        summary={({ url }) => {
+          return (
+            <p>{url}</p>
+          );
+        }}
+      >
+        <ToolbarItem
+          full={true}
+          propKey="url"
+          type="url"
+          label="URL"
+        />
+      </ToolbarSection>
+      <ToolbarSection
         title="Colors"
         props={[`background`, `color`]}
         summary={({ background, color }) => {
           return (
-            <div className="flex flex-row-reverse">
-              <div
-                style={{
-                  background:
-                    background && `rgba(${Object.values(background)})`,
-                }}
-                className="shadow-md flex-end w-6 h-6 text-center flex items-center rounded-full bg-black"
-              >
-                <p
-                  style={{
-                    color: color && `rgba(${Object.values(color)})`,
-                  }}
-                  className="text-white w-full text-center"
-                >
-                  T
+            <div>
+              <div style={{background: background && `rgba(${Object.values(background)})`}}
+                className={style.textPlaceholder}>
+                <p style={{color: color && `rgba(${Object.values(color)})`}}
+                  className={style.textPlaceholderText}>
+                  Text
                 </p>
               </div>
             </div>

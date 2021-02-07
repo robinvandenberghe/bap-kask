@@ -1,22 +1,14 @@
 import React, { useState } from "react";
-import { observer } from "mobx-react-lite"
-// import cx from 'classnames';
+import cx from 'classnames';
 import lz from 'lzutf8';
 import { Editor, Frame, Element, useEditor } from '@craftjs/core';
-import { Container, Text } from '../components/selectors';
+import { AppContainer, Container, Text, Button, Video, Image  } from '../components/selectors';
 import { RenderNode, Viewport } from '../components/editor';
-import { Custom1, OnlyButtons } from '../components/selectors/Custom1';
-import { Custom2, Custom2VideoDrop } from '../components/selectors/Custom2';
-import { Custom3, Custom3BtnDrop } from '../components/selectors/Custom3';
-import { Button } from '../components/selectors/Button';
-import { Video } from '../components/selectors/Video';
-import { Image } from '../components/selectors/Image';
 import stylesLayout from "../styles/layout.module.css";
 import style from './EventDetail.module.css';
 
 const EventDetail = ({event, split}) => {
   const [ enabled ] = useState(false);
-
 
   if(event){
     const {topic, title, content, startEndHour, address, ticketInfo} = event;
@@ -24,16 +16,12 @@ const EventDetail = ({event, split}) => {
     const json = lz.decompress(base64);
     return (
       <section className={stylesLayout.layout}>
+        <div className={style.scroll}>
           <Editor
             resolver={{
+              AppContainer,
               Container,
               Text,
-              Custom1,
-              Custom2,
-              Custom2VideoDrop,
-              Custom3,
-              Custom3BtnDrop,
-              OnlyButtons,
               Button,
               Video,
               Image,
@@ -41,7 +29,16 @@ const EventDetail = ({event, split}) => {
             enabled={enabled}
             onRender={RenderNode}
           >
-            <Viewport object={{item: event, type: `event`, split, json}}>
+            <Viewport object={{item: event, type: `event`, split, json,  template: <Element
+              id={`appContainer`}
+              canvas
+              is={AppContainer}
+              width="100%"
+              height="auto"
+              background={{ r: 255, g: 255, b: 255, a: 0 }}
+              padding={[`10`, `10`, `10`, `10`]}
+              flexDirection={`row`}
+            ></Element> }} >
               <div className={style.infoContainer}>
                 <h2>{title}</h2>
                 <div className={style.topicLabel} style={{backgroundColor: `#${topic.labelColor}`}}>
@@ -63,6 +60,7 @@ const EventDetail = ({event, split}) => {
               </div>
             </Viewport>
           </Editor>
+        </div>
       </section>
     );
   }else{

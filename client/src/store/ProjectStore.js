@@ -18,7 +18,6 @@ class ProjectStore {
     ));
   };
 
-
   addProject = data => {
     const { id, userId, userName, userSurname, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, title, coverUrl, slug, content } = data;
     const user = new User();
@@ -44,6 +43,10 @@ class ProjectStore {
     user.updateFromServer({id: userId, name: userName, surname: userSurname, profileUrl: userProfileUrl});
     project.updateFromServer({id, user, title, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug, content });
   };
+
+  uploadFile = async (data) => {
+    return await this.api.uploadFile(data);
+  }
 
   deleteProject = Project => {
     this.projects.remove(Project);

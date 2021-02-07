@@ -7,15 +7,14 @@ const defaultProps = {
   flexDirection: `column`,
   alignItems: `flex-start`,
   justifyContent: `flex-start`,
-  fillSpace: `no`,
   padding: [`0`, `0`, `0`, `0`],
   margin: [`0`, `0`, `0`, `0`],
-  background: { r: 243, g: 243, b: 243, a: 1 },
+  background: { r: 250, g: 250, b: 250, a: 1 },
   color: { r: 0, g: 0, b: 0, a: 1 },
   shadow: 0,
   radius: 0,
-  width: `100%`,
-  height: `auto`,
+  width: `50%`,
+  height: `125px`,
 };
 
 export const Container = (props) => {
@@ -27,7 +26,6 @@ export const Container = (props) => {
     flexDirection,
     alignItems,
     justifyContent,
-    fillSpace,
     background,
     color,
     padding,
@@ -41,7 +39,8 @@ export const Container = (props) => {
       propKey={{ width: `width`, height: `height` }}
       style={{
         justifyContent,
-        flexDirection,
+        display: `flex`,
+        flexFlow: flexDirection + ` wrap`,
         alignItems,
         background: `rgba(${Object.values(background)})`,
         color: `rgba(${Object.values(color)})`,
@@ -52,7 +51,6 @@ export const Container = (props) => {
             ? `none`
             : `0px 3px 100px ${shadow}px rgba(0, 0, 0, 0.13)`,
         borderRadius: `${radius}px`,
-        flex: fillSpace === `yes` ? 1 : `unset`,
       }}
     >
       {children}

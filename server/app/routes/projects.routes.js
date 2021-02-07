@@ -6,4 +6,5 @@ module.exports = (app, connection) => {
   app.get('/api/projects/:projectId', (req, res) => controller.findOne(req, res, connection));
   app.put('/api/projects/:projectId', checkToken, (req, res) => controller.update(req, res, connection));
   app.delete('/api/projects/:projectId', checkToken, (req, res) => controller.delete(req, res, connection));
+  app.post('/api/projects/upload-file',  checkToken, controller.uploadFile);
 };

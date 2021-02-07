@@ -3,6 +3,8 @@ import ProjectPreview from "../components/ProjectPreview";
 import { useStores } from "../hooks/useStores";
 import stylesLayout from "../styles/layout.module.css";
 import style from "./Search.module.css";
+import { observer } from "mobx-react-lite"
+
 
 const Search = () => {
   const { projectStore } = useStores();
@@ -26,7 +28,7 @@ const Search = () => {
       <section >
         <ul className={style.searchResults}>
           {!projects.length ?
-          <li className={style.noResults} >Er zijn geen resultaten gevonden</li>
+          <li className={style.noResults} >We found no works matching your query.</li>
           :
           projects.map((project, index)=> <ProjectPreview key={index} project={project} />)}
         </ul>
@@ -34,7 +36,7 @@ const Search = () => {
       <section className={style.container}>
         <label className={style.searchBar}>
           <img alt={`search icon`} src={`/assets/img/search.svg`}/>
-          <input placeholder={`Zoeken`} value={query} onChange={handleChange} />
+          <input placeholder={`Search`} value={query} onChange={handleChange} />
         </label>
 
       </section>
@@ -42,4 +44,4 @@ const Search = () => {
   );
 };
 
-export default (Search);
+export default observer(Search);

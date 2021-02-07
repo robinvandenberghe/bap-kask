@@ -13,7 +13,6 @@ const IndicatorDiv = styled.div`
   margin-top: -29px;
   font-size: 12px;
   line-height: 12px;
-
   svg {
     fill: #fff;
     width: 15px;
@@ -85,7 +84,6 @@ export const RenderNode = ({ render }) => {
 
   useEffect(() => {
     window.addEventListener(`scroll`, scroll);
-
   }, [scroll]);
 
   return (
