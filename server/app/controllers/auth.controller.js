@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const tokenCookie = {
-  maxAge: 1800000,
+  maxAge: 18000000,
   sameSite: true
 };
 const signatureCookie = {
@@ -164,6 +164,25 @@ exports.getAllSavedWorks = async (req, res, connection) => {
         message: 'Internal error, please try again',
         error
       });
+  }
+};
+
+exports.getUser = (req, res, connection) => {
+  try {
+    const {userId} = req.params;
+    connection.query('SELECT name, surname, email, role, profileUrl FROM users WHERE id = ?', [ userId ], (error, results, fields) => {
+      if (error) throw error;
+      if (!results.length || results.length === 0) {
+        return res.status(404).send('No user found');
+      }
+      const {name, surname, email, role, profileUrl} = results[0];
+      connection.query('SELECT projectId FROM `savedProjects` WHERE `userId` = ?', [userId], async (err, result, fields) => {
+        if (err) throw err;
+        return res.send({name, surname, email, role, profileUrl, savedWorks: result});
+      });
+    });
+  } catch (err) {
+    return res.status(500).send({err: err || 'Error'});
   }
 };
 

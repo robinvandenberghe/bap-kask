@@ -26,7 +26,7 @@ exports.create = (req, res, connection) => {
 
 exports.findAll = async (req, res, connection) => {
   try {
-    connection.query('SELECT messages.*, s.name AS senderName, s.surname AS senderSurname, s.profileUrl AS senderProfileUrl, r.name AS recipientName, r.surname AS recipientSurname, r.profileUrl AS recipientProfileUrl FROM messages JOIN users AS s ON s.id = messages.senderId JOIN users AS r ON r.id = messages.recipientId WHERE `senderId` = ? OR `recipientId` = ?', [req.authUserId, req.authUserId], (error, results, fields) => {
+    connection.query('SELECT messages.*, s.name AS senderName, s.surname AS senderSurname, s.profileUrl AS senderProfileUrl, r.name AS recipientName, r.surname AS recipientSurname, r.profileUrl AS recipientProfileUrl FROM messages JOIN users AS s ON s.id = messages.senderId JOIN users AS r ON r.id = messages.recipientId WHERE `senderId` = ? OR `recipientId` = ? ORDER BY messages.sentAt ASC', [req.authUserId, req.authUserId], (error, results, fields) => {
       if (error) throw error;
       res.send(results);
     });
@@ -38,7 +38,7 @@ exports.findAll = async (req, res, connection) => {
 exports.findOne = async (req, res, connection) => {
   try {
     connection.query('SELECT messages.*, s.name AS senderName, s.surname AS senderSurname, s.profileUrl AS senderProfileUrl, r.name AS recipientName, r.surname AS recipientSurname, r.profileUrl AS recipientProfileUrl FROM messages JOIN users AS s ON s.id = messages.senderId JOIN users AS r ON r.id = messages.recipientId WHERE `id` = ?', req.params.messageId, (error, results, fields) => {
-      if (error || results.length || results.length == 0) throw error;
+      if (error || results.length || results.length === 0) throw error;
       res.send(results[0]);
     });
   } catch (err) {

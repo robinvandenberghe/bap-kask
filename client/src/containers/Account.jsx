@@ -12,7 +12,7 @@ const Account = () => {
   const { name, surname, profileUrl, role } = uiStore.authUser;
   const [ page, setPage ] = useState(`works`);
   let roleClass = null;
-  let roleTitle = `Bezoeker`;
+  let roleTitle = `Visitor`;
   if(role!==`user`){
     roleClass = role===`student`? style.studentClass : style.adminClass
     roleTitle = role===`student`?`Student`:`Admin`
@@ -22,9 +22,9 @@ const Account = () => {
     <section className={stylesLayout.layout}>
       <article className={style.pageHeader}>
         {profileUrl?
-        <img className={style.profileImg} alt={`Profielfoto van ${name} ${surname}`} src={`/assets/img/users/${profileUrl}`} />
+        <img className={style.profileImg} alt={`${name} ${surname}`} src={`/assets/img/users/${profileUrl}`} />
         :
-        <img className={style.profileImg} alt={`Profielfoto van ${name} ${surname}`} src={`/assets/img/users/default.jpg`} />
+        <img className={style.profileImg} alt={`${name} ${surname}`} src={`/assets/img/users/default.jpg`} />
         }
         <div className={style.titleContainer}>
           <div className={style.title}>
@@ -34,27 +34,32 @@ const Account = () => {
           <div className={cx(style.subTitle, roleClass)} />
         </div>
         <div className={style.profileButtons}>
-          <span className={style.editButton}>Bewerken</span>
-          <span className={style.editButton} onClick={()=>uiStore.logout()}>Afmelden</span>
+          <span className={style.editButton}>Edit</span>
+          <span className={style.editButton} onClick={()=>uiStore.logout()}>Log out</span>
         </div>
       </article>
       <div className={style.pageButtons}>
         <div className={cx(style.navButton, page===`works`? style.active :null )} onClick={()=>setPage(`works`)}>
-          <span>Opgeslagen werken</span>
+          <span>Saved works</span>
           <div className={style.savedLabel}>
             <span>{uiStore.savedWorksLength}</span>
-            <img alt={`Bladwijzer icoon`} src={`/assets/img/icons/bookmarkFill.svg`} />
+            <img alt={`Bookmark icon`} src={`/assets/img/icons/bookmarkFill.svg`} />
           </div>
         </div>
         {role===`student`?
         <div className={cx(style.navButton, page===`mywork`? style.active :null )} onClick={()=>setPage(`mywork`)}>
-          <span>Mijn werk</span>
+          <span>My work</span>
         </div>
         :null}
         {role===`admin`?
-        <div className={cx(style.navButton, page===`admin`? style.active :null )} onClick={()=>setPage(`admin`)}>
-          <span>Werken beheren</span>
-        </div>
+        <>
+          <div className={cx(style.navButton, page===`manageworks`? style.active :null )} onClick={()=>setPage(`manageworks`)}>
+            <span>Manage works</span>
+          </div>
+          <div className={cx(style.navButton, page===`manageevents`? style.active :null )} onClick={()=>setPage(`manageevents`)}>
+            <span>Manage events</span>
+          </div>
+        </>
         :null}
       </div>
 

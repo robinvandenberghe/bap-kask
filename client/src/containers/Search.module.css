@@ -15,7 +15,7 @@
   display: grid;
   justify-content: center;
   grid-auto-rows: max-content;
-  grid-template-columns: 1fr;
+  grid-template-columns: 90%;
   padding: 2rem;
   overflow: scroll;
   -ms-overflow-style: none;

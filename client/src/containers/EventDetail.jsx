@@ -66,7 +66,7 @@ const EventDetail = ({event, split}) => {
   }else{
     return(
       <div className={style.loadingContainer}>
-        <h3>Selecteer een evenement.</h3>
+        <h3>Select an event.</h3>
       </div>
     )
   }

@@ -22,18 +22,29 @@ const checkToken = (req, res, next) => {
   }
 };
 
-const hasRole = role => (req, res, connection, next) => {
+const hasRole = (req, res, connection, role, next) => {
   try {
     connection.query('SELECT * FROM `users` WHERE `id` = ?', [ req.authUserId ],  (error, results, fields) => {
       if (error || results.length || results.length === 0) throw error;
       const user = results[0];
-      if (user.role.includes(role)) {
-        next();
+      if (role.isArray()) {
+        if (role.indexOf(user.role) !== - 1) {
+          next();
+        } else {
+          res.status(403).send({
+            success: false,
+            message: 'Unauthorized'
+          });
+        }
       } else {
-        res.status(403).send({
-          success: false,
-          message: 'Unauthorized'
-        });
+        if (user.role.includes(role)) {
+          next();
+        } else {
+          res.status(403).send({
+            success: false,
+            message: 'Unauthorized'
+          });
+        }
       }
     });
   } catch (error) {

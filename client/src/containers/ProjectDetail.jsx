@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { observer } from "mobx-react-lite"
 import lz from 'lzutf8';
 import { Editor, Element } from '@craftjs/core';
@@ -9,6 +9,7 @@ import { useStores } from "../hooks/useStores";
 import { useObject } from "../hooks/useObject";
 import stylesLayout from "../styles/layout.module.css";
 import style from './ProjectDetail.module.css';
+import ROUTES from "../constants";
 
 const ProjectDetail = () => {
   const { slug } = useParams();
@@ -147,7 +148,7 @@ const ProjectDetail = () => {
               </Element>
             </Element> }}>
               <div className={style.infoContainer}>
-                <h4>{user.name + ` ` + user.surname + `, ` + title}</h4>
+                <h4><NavLink to={ROUTES.profileDetail.to+user.id}>{user.name + ` ` + user.surname} </NavLink>{`, ` + title}</h4>
                 <p className={style.subjectTitle}>{study.title + ` - ` + subject.title}</p>
               </div>
             </Viewport>
@@ -158,8 +159,8 @@ const ProjectDetail = () => {
     return(
       <section className={stylesLayout.layout}>
         <div className={style.loadingContainer}>
-          <h3>Project laden...</h3>
-          <img alt={`Laadanimatie`} src={`/assets/img/loading.svg`} />
+          <h3>Loading project...</h3>
+          <img alt={`Loading animation`} src={`/assets/img/loading.svg`} />
         </div>
       </section>
     )

@@ -16,6 +16,7 @@ import ProjectDetail from "./ProjectDetail";
 import Overview from "./Overview";
 import Schedule from "./Schedule";
 import Chat from "./Chat";
+import FDDetail from "./FDDetail";
 
 const App = () => {
 
@@ -39,6 +40,7 @@ const App = () => {
           <Route exact path={ROUTES.profileDetail.path} component={ProfileDetail} />          
           <Route exact path={ROUTES.arDetail} component={ARDetail} />
           <Route exact path={ROUTES.admin} component={Admin} />
+          <Route exact path={ROUTES.festivalDigital} component={FDDetail} />
         </Switch>
       </main>
       <Divider />

@@ -1,0 +1,143 @@
+.sectionGrid{
+  display:grid;
+  gap: 5rem;
+  justify-items: center;
+  padding: 3rem 0;
+}
+.sectionGrid h3{
+  font-size: 2rem;
+  font-weight: 600;
+}
+.topInfo{
+  display: grid;
+  position: relative;
+  justify-items: center;
+  padding: 4.8rem 5% 0;
+  max-width: 100rem;
+  width: 100%;
+}
+.backgroundRaster{
+  width:100%;
+  z-index: -1;
+  position: absolute;
+  top:0;
+  left:50%;
+  transform: translateX(-50%);
+}
+.whoAreWe{
+  display: grid;
+  gap: .4rem;
+  border: solid .2rem var(--primary-color);
+  background-color: var(--blue-color);
+  color: var(--white-color);
+  padding: 2.4rem 1.6rem 5.2rem;
+  width: 100%;
+  max-width: 44rem;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  justify-self: flex-start;
+}
+.weAr{
+  background-color: var(--white-color);
+  display: grid;
+  position: relative;
+  border: solid .3rem var(--primary-color);
+  grid-template-columns: max-content 1fr;
+  gap: 2rem;
+  padding: 1.6rem;
+  align-items: center;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  justify-self: flex-end;
+  margin-top: -4rem;
+}
+.weArContent{
+  padding: 1.6rem 1rem;
+  border: solid .2rem var(--primary-color);
+  background-color: var(--yellow-color);
+  width: 100%;
+  max-width: 44rem;
+}
+.weArCircle{
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+}
+.weAr .shadowBlock{
+  display: block;
+  position: absolute;
+  top: 1rem;
+  left: -1rem;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: var(--primary-color);
+}
+.howItWorks{
+  padding: 3.2rem 2rem;
+  display:flex;
+  width:100%;
+  max-width: 120rem;
+  background-color: var(--green-color);
+  color: var(--white-color);
+  flex-flow: row wrap;
+  gap: 2rem;
+  justify-content: space-around;
+  align-items: center;
+}
+.howItWorksText {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  width: 100%;
+  max-width: 44rem;
+}
+.howSteps{
+  display:flex;
+  flex-flow: row wrap;
+  gap: 1.6rem;
+  width: max-content;
+  align-items: center;
+}
+.howStep{
+  display:grid;
+  justify-items: center;
+  gap: .8rem;
+  grid-auto-rows: max-content;
+  font-weight: 600;
+  font-size: 2rem;
+}
+.howStep img{
+  width: 8.8rem;
+  height:8.8rem;
+  object-fit: contain;
+}
+.ourWorks{
+  margin-top: 2rem;
+  width:100%;
+  max-width: 120rem;
+  display: grid;
+  gap: 2rem;
+  padding-bottom: 4rem;
+}
+.workList{
+  display: grid;
+  gap:2rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: max-content;
+}
+
+@media screen and (max-width: 1000px){
+  .workList{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 750px){
+  .workList{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 500px){
+  .workList{
+    grid-template-columns: 1fr;
+  }
+}

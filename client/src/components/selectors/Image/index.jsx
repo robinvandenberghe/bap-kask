@@ -6,6 +6,7 @@ const ImgTag = styled.img`
   width: 100%;
   height: 100%;
   max-width:100%;
+  object-positiont: center;
 `;
 
 const defaultProps = {
