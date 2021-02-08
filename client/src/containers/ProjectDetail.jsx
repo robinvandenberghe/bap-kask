@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import { observer } from "mobx-react-lite"
-import classNames from 'classnames';
 import lz from 'lzutf8';
 import { Editor, Element } from '@craftjs/core';
 import { Container, Text, Video, Button, Image, AppContainer, Credits, Audio } from '../components/selectors';
@@ -101,6 +100,7 @@ const ProjectDetail = () => {
                 background={{ r: 255, g: 255, b: 255, a: 0 }}
                 margin={[`40`,`0`,`0`,`0`]}
                 flexDirection={`row`}
+                alignItems={`center`}
                 justifyContent={`space-between`}
               >
                 <Element

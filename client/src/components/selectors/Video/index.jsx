@@ -4,7 +4,7 @@ import { VideoSettings } from './VideoSettings';
 import styled from 'styled-components';
 import YouTube from 'react-youtube';
 import Vimeo from '@u-wave/react-vimeo';
-const YoutubeDiv = styled.div`
+const VideoDiv = styled.div`
   width: 100%;
   height: 100%;
   > div {
@@ -27,25 +27,29 @@ export const Video = (props) => {
   } = useNode((node) => ({
     selected: node.events.selected,
   }));
-
-  const { videoId } = props;
-
+  const { videoId, provider } = props;
   return (
-    <YoutubeDiv ref={connect} enabled={enabled}>
-      <YouTube
-        videoId={videoId}
-        opts={{
-          width: `100%`,
-          height: `100%`,
-        }}
-      />
-    </YoutubeDiv>
+    <VideoDiv ref={connect} enabled={enabled}>
+      {provider===`youtube`?
+        <YouTube
+          videoId={videoId}
+          opts={{
+            width: `100%`,
+            height: `100%`,
+          }}
+        />
+      :provider===`vimeo`?
+        <Vimeo video={videoId} />
+      :null}
+
+    </VideoDiv>
   );
 };
 
 Video.craft = {
   displayName: `Video`,
   props: {
+    provider: `youtube`,
     videoId: `jNQXAC9IVRw`,
   },
   related: {

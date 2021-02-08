@@ -101,17 +101,17 @@ exports.delete = (req, res, connection) => {
 exports.uploadFile = async (req, res) => {
   try {
     const {data} = req.body;
-    const obj = JSON.parse(data);
+    const {previous, id, type} = JSON.parse(data);
     const arr = req.files[0].mimetype.split(`/`);
     const extension = arr[arr.length - 1];
     const filename = `${uuidv4()}.${extension}`;
-    if (!fs.existsSync(`${__dirname}/../../public/assets/projects/${obj.id}`))fs.mkdirSync(`${__dirname}/../../public/assets/projects/${obj.id}`);
-    if (obj.previous && fs.existsSync(`${__dirname}/../../public${obj.previous}`))fs.unlinkSync(`${__dirname}/../../public${obj.previous}`);
-    fs.writeFileSync(`${__dirname}/../../public/assets/projects/${obj.id}/${filename}`, req.files[0].buffer);
+    if (!fs.existsSync(`${__dirname}/../../public/assets/${type}s/${id}`))fs.mkdirSync(`${__dirname}/../../public/assets/${type}s/${id}`);
+    if (previous && previous !== `/assets/img/defaultImg.jpg` && fs.existsSync(`${__dirname}/../../public${previous}`))fs.unlinkSync(`${__dirname}/../../public${previous}`);
+    fs.writeFileSync(`${__dirname}/../../public/assets/${type}s/${id}/${filename}`, req.files[0].buffer);
     res.send({
       status: true,
       message: `File is uploaded`,
-      fileUrl: `/assets/projects/${obj.id}/${filename}`,
+      fileUrl: `/assets/${type}s/${id}/${filename}`,
     });
   } catch (err) {
     return res.status(500).send({err: err || 'Error'});

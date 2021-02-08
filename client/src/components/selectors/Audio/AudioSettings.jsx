@@ -9,7 +9,14 @@ export const AudioSettings = () => {
         props={[`audioSrc`]}
       >
         <ToolbarItem full propKey="audioSrc" type="audio" label="Image" />
-      </ToolbarSection> 
+      </ToolbarSection>
+      <ToolbarSection
+        title="Colors"
+        props={[`color`]}
+        summary={({ color }) =><div style={{background: color && `rgba(${Object.values(color)})`, width: `100%`, height: `100%`, display: `block`}}/>}
+      >
+        <ToolbarItem full propKey="color" type="color" label="Progress bar color" />
+      </ToolbarSection>
       <ToolbarSection
         title="Margin"
         props={[`margin`]}
