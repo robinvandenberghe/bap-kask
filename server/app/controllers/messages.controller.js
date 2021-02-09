@@ -1,5 +1,6 @@
+const {connection} = require('../middleware/mysqlLib');
 
-exports.create = (req, res, connection) => {
+exports.create = (req, res) => {
   const {id, sender, recipient, message, sentAt, hasRead} = req.body;
   if (!id || !sender || !recipient || !message || !sentAt || !hasRead) {
     return res.status(400).send({err: 'Er ontbreekt een veld of een veld is iet ingevuld'});
@@ -24,7 +25,7 @@ exports.create = (req, res, connection) => {
   }
 };
 
-exports.findAll = async (req, res, connection) => {
+exports.findAll = (req, res) => {
   try {
     connection.query('SELECT messages.*, s.name AS senderName, s.surname AS senderSurname, s.profileUrl AS senderProfileUrl, r.name AS recipientName, r.surname AS recipientSurname, r.profileUrl AS recipientProfileUrl FROM messages JOIN users AS s ON s.id = messages.senderId JOIN users AS r ON r.id = messages.recipientId WHERE `senderId` = ? OR `recipientId` = ? ORDER BY messages.sentAt ASC', [req.authUserId, req.authUserId], (error, results, fields) => {
       if (error) throw error;
@@ -35,7 +36,7 @@ exports.findAll = async (req, res, connection) => {
   }
 };
 
-exports.findOne = async (req, res, connection) => {
+exports.findOne = (req, res) => {
   try {
     connection.query('SELECT messages.*, s.name AS senderName, s.surname AS senderSurname, s.profileUrl AS senderProfileUrl, r.name AS recipientName, r.surname AS recipientSurname, r.profileUrl AS recipientProfileUrl FROM messages JOIN users AS s ON s.id = messages.senderId JOIN users AS r ON r.id = messages.recipientId WHERE `id` = ?', req.params.messageId, (error, results, fields) => {
       if (error || results.length || results.length === 0) throw error;
@@ -46,7 +47,7 @@ exports.findOne = async (req, res, connection) => {
   }
 };
 
-exports.update = async (req, res, connection) => { 
+exports.update = (req, res) => { 
   const {id, sender, recipient, message, sentAt, hasRead} = req.body;
   if (!id || !sender || !recipient || !message || !sentAt || !hasRead) {
     return res.status(400).send({err: 'Er ontbreekt een veld of een veld is iet ingevuld'});
@@ -62,11 +63,11 @@ exports.update = async (req, res, connection) => {
   }
 };
 
-exports.delete = async (req, res, connection) => {
+exports.delete = (req, res) => {
   const {messageId} = req.params;
   try {
     connection.query('DELETE FROM messages WHERE id = ?', messageId, (error, results, fields) => {
-      if (error || results.length || results.length == 0) throw error;
+      if (error || results.length || results.length === 0) throw error;
       res.sendStatus(200);
     });
   } catch (err) {

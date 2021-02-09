@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const {connection} = require('./mysqlLib');
+const {ADMIN, STUDENT} = require(`../roles`);
 
 const checkToken = (req, res, next) => {
   const {token, signature} = req.cookies;
@@ -22,33 +24,22 @@ const checkToken = (req, res, next) => {
   }
 };
 
-const hasRole = (req, res, connection, role, next) => {
+const isAdmin = (req, res, next) => {
   try {
-    connection.query('SELECT * FROM `users` WHERE `id` = ?', [ req.authUserId ],  (error, results, fields) => {
-      if (error || results.length || results.length === 0) throw error;
+    connection.query('SELECT * FROM `users` WHERE `id` = ?', [ req.authUserId ], (error, results, fields) => {
+      if (error || results.length === 0) throw error;
       const user = results[0];
-      if (role.isArray()) {
-        if (role.indexOf(user.role) !== - 1) {
-          next();
-        } else {
-          res.status(403).send({
-            success: false,
-            message: 'Unauthorized'
-          });
-        }
+      if (user.role === ADMIN) {
+        next();
       } else {
-        if (user.role.includes(role)) {
-          next();
-        } else {
-          res.status(403).send({
-            success: false,
-            message: 'Unauthorized'
-          });
-        }
+        return res.status(403).send({
+          success: false,
+          message: 'Unauthorized'
+        });
       }
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       success: false,
       message: 'Internal error, please try again',
       error
@@ -56,4 +47,54 @@ const hasRole = (req, res, connection, role, next) => {
   }
 };
 
-module.exports = {checkToken, hasRole};
+const isStudent = (req, res, next) => {
+  try {
+    connection.query('SELECT * FROM `users` WHERE `id` = ?', [ req.authUserId ], (error, results, fields) => {
+      if (error || results.length === 0) throw error;
+      const user = results[0];
+      if (user.role === STUDENT) {
+        next();
+      } else {
+        return res.status(403).send({
+          success: false,
+          message: 'Unauthorized'
+        });
+      }
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: 'Internal error, please try again',
+      error
+    });
+  }
+};
+
+const isAdminOrStudent = (req, res, next) => {
+  try {
+    connection.query('SELECT * FROM `users` WHERE `id` = ?', [ req.authUserId ], (error, results, fields) => {
+      if (error || results.length === 0) throw error;
+      const user = results[0];
+      if (user.role === ADMIN || user.role === STUDENT) {
+        next();
+      } else {
+        return res.status(403).send({
+          success: false,
+          message: 'Unauthorized'
+        });
+      }
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: 'Internal error, please try again',
+      error
+    });
+  }
+};
+
+
+
+
+
+module.exports = {checkToken, isAdmin, isStudent, isAdminOrStudent};

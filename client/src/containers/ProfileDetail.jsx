@@ -45,7 +45,10 @@ const ProfileDetail = () => {
           }
           <div className={style.titleContainer}>
             <div className={style.title}>
-              <span>{name + ` ` + surname}</span>
+              <div className={style.nameEmail}>
+                <span>{name + ` ` + surname}</span>
+                {role!==`user`?<span className={style.email}>{email}</span>:null}
+              </div>
               <span className={cx(style.userRole, roleClass)}>{roleTitle}</span>
             </div>
             <div className={cx(style.subTitle, roleClass)} />

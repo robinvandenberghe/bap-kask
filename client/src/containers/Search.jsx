@@ -38,7 +38,11 @@ const Search = () => {
           <img alt={`search icon`} src={`/assets/img/search.svg`}/>
           <input placeholder={`Search`} value={query} onChange={handleChange} />
         </label>
-
+        <ul className={style.searchSubjects}>
+          {projectStore.subjects.map((item, index) => {
+            <li key={index} onClick={()=>{}}>{item.title}</li>
+          })}
+        </ul>
       </section>
     </div>
   );

@@ -1,20 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const mysql = require('mysql');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
-
-const connection = mysql.createConnection({
-  host: process.env.DB_URL,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PW,
-  database: process.env.DB_NAME
-});
-
-connection.connect(function(err) {
+const {connection} = require('./app/middleware/mysqlLib');
+connection.connect(err => {
   if (err) {
     console.error(`error connecting: ${err.stack}`);
     return;
@@ -32,10 +23,10 @@ app.use(upload.any());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-require('./app/routes/auth.routes.js')(app, connection);
-require('./app/routes/messages.routes.js')(app, connection);
-require('./app/routes/projects.routes.js')(app, connection);
-require('./app/routes/events.routes.js')(app, connection);
+require('./app/routes/auth.routes.js')(app);
+require('./app/routes/messages.routes.js')(app);
+require('./app/routes/projects.routes.js')(app);
+require('./app/routes/events.routes.js')(app);
 
 app.use(express.static(`public`));
 

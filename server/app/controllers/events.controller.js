@@ -1,5 +1,6 @@
+const {connection} = require('../middleware/mysqlLib');
 
-exports.create = (req, res, connection) => {
+exports.create = (req, res) => {
   const {id, topic, startDate, endDate, title, content, ticketInfo, address} = req.body;
   if (!id || !title || !content || !topic || !startDate || !endDate || !ticketInfo || !address) {
     return res.status(400).send({err: 'Er ontbreekt een veld of een veld is iet ingevuld'});
@@ -25,7 +26,7 @@ exports.create = (req, res, connection) => {
   }
 };
 
-exports.findAll = (req, res, connection) => {
+exports.findAll = (req, res) => {
   try {
     connection.query('SELECT `events`.*, t.title AS topicTitle, t.labelColor FROM `events` INNER JOIN topics AS t ON `events`.topicId = t.id',  (error, results, fields) => {
       if (error || !results.length || results.length === 0) throw error;
@@ -36,7 +37,7 @@ exports.findAll = (req, res, connection) => {
   }
 };
 
-exports.findOne = (req, res, connection) => {
+exports.findOne = (req, res) => {
   try {
     const {eventId} = req.params;
     connection.query('SELECT `events`.*, t.title AS topicTitle, t.labelColor FROM `events` INNER JOIN topics AS t ON `events`.topicId = t.id WHERE `events`.id = ?', [ eventId ], (error, results, fields) => {
@@ -51,7 +52,7 @@ exports.findOne = (req, res, connection) => {
   }
 };
 
-exports.update = (req, res, connection) => {
+exports.update = (req, res) => {
   const {id, topic, startDate, endDate, title, content, ticketInfo, address} = req.body;
   if (!id || !title || !content || !topic || !startDate || !endDate || !ticketInfo || !address) {
     return res.status(400).send({err: 'Er ontbreekt een veld of een veld is iet ingevuld'});
@@ -84,7 +85,7 @@ exports.update = (req, res, connection) => {
   }
 };
 
-exports.delete = (req, res, connection) => {
+exports.delete = (req, res) => {
   try {
     const {eventId} = req.params;
     connection.query('DELETE FROM `events` WHERE id = ?', [ eventId ],  (error, results, fields) => {

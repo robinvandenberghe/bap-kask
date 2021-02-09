@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const {connection} = require('../middleware/mysqlLib');
 
 const tokenCookie = {
   maxAge: 18000000,
@@ -11,7 +12,7 @@ const signatureCookie = {
   sameSite: true
 };
 
-exports.login = async (req, res, connection) => {
+exports.login = (req, res) => {
   const {email, password} = req.body;
   if (!email) {
     return res.status(400).send({
@@ -49,8 +50,8 @@ exports.login = async (req, res, connection) => {
       } else {
         const isPasswordCorrect = await validPassword(password, user.password);
         if (isPasswordCorrect) {
-          const {id, name, surname, role} = user;
-          const token = jwt.sign({id, name, surname, role}, process.env.SECRET, {
+          const {id, name, surname, role, email} = user;
+          const token = jwt.sign({id, name, surname, role, email}, process.env.SECRET, {
             expiresIn: '24h'
           });
           const parts = token.split('.');
@@ -82,7 +83,7 @@ exports.login = async (req, res, connection) => {
   }
 };
 
-exports.saveWork = async (req, res, connection) => {
+exports.saveWork = (req, res) => {
   const {userId, workId} = req.body;
   if (!userId || !workId) {
     res
@@ -100,7 +101,7 @@ exports.saveWork = async (req, res, connection) => {
       if (err) throw err;
       if (result.length === 0) {
         try {
-          connection.query('INSERT INTO `savedProjects` SET ?', {userId, projectId: workId}, async (err, result, fields) => {
+          connection.query('INSERT INTO `savedProjects` SET ?', {userId, projectId: workId}, (err, result, fields) => {
             if (err) throw err;
             res
               .status(200)
@@ -119,7 +120,7 @@ exports.saveWork = async (req, res, connection) => {
         }
       } else {
         try {
-          connection.query('DELETE FROM `savedProjects` WHERE `userId` = ? AND `projectId` = ?', [ userId, workId ], async (err, result, fields) => {
+          connection.query('DELETE FROM `savedProjects` WHERE `userId` = ? AND `projectId` = ?', [ userId, workId ], (err, result, fields) => {
             if (err) throw err;
             res
               .status(200)
@@ -150,9 +151,9 @@ exports.saveWork = async (req, res, connection) => {
 };
 
 
-exports.getAllSavedWorks = async (req, res, connection) => {
+exports.getAllSavedWorks = (req, res) => {
   try {
-    connection.query('SELECT * FROM `savedProjects` WHERE `userId` = ?', [req.authUserId], async (err, result, fields) => {
+    connection.query('SELECT * FROM `savedProjects` WHERE `userId` = ?', [req.authUserId], (err, result, fields) => {
       if (err) throw err;
       res.send(result);
     });
@@ -167,7 +168,7 @@ exports.getAllSavedWorks = async (req, res, connection) => {
   }
 };
 
-exports.getUser = (req, res, connection) => {
+exports.getUser = (req, res) => {
   try {
     const {userId} = req.params;
     connection.query('SELECT name, surname, email, role, profileUrl FROM users WHERE id = ?', [ userId ], (error, results, fields) => {
@@ -176,7 +177,7 @@ exports.getUser = (req, res, connection) => {
         return res.status(404).send('No user found');
       }
       const {name, surname, email, role, profileUrl} = results[0];
-      connection.query('SELECT projectId FROM `savedProjects` WHERE `userId` = ?', [userId], async (err, result, fields) => {
+      connection.query('SELECT projectId FROM `savedProjects` WHERE `userId` = ?', [userId], (err, result, fields) => {
         if (err) throw err;
         return res.send({name, surname, email, role, profileUrl, savedWorks: result});
       });
@@ -193,10 +194,10 @@ exports.logout = (req, res) => {
     .sendStatus(200);
 };
 
-exports.register = async (req, res, connection) => {
+exports.register =  async (req, res) => {
   const {id, email, password, name, surname, role} = req.body;
   try {
-    connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], async (err, result, fields) => {
+    connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], (err, result, fields) => {
       if (err) throw err;
       const user = result.length && result.length === 0 ? undefined : result[0];
       if (user) {
@@ -213,8 +214,11 @@ exports.register = async (req, res, connection) => {
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: 'Internal error, please try again',
-      error
+      error: {
+        name: `name`,
+        id: `INTERNAL_ERROR`,
+        message: `Internal error, please try again`
+      }
     });
   }
   const hashedPass = await hashPassword(password);
@@ -226,7 +230,7 @@ exports.register = async (req, res, connection) => {
   try {
     connection.query('INSERT INTO `users`SET ?', userToInsert,  (error, result, fields) => {
       if (error) throw error;
-      connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], async (err, result, fields) => {
+      connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], (err, result, fields) => {
         if (err) throw err;
         const user = result.length && result.length === 0 ? undefined : result[0];
         if (!user) {
@@ -257,8 +261,82 @@ exports.register = async (req, res, connection) => {
       .status(500)
       .send({
         success: false,
-        message: 'Internal error, please try again',
-        error
+        error: {
+          name: `name`,
+          id: `INTERNAL_ERROR`,
+          message: `Internal error, please try again`
+        }
+      });
+  }
+};
+
+exports.createStudent =  async (req, res) => {
+  const {id, email, name, surname, role} = req.body;
+  try {
+    connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], (err, result, fields) => {
+      if (err) throw err;
+      const user = result.length && result.length === 0 ? undefined : result[0];
+      if (user) {
+        res.status(401).send({
+          success: false,
+          error: {
+            name: `email`,
+            id: `USER_ALREADY_EXISTS`,
+            message: `Er bestaat al een gebruiker met dit e-mailadres.`
+          }
+        });
+      }
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      error: {
+        name: `email`,
+        id: `INTERNAL_ERROR`,
+        message: `Internal error, please try again`
+      }
+    });
+  }
+  const hashedPass = await hashPassword(id);
+  if (!hashedPass)res.status(500).send({
+    success: false,
+    message: 'Internal error, please try again'
+  });
+  const userToInsert = {id, name, surname, email, password: hashedPass, role};
+  try {
+    connection.query('INSERT INTO `users`SET ?', userToInsert,  (error, result, fields) => {
+      if (error) throw error;
+      connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], (err, result, fields) => {
+        if (err) throw err;
+        const user = result.length && result.length === 0 ? undefined : result[0];
+        if (!user) {
+          res.status(401).send({
+            success: false,
+            error: {
+              name: `email`,
+              id: `NO_USER`,
+              message: `Er bestaat geen gebruiker met deze id.`
+            }
+          });
+        } else {
+          const {id, name, surname, role} = user;
+          res.send({
+            success: true,
+            user: {id, name, surname, role}
+          });
+        }
+      });
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({
+        success: false,
+        error: {
+          name: `email`,
+          id: `INTERNAL_ERROR`,
+          message: `Internal error, please try again`
+        }
       });
   }
 };

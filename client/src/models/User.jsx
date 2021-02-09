@@ -17,13 +17,15 @@ class User {
   setSurname = value => (this.surname = value);
   setRole = value => (this.role = value);
   setProfileUrl = value => (this.profileUrl = value);
+  setEmail = value => (this.email = value);
 
   updateFromServer = values => {
     this.setId(values.id);
     this.setName(values.name);
     this.setSurname(values.surname);
     this.setRole(values.role);
-    this.setProfileUrl(values.profileUrl)
+    this.setProfileUrl(values.profileUrl);
+    this.setEmail(values.email);
   };
 }
 

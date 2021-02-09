@@ -93,7 +93,7 @@ const Chat = () => {
             {selected.work?
             <span className={style.strong}>{selected.work.title}</span>
             :null}
-            <span>{`- ${selected.user.name} ${selected.user.surname}`}</span>
+            <span>{`${selected.user.name} ${selected.user.surname}`}</span>
           </>
           :null}
         </div>
@@ -132,7 +132,7 @@ const Chat = () => {
                   {selected.work?
                   <NavLink to={ROUTES.projectDetail.to+selected.work.slug} className={style.strong}>{selected.work.title}</NavLink>
                   :null}
-                  <NavLink to={ROUTES.profileDetail.to+selected.user.id}>{`- ${selected.user.name} ${selected.user.surname}`}</NavLink>
+                  <NavLink to={ROUTES.profileDetail.to+selected.user.id}>{` - ${selected.user.name} ${selected.user.surname}`}</NavLink>
                 </>
                 :null}
               </div>

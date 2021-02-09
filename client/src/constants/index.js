@@ -8,7 +8,6 @@ const ROUTES = {
   scheduleDetail: { path: `/schedule/:id`, to: `/schedule/` },
   arDetail : `/augmented-reality`,
   festivalDigital : `/festival-digital`,
-  admin: `/admin`,
   about: `/about`,
   account: `/account`,
   login: `/login`,

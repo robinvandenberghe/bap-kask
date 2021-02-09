@@ -120,3 +120,75 @@
   justify-content: space-between;
   gap: 2rem;
 }
+.manageWorks{
+  display:grid;
+  gap: 2rem;
+  justify-items: center;
+}
+.newProject{
+  padding: .8rem 1.6rem;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  font-size: 1.8rem;
+  font-weight: 600;
+  justify-self: flex-end;
+}
+.newProject:hover{
+  cursor: pointer;
+}
+.studyEdit{
+  display:grid;
+  grid-auto-rows: max-content;
+  gap: 2.4rem;
+  max-width: 122rem;
+}
+.studyEdit h3{
+  font-size: 2rem;
+  font-weight: 600;
+}
+.editList{
+  display:grid;
+  grid-auto-rows: max-content;
+  width:100%;
+  gap: 1.6rem;
+}
+.projectEdit{
+  padding: 2rem;
+  border: solid .2rem var(--primary-color);
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) auto;
+  gap:2rem;
+}
+.infoFlex{
+  display:grid;
+  gap: .8rem;
+  align-items: center;
+  justify-items: flex-start;
+  font-size: 1.8rem;
+}
+.titleName h4{
+  font-weight: 600;
+}
+.studySubject{
+  font-weight: 300;
+}
+.editDelete{
+  display:flex;
+  gap: .8rem;
+  flex-flow: row;
+}
+.editDelete img{
+  width: 3.2rem;
+  height: 3.2rem;
+  object-fit: contain;
+  object-position: center;
+}
+.editDelete img:hover{
+  cursor: pointer;
+}
+.newTitle{
+  font-size: 2rem;
+  font-weight: 600;
+  justify-self: flex-start;
+}

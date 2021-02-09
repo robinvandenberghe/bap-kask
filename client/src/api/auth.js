@@ -67,6 +67,14 @@ class Auth {
     return await r.json();
   };
 
+  createStudent = async entity => {
+    const r = await fetch(
+      `/auth/create-student`,
+      this.getOptions(`post`, entity)
+    );
+    return await r.json();
+  };
+
   update = async entity => {
     const r = await fetch(
       `/api/${this.entity}/${entity.id}`,

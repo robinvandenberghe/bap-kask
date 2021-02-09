@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
 import Home from "./Home/";
-import Admin from "./Admin";
 import Account from "./Account";
 import ARDetail from "./ARDetail";
 import ProfileDetail from "./ProfileDetail";
@@ -40,7 +39,6 @@ const App = () => {
           <Route path={ROUTES.chat} component={Chat} />
           <Route exact path={ROUTES.profileDetail.path} component={ProfileDetail} />          
           <Route exact path={ROUTES.arDetail} component={ARDetail} />
-          <Route exact path={ROUTES.admin} component={Admin} />
           <Route exact path={ROUTES.festivalDigital} component={FDDetail} />
         </Switch>
       </main>

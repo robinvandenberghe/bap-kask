@@ -33,12 +33,13 @@
     "react-three-fiber": "^5.3.18",
     "react-youtube": "^7.13.1",
     "styled-components": "^5.2.1",
-    "three": "^0.125.1",
+    "three": "^0.125.2",
     "uuid": "^8.3.2"
   },
   "proxy": "http://localhost:4000",
   "scripts": {
     "start": "react-scripts start",
+    "safeStart": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

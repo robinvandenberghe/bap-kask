@@ -1,10 +1,11 @@
 import React from "react";
-import { observer } from "mobx-react";
+import stylesLayout from '../styles/layout.module.css';
+import * as THREE from 'three';
 require(`aframe`);
 
 const ARDetail = () => {
   return (
-    <section>
+    <section className={stylesLayout.layout} style={{overflow: `hidden`}}>
       <a-scene
         embedded
         vr-mode-ui="enabled: false;"
@@ -14,8 +15,8 @@ const ARDetail = () => {
         raycaster="objects: .clickable"
         >
         <a-assets>
-          <a-asset-item id="tree" src="/assets/models/plaat107.glb"></a-asset-item>
-          <a-asset-item id="video" loop="true" src="/assets/video/testmov.mp4" webkit-playsinline autoplay={true}></a-asset-item>
+          <a-asset-item id="tree" src="/assets/models/DamagedHelmet.glb"></a-asset-item>
+          {/* <a-asset-item id="video" loop="true" src="/assets/video/testmov.mp4" webkit-playsinline autoplay={true}></a-asset-item> */}
         </a-assets>
         <a-marker
           type='hiro'
@@ -43,4 +44,4 @@ const ARDetail = () => {
   );
 };
 
-export default observer(ARDetail);
+export default ARDetail;

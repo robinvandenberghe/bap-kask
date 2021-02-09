@@ -52,6 +52,15 @@
   align-items: center;
   width: 100%;
 }
+.titleContainer .nameEmail{
+  display: grid;
+  gap: .4rem;
+}
+.nameEmail .email{
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
 .titleContainer .userRole{
   background-color: var(--yellow-color);
   padding: 1rem;

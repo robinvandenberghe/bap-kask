@@ -10,7 +10,7 @@
 .form label {
   display: grid;
   font-size: var(--font-base);
-  gap: .4rem;
+  gap: .8rem;
 }
 .form_input {
   display: block;

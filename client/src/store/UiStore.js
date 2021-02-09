@@ -114,6 +114,10 @@ class UiStore {
     });
   };
 
+  createStudent = async (userObj) => {
+    return await this.authService.createStudent(userObj);
+  };
+
   get conversationLength() {
     if (this.conversations) {
       return this.conversations.length
