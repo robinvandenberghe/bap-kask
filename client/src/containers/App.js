@@ -36,7 +36,8 @@ const App = () => {
           <Route exact path={ROUTES.overview} component={Overview} />
           <Route exact path={ROUTES.scheduleDetail.path} component={Schedule}/>
           <Route path={ROUTES.schedule} component={Schedule}/>
-          <Route exact path={ROUTES.chat} component={Chat} />
+          <Route exact path={ROUTES.chatDetail.path} component={Chat}/>
+          <Route path={ROUTES.chat} component={Chat} />
           <Route exact path={ROUTES.profileDetail.path} component={ProfileDetail} />          
           <Route exact path={ROUTES.arDetail} component={ARDetail} />
           <Route exact path={ROUTES.admin} component={Admin} />

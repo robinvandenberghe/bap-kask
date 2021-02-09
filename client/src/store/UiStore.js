@@ -6,9 +6,9 @@ import Api from "../api/index";
 import User from "../models/User";
 class UiStore {
   authUser = null;
-  conversations = [];
-  savedWorks = [];
   constructor(rootStore) {
+    this.conversations = [];
+    this.savedWorks = [];
     this.rootStore = rootStore;
     this.authService = new Auth();
     this.setUser(getUserFromCookie());
@@ -34,7 +34,9 @@ class UiStore {
     this.messageApi.getAll().then(d => {
       const c = d.map((item=>{
         const {id, senderId, senderName, senderSurname, senderProfileUrl, recipientId, recipientName, recipientSurname, recipientProfileUrl, sentAt, hasRead, message} = item;
-        return {id, message, sentAt, hasRead, sender: new User(senderId, senderName, senderSurname, ``, ``, ``, senderProfileUrl), recipient: new User(recipientId, recipientName, recipientSurname, ``, ``, ``, recipientProfileUrl)};
+        const m = new Message();
+        m.updateFromServer({id, message, sentAt, hasRead, sender: new User(senderId, senderName, senderSurname, ``, ``, ``, senderProfileUrl), recipient: new User(recipientId, recipientName, recipientSurname, ``, ``, ``, recipientProfileUrl)});
+        return m;
       }))
       const recipients = [...new Set(c.map(item => toJS(item.recipient.id)))];
       const senders = [...new Set(toJS(c.map(item => item.sender.id)))];
@@ -43,7 +45,6 @@ class UiStore {
         const messages = c.filter((a)=>a.sender.id===u||a.recipient.id===u);
         return { user: messages.filter((a)=>a.sender.id!==this.authUser.id)[0].sender, messages};
       })
-      console.log(convos);
       this.setConversations(convos);
     } );
   };

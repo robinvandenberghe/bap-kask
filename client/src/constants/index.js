@@ -13,7 +13,8 @@ const ROUTES = {
   account: `/account`,
   login: `/login`,
   register: `/register`,
-  chat: `/conversations`,
+  chat: `/conversations/`,
+  chatDetail: { path: `/conversations/:userId`, to: `/conversations/` },
 };
 
 export default ROUTES;

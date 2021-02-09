@@ -113,6 +113,7 @@
   grid-auto-rows: max-content;
   justify-items: flex-end;
   align-content: flex-end;
+  overflow-y: scroll;
 }
 .messageContainer{
   display: flex;
@@ -165,4 +166,38 @@
   color: var(--white-color);
   font-size: 2rem;
   font-weight: 600;
+}
+.selectChat{
+  display:grid;
+  width:100%;
+  height: 100%;
+  justify-items: center;
+  align-items: center;
+  border-left: solid .2rem var(--primary-color);
+}
+.selectChat p{
+  width: 100%;
+  max-width: max-content;
+  font-weight: 500;
+  font-size: 1.8rem;
+}
+
+@media screen and (max-width: 800px) {
+  .conversation, .selectChat{
+    border-left: none;
+  }
+  .sendBar, .chatHeader{
+    border-left: solid .2rem var(--primary-color);
+  }
+  .summaryColumn{
+    max-width: unset;
+  }
+  .chatPreview{
+    border-right: solid .2rem var(--primary-color);
+  }
+  .chatContainer{
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+    max-width: 60rem;
+  }
 }

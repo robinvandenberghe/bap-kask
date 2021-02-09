@@ -2,9 +2,9 @@ import { makeAutoObservable, action } from "mobx";
 import Event from "../models/Event";
 import Api from "../api";
 class EventStore {
-  events = [];
 
   constructor(rootStore) {
+    this.events = [];
     this.rootStore = rootStore;
     this.api = new Api(`events`);
     this.getAll();
@@ -16,7 +16,6 @@ class EventStore {
       d => d.forEach(this._addEvent)
     ));
   };
-
 
   addEvent = data => {
     const { id, topicId, topicTitle, labelColor, startDate, endDate, title, content, ticketInfo, address, subline} = data;

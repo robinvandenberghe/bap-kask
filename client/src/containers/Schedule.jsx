@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useStores } from "../hooks/useStores";
 import { observer } from 'mobx-react-lite';
-import { observe } from 'mobx';
 import { useHistory, useParams } from "react-router-dom";
 import stylesLayout from "../styles/layout.module.css";
 import style from "./Schedule.module.css";
 import cx from 'classnames';
 import EventPreview from "../components/EventPreview";
 import EventDetail from "./EventDetail";
+import { observe } from "mobx";
 
 const Schedule = () => {
   const { eventStore } = useStores();
@@ -17,20 +17,21 @@ const Schedule = () => {
   const [ filterOpen, setFilterOpen] = useState(false);
   const [ split, setSplit ] = useState(true);
   const [ topicFilter, setFilter] = useState(getDistinctTopics(eventStore.events));
-  observe(eventStore.events, arr => {
-    if(id&&arr.object.find((item)=>item.id===id)){
-      setEvent(arr.object.find((item)=>item.id===id));
-    }
-    setFilter(getDistinctTopics(arr.object))
+  observe(eventStore.events,()=>{
+    if(id&&eventStore.events.find((item)=>item.id===id)&&!selectedEvent)setEvent(eventStore.events.find((item)=>item.id===id));
+    setFilter(getDistinctTopics(eventStore.events));
   });
-  
+
   useEffect(()=>{
     if(!id&&selectedEvent){
       setEvent();
     }
     check();
     window.addEventListener(`resize`, check);
-  }, [id])
+    return () => {
+      window.removeEventListener(`resize`, check);
+    };
+  });
 
   const filterItemClicked = (item) => {
     const obj = [...topicFilter];
@@ -60,7 +61,7 @@ const Schedule = () => {
 
   const handleClick = (event) => {
     setEvent(event);
-    history.push(`/schedule/${event.id}`)
+    history.push(`/schedule/${event.id}`);
   }
 
   return (
@@ -98,12 +99,11 @@ const Schedule = () => {
           </div>
         :null}
       </>}
-
     </section>
   );
 };
 
-export default observer(Schedule);
+export default observer(Schedule); 
 
 const getDistinctTopics = (array) => {
   const result = [];

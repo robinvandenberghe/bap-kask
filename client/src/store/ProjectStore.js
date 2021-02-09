@@ -3,9 +3,10 @@ import Project from "../models/Project";
 import User from "../models/User";
 import Api from "../api";
 class ProjectStore {
-  projects = [];
-  selections = [];
+
   constructor(rootStore) {
+    this.projects = [];
+    this.selections = [];
     this.rootStore = rootStore;
     this.api = new Api(`projects`);
     this.getAll();
