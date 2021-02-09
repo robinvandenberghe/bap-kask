@@ -12,10 +12,10 @@ import ROUTES from "../constants";
 import NewProject from "../components/NewProject";
 
 const Account = () => {
-  const { uiStore, projectStore } = useStores();
+  const { uiStore, projectStore, eventStore } = useStores();
   const history = useHistory();
   const { name, surname, profileUrl, role } = uiStore.authUser;
-  const [ page, setPage ] = useState(`newwork`);
+  const [ page, setPage ] = useState(`manageevents`);
   const [ promptMessage, setPrompt ] = useState();
   let roleClass = null;
   let roleTitle = `Visitor`;
@@ -26,6 +26,9 @@ const Account = () => {
 
   const handleDeleteProject = (project) => {
     setPrompt({message: `Are you sure you want to delete this work?`, primary: {title: `Yes`, action: ()=>projectStore.deleteProject(project)}, secondary: {title: `No`, action: ()=>setPrompt()}});
+  }
+  const handleDeleteEvent = (event) => {
+    setPrompt({message: `Are you sure you want to delete this event?`, primary: {title: `Yes`, action: ()=>projectStore.deleteProject(event)}, secondary: {title: `No`, action: ()=>setPrompt()}});
   }
 
   const ProjectEdit = ({project}) => {
@@ -43,6 +46,32 @@ const Account = () => {
         <div className={style.editDelete}>
           <img alt={`Edit icon`} src={`/assets/img/icons/edit.svg`} onClick={()=>history.push(ROUTES.projectDetail.to+slug)} />
           <img alt={`Delete icon`} src={`/assets/img/icons/delete.svg`} onClick={()=>handleDeleteProject(project)} />
+        </div>
+      </li>
+    );
+  }
+
+  const EventEdit = ({event}) => {
+    const { id, topic, sub, title, startEndHour, startEndDate, subline} = event;
+    return (
+      <li className={style.projectEdit}>
+        <div className={cx(style.infoFlex, style.titleName)}>
+          <h4>{title}</h4>
+          <div className={style.lineFlex}>
+            <div className={style.topicLabel} style={{backgroundColor: `#${topic.labelColor}`}}>
+              <span className={style.bol}/>
+              <span>{topic.title}</span>
+            </div>
+            <span>{subline}</span>
+          </div>
+        </div>
+        <div className={cx(style.infoFlex, style.studySubject)}>
+          <span>{startEndDate}</span>
+          <span>{startEndHour}</span>
+        </div>
+        <div className={style.editDelete}>
+          <img alt={`Edit icon`} src={`/assets/img/icons/edit.svg`} onClick={()=>history.push(ROUTES.scheduleDetail.to+id)} />
+          <img alt={`Delete icon`} src={`/assets/img/icons/delete.svg`} onClick={()=>handleDeleteEvent(event)} />
         </div>
       </li>
     );
@@ -115,6 +144,14 @@ const Account = () => {
         <h3 className={style.newTitle}>New project</h3>
         <NewProject />
       </section>  
+      :page===`manageevents`?
+      <section className={style.manageWorks}>
+        <span className={style.newProject} onClick={()=>setPage(`newwork`)}>+ new event</span>
+        <h3>Events</h3>
+        <ul className={style.editList}>
+          {eventStore.events.map((event,key)=><EventEdit event={event} key={event.id} />)}
+        </ul>
+      </section> 
       :null}
       {promptMessage?<Prompt object={promptMessage}/>:null}
     </section>

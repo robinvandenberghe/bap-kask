@@ -140,7 +140,8 @@
   display:grid;
   grid-auto-rows: max-content;
   gap: 2.4rem;
-  max-width: 122rem;
+  max-width: 120rem;
+  width: 100%;
 }
 .studyEdit h3{
   font-size: 2rem;
@@ -191,4 +192,30 @@
   font-size: 2rem;
   font-weight: 600;
   justify-self: flex-start;
+}
+.lineFlex{
+  display:flex;
+  flex-flow: row wrap;
+  gap: .8rem;
+  align-items: center;
+}
+.topicLabel{
+  padding: .4rem .8rem;
+  display:flex;
+  flex-flow: row;
+  gap: .8rem;
+  color: white;
+  align-items: center;
+  border: .2rem solid var(--primary-color);
+  width: max-content;
+}
+.container.active .topicLabel{
+  border-color: var(--white-color);
+}
+.topicLabel .bol{
+  display:block;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background-color: var(--white-color);
 }

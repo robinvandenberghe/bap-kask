@@ -3,8 +3,8 @@ const {v4: uuidv4} = require('uuid');
 const {connection} = require('../middleware/mysqlLib');
 
 exports.create = (req, res) => {
-  const {id, user, study, subject, title, slug} = req.body;
-  if (!id || !user || !study || !subject || !title || !slug) {
+  const {id, user, study, subject, title, slug, coverUrl} = req.body;
+  if (!id || !user || !study || !subject || !title || !slug || !coverUrl) {
     return res.status(400).send({
       success: false,
       error: {
@@ -14,12 +14,12 @@ exports.create = (req, res) => {
       }
     });
   }
-  const projectToInsert = {id, userId: user.id, studyId: study.id, subjectId: subject.id, title, slug};
+  const projectToInsert = {id, userId: user.id, studyId: study.id, subjectId: subject.id, title, slug, coverUrl};
   try {
     connection.query('INSERT INTO projects SET ?', projectToInsert, (error, results, fields) => {
       if (error) throw error;
       try {
-        connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, u.email AS userEmail, s.title AS studyTitle, sub.title AS subjectTitle FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id WHERE `projects`.id = ?', [ id ], (error, results, fields) => {
+        connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, u.email AS userEmail, s.title AS studyTitle, sub.title AS subjectTitle, sub.labelColor, sub.textColor  FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id WHERE `projects`.id = ?', [ id ], (error, results, fields) => {
           if (error) throw error;
           if (!results.length || results.length === 0) {
             return res.status(404).send({
@@ -61,7 +61,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   try {
-    connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, u.email AS userEmail, s.title AS studyTitle, sub.title AS subjectTitle FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id',  (error, results, fields) => {
+    connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, u.email AS userEmail, s.title AS studyTitle, sub.title AS subjectTitle, sub.labelColor, sub.textColor FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id',  (error, results, fields) => {
       if (error || !results.length || results.length === 0) throw error;
       return res.send(results);
     });
@@ -95,7 +95,7 @@ exports.findAllStudies = (req, res) => {
 exports.findOne = (req, res) => {
   try {
     const {projectId} = req.params;
-    connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, u.email AS userEmail, s.title AS studyTitle, sub.title AS subjectTitle FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id WHERE `projects`.id = ?', [ projectId ], (error, results, fields) => {
+    connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, u.email AS userEmail, s.title AS studyTitle, sub.title AS subjectTitle, sub.labelColor, sub.textColor FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id WHERE `projects`.id = ?', [ projectId ], (error, results, fields) => {
       if (error) throw error;
       if (!results.length || results.length === 0) {
         return res.status(404).send('No project found');
@@ -113,7 +113,7 @@ exports.update = (req, res) => {
     return res.status(400).send({err: 'Er ontbreekt een veld of een veld is niet ingevuld'});
   }
   try {
-    connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, s.title AS studyTitle, sub.title AS subjectTitle FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id WHERE `projects`.id = ?', [ id ], (error, results, fields) => {
+    connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, s.title AS studyTitle, sub.title AS subjectTitle, sub.labelColor, sub.textColor FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id WHERE `projects`.id = ?', [ id ], (error, results, fields) => {
       if (error) throw error;
       if (!results.length || results.length === 0)res.status(404).send('No project found');
       const projectToUpdate = {id, userId: user.id, studyId: study.id, subjectId: subject.id, title, slug, content};
@@ -121,7 +121,7 @@ exports.update = (req, res) => {
         connection.query('UPDATE `projects` SET ? WHERE id = ?', [ projectToUpdate, id ], (error, results, fields) => {
           if (error) throw error;          
           try {
-            connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, u.email AS userEmail, s.title AS studyTitle, sub.title AS subjectTitle FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id WHERE `projects`.id = ?', [ id ], (error, results, fields) => {
+            connection.query('SELECT `projects`.*, u.name AS userName, u.surname AS userSurname, u.profileUrl AS userProfileUrl, u.email AS userEmail, s.title AS studyTitle, sub.title AS subjectTitle, sub.labelColor, sub.textColor FROM projects INNER JOIN users AS u ON projects.userId = u.id INNER JOIN studyFields AS s ON projects.studyId = s.id INNER JOIN subjects AS sub ON projects.subjectId = sub.id WHERE `projects`.id = ?', [ id ], (error, results, fields) => {
               if (error) throw error;
               if (!results.length || results.length === 0) {
                 return res.status(404).send('No project found');

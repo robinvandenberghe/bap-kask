@@ -10,6 +10,7 @@ const Search = () => {
   const { projectStore } = useStores();
   const [ query, setQuery] = useState();
   const [ projects, setProjects ] = useState(projectStore.projects);
+  const [ selectedSubject, setSubject ] = useState();
 
   const handleChange = (e) => {
     const val = e.target.value.toLowerCase();
@@ -30,7 +31,7 @@ const Search = () => {
           {!projects.length ?
           <li className={style.noResults} >We found no works matching your query.</li>
           :
-          projects.map((project, index)=> <ProjectPreview key={index} project={project} />)}
+          projects.filter(i=>selectedSubject?i.subject.id===selectedSubject:true).map((project, index)=> <ProjectPreview key={index} project={project} />)}
         </ul>
       </section>
       <section className={style.container}>
@@ -39,9 +40,7 @@ const Search = () => {
           <input placeholder={`Search`} value={query} onChange={handleChange} />
         </label>
         <ul className={style.searchSubjects}>
-          {projectStore.subjects.map((item, index) => {
-            <li key={index} onClick={()=>{}}>{item.title}</li>
-          })}
+          {projectStore.subjects.map((item, index) => <li key={index} className={item.id===selectedSubject?style.activeSubject:null} onClick={()=>setSubject(item.id)}>{item.title}</li>)}
         </ul>
       </section>
     </div>

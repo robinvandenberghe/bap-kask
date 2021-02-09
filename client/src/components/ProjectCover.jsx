@@ -14,7 +14,7 @@ const ProjectCover = ({project}) => {
       <BookmarkButton id={id} className={classNames(style.bookmarkButton, isActive? style.active :null)} />
       <NavLink to={`${ROUTES.projectDetail.to}${slug}`} >
         <article className={style.container}>
-          <img alt={`Cover for ${title}`} src={`/assets/img/projects/${id}/${coverUrl}`} className={style.coverImage}/>
+          <img alt={`Cover for ${title}`} src={process.env.NODE_ENV===`development`?`http://localhost:4000${coverUrl}`:coverUrl} className={style.coverImage}/>
           <h4 className={classNames(style.overlay, isActive? style.active :null)}>{user.name + ` ` + user.surname}</h4>
         </article>
       </NavLink>

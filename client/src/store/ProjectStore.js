@@ -42,31 +42,31 @@ class ProjectStore {
   };
 
   addProject = async data => {
-    const { u, studyId, subjectId, title, coverUrl, slug, content} = data;
-    const user = new User();
-    user.updateFromServer(u);
+    const {userObj, studyId, subjectId, title, cover, slug} = data;
     const newProject = new Project();
-    newProject.updateFromServer({user, title, study: { id: studyId }, subject:{ id: subjectId }, coverUrl, slug, content });
+    const c = await this.uploadFile({data: {id: newProject.id, previous: undefined, type: `project`} , file: cover});
+    newProject.updateFromServer({id: newProject.id, user: userObj, title, study: { id: studyId }, subject:{ id: subjectId }, coverUrl: c.fileUrl, slug });
+    console.log(newProject);
     const r = await this.api.create(newProject);
     this._addProject(r);
     return r;
   };
 
   _addProject = values => {
-    const { id, userId, userName, userSurname, userEmail, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, title, coverUrl, slug, content } = values;
+    const { id, userId, userName, userSurname, userEmail, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, labelColor, textColor, title, coverUrl, slug, content } = values;
     const user = new User();
     user.updateFromServer({id: userId, name: userName, surname: userSurname, email: userEmail, profileUrl: userProfileUrl});
     const project = new Project();
-    project.updateFromServer({id, user, title, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug, content });
+    project.updateFromServer({id, user, title, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle, labelColor, textColor}, coverUrl, slug, content });
     this.projects.push(project);
   };
 
   updateProject = async (project) => {
     const values = await this.api.update(project);
-    const { id, userId, userName, userSurname, userEmail, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, title, coverUrl, slug, content } = values;
+    const { id, userId, userName, userSurname, userEmail, studyId, studyTitle, userProfileUrl, subjectId, subjectTitle, labelColor, textColor, title, coverUrl, slug, content } = values;
     const user = new User();
     user.updateFromServer({id: userId, email: userEmail, name: userName, surname: userSurname, profileUrl: userProfileUrl});
-    project.updateFromServer({id, user, title, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle}, coverUrl, slug, content });
+    project.updateFromServer({id, user, title, study: { id: studyId, title: studyTitle}, subject:{ id: subjectId, title: subjectTitle, labelColor, textColor}, coverUrl, slug, content });
   };
 
   uploadFile = async (data) => {

@@ -120,7 +120,7 @@ exports.saveWork = (req, res) => {
         }
       } else {
         try {
-          connection.query('DELETE FROM `savedProjects` WHERE `userId` = ? AND `projectId` = ?', [ userId, workId ], (err, result, fields) => {
+          connection.query('DELETE FROM `savedProjects` WHERE `userId` = ? AND `projectId` = ?', [ userId, workId ], err => {
             if (err) throw err;
             res
               .status(200)
@@ -153,7 +153,7 @@ exports.saveWork = (req, res) => {
 
 exports.getAllSavedWorks = (req, res) => {
   try {
-    connection.query('SELECT * FROM `savedProjects` WHERE `userId` = ?', [req.authUserId], (err, result, fields) => {
+    connection.query('SELECT * FROM `savedProjects` WHERE `userId` = ?', [req.authUserId], (err, result) => {
       if (err) throw err;
       res.send(result);
     });
@@ -171,13 +171,13 @@ exports.getAllSavedWorks = (req, res) => {
 exports.getUser = (req, res) => {
   try {
     const {userId} = req.params;
-    connection.query('SELECT name, surname, email, role, profileUrl FROM users WHERE id = ?', [ userId ], (error, results, fields) => {
+    connection.query('SELECT name, surname, email, role, profileUrl FROM users WHERE id = ?', [ userId ], (error, results) => {
       if (error) throw error;
       if (!results.length || results.length === 0) {
         return res.status(404).send('No user found');
       }
       const {name, surname, email, role, profileUrl} = results[0];
-      connection.query('SELECT projectId FROM `savedProjects` WHERE `userId` = ?', [userId], (err, result, fields) => {
+      connection.query('SELECT projectId FROM `savedProjects` WHERE `userId` = ?', [userId], (err, result) => {
         if (err) throw err;
         return res.send({name, surname, email, role, profileUrl, savedWorks: result});
       });
@@ -197,11 +197,10 @@ exports.logout = (req, res) => {
 exports.register =  async (req, res) => {
   const {id, email, password, name, surname, role} = req.body;
   try {
-    connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], (err, result, fields) => {
+    connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], async (err, result) => {
       if (err) throw err;
-      const user = result.length && result.length === 0 ? undefined : result[0];
-      if (user) {
-        res.status(401).send({
+      if (result[0]) {
+        return res.status(401).send({
           success: false,
           error: {
             name: `email`,
@@ -209,10 +208,60 @@ exports.register =  async (req, res) => {
             message: `Er bestaat al een gebruiker met dit e-mailadres.`
           }
         });
+      } else {
+        const hashedPass = await hashPassword(password);
+        if (!hashedPass) {
+          return res.status(500).send({
+            success: false,
+            message: 'Internal error, please try again'
+          });
+        }
+        const userToInsert = {id, name, surname, email, password: hashedPass, role};
+        try {
+          connection.query('INSERT INTO `users`SET ?', userToInsert, error => {
+            if (error) throw error;
+            connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], (err, result) => {
+              if (err) throw err;
+              const user = result.length && result.length === 0 ? undefined : result[0];
+              if (!user) {
+                return res.status(401).send({
+                  success: false,
+                  error: {
+                    name: `email`,
+                    id: `NO_USER`,
+                    message: `Er bestaat geen gebruiker met deze id.`
+                  }
+                });
+              } else {
+                const {id, name, surname, role} = user;
+                const token = jwt.sign({id, name, surname, role}, process.env.SECRET, {
+                  expiresIn: '24h'
+                });
+                const parts = token.split('.');
+                const signature = parts.splice(2);
+                return res
+                  .cookie('token', parts.join('.'), tokenCookie)
+                  .cookie('signature', signature, signatureCookie)
+                  .sendStatus(200);
+              }
+            });
+          });
+        } catch (error) {
+          return res
+            .status(500)
+            .send({
+              success: false,
+              error: {
+                name: `name`,
+                id: `INTERNAL_ERROR`,
+                message: `Internal error, please try again`
+              }
+            });
+        }
       }
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       success: false,
       error: {
         name: `name`,
@@ -221,63 +270,15 @@ exports.register =  async (req, res) => {
       }
     });
   }
-  const hashedPass = await hashPassword(password);
-  if (!hashedPass)res.status(500).send({
-    success: false,
-    message: 'Internal error, please try again'
-  });
-  const userToInsert = {id, name, surname, email, password: hashedPass, role};
-  try {
-    connection.query('INSERT INTO `users`SET ?', userToInsert,  (error, result, fields) => {
-      if (error) throw error;
-      connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], (err, result, fields) => {
-        if (err) throw err;
-        const user = result.length && result.length === 0 ? undefined : result[0];
-        if (!user) {
-          res.status(401).send({
-            success: false,
-            error: {
-              name: `email`,
-              id: `NO_USER`,
-              message: `Er bestaat geen gebruiker met deze id.`
-            }
-          });
-        } else {
-          const {id, name, surname, role} = user;
-          const token = jwt.sign({id, name, surname, role}, process.env.SECRET, {
-            expiresIn: '24h'
-          });
-          const parts = token.split('.');
-          const signature = parts.splice(2);
-          res
-            .cookie('token', parts.join('.'), tokenCookie)
-            .cookie('signature', signature, signatureCookie)
-            .sendStatus(200);
-        }
-      });
-    });
-  } catch (error) {
-    res
-      .status(500)
-      .send({
-        success: false,
-        error: {
-          name: `name`,
-          id: `INTERNAL_ERROR`,
-          message: `Internal error, please try again`
-        }
-      });
-  }
 };
 
 exports.createStudent =  async (req, res) => {
   const {id, email, name, surname, role} = req.body;
   try {
-    connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], (err, result, fields) => {
+    connection.query('SELECT * FROM `users` WHERE `email` = ?', [email], async (err, result) => {
       if (err) throw err;
-      const user = result.length && result.length === 0 ? undefined : result[0];
-      if (user) {
-        res.status(401).send({
+      if (result[0]) {
+        return res.status(401).send({
           success: false,
           error: {
             name: `email`,
@@ -285,10 +286,54 @@ exports.createStudent =  async (req, res) => {
             message: `Er bestaat al een gebruiker met dit e-mailadres.`
           }
         });
+      } else {
+        const hashedPass = await hashPassword(id);
+        if (!hashedPass) {
+          return res.status(500).send({
+            success: false,
+            message: 'Internal error, please try again'
+          });
+        }
+        const userToInsert = {id, name, surname, email, password: hashedPass, role};
+        try {
+          connection.query('INSERT INTO `users`SET ?', userToInsert, error => {
+            if (error) throw error;
+            connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], (err, result) => {
+              if (err) throw err;
+              if (!result[0]) {
+                return res.status(401).send({
+                  success: false,
+                  error: {
+                    name: `email`,
+                    id: `NO_USER`,
+                    message: `Er bestaat geen gebruiker met deze id.`
+                  }
+                });
+              } else {
+                const {id, name, surname, role} = result[0];
+                return res.send({
+                  success: true,
+                  user: {id, name, surname, role}
+                });
+              }
+            });
+          });
+        } catch (error) {
+          return res
+            .status(500)
+            .send({
+              success: false,
+              error: {
+                name: `email`,
+                id: `INTERNAL_ERROR`,
+                message: `Internal error, please try again`
+              }
+            });
+        }
       }
     });
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       success: false,
       error: {
         name: `email`,
@@ -296,48 +341,6 @@ exports.createStudent =  async (req, res) => {
         message: `Internal error, please try again`
       }
     });
-  }
-  const hashedPass = await hashPassword(id);
-  if (!hashedPass)res.status(500).send({
-    success: false,
-    message: 'Internal error, please try again'
-  });
-  const userToInsert = {id, name, surname, email, password: hashedPass, role};
-  try {
-    connection.query('INSERT INTO `users`SET ?', userToInsert,  (error, result, fields) => {
-      if (error) throw error;
-      connection.query('SELECT * FROM `users` WHERE `id` = ?', [ id ], (err, result, fields) => {
-        if (err) throw err;
-        const user = result.length && result.length === 0 ? undefined : result[0];
-        if (!user) {
-          res.status(401).send({
-            success: false,
-            error: {
-              name: `email`,
-              id: `NO_USER`,
-              message: `Er bestaat geen gebruiker met deze id.`
-            }
-          });
-        } else {
-          const {id, name, surname, role} = user;
-          res.send({
-            success: true,
-            user: {id, name, surname, role}
-          });
-        }
-      });
-    });
-  } catch (error) {
-    res
-      .status(500)
-      .send({
-        success: false,
-        error: {
-          name: `email`,
-          id: `INTERNAL_ERROR`,
-          message: `Internal error, please try again`
-        }
-      });
   }
 };
 

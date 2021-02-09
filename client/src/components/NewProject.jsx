@@ -5,6 +5,7 @@ import TextInputField from './TextInputField';
 import { observer } from "mobx-react";
 import ROUTES from "../constants";
 import { useHistory } from "react-router-dom";
+import imageCompression from 'browser-image-compression';
 import User from "../models/User";
 
 const NewProject = () => {
@@ -17,8 +18,30 @@ const NewProject = () => {
   const [ title, setTitle ] = useState(``);
   const [ study, setStudy ] = useState(``);
   const [ subject, setSubject ] = useState(``);
+  const [ cover, setCover ] = useState();
+  const [ coverUrl, setCoverUrl ] = useState(`/assets/img/defaultCover.jpg`);
+  const reader = new FileReader();
+  reader.addEventListener(`load`, ()=>{
+    setCoverUrl(reader.result);
+  });
+
+  const handleImageInput = async (e) => {
+    const files = [...e.target.files];
+    if(files.length > 0){
+      const compressedFile = await imageCompression(files[0], {maxSizeMB: 1, maxWidthOrHeight: 400});
+      reader.readAsDataURL(compressedFile);
+      setCover(compressedFile);
+    }
+  }
 
   const handleSubmit = async () => {
+    if(!cover){
+      return setError({
+        name: `cover`,
+        id: `EMPTY`,
+        message: `Please enter a cover image.`
+      });
+    }
     if(!email){
       return setError({
         name: `email`,
@@ -62,15 +85,18 @@ const NewProject = () => {
       });
     }
     const userObj = new User();
-    userObj.updateFromServer({name, email, surname, role: `student`});
+    userObj.updateFromServer({id: userObj.id, name, email, surname, role: `student`});
     const u = await uiStore.createStudent(userObj);
     if(!u.success){
       return setError(u.error);
     }
-    u.updateFromServer(u.user);
-    const d = { u, studyId: study, subjectId: subject, title, slug: slugify(`${name} ${surname} ${title}`), coverUrl: `defaultImg.jpg` };
+    userObj.updateFromServer(u.user);
+    const d = {userObj, studyId: study, subjectId: subject, title, slug: slugify(`${name} ${surname} ${title}`), cover};
     const r = await projectStore.addProject(d);
-    if(r&&r.user.name===name){
+    if(!r.success){
+      return setError(r.error);
+    }
+    if(r.project.userName===name){
       setError();
       setEmail();
       setName();
@@ -90,6 +116,11 @@ const NewProject = () => {
 
   return (
     <section className={style.container}>
+      <label htmlFor="cover" className={style.coverImage}>
+        <span>Cover Image</span>
+        <img src={coverUrl} alt={`cover`} />
+        <input type={`file`} accept="image/*" name="cover" id="cover" onChange={handleImageInput} />
+      </label>
       <div className={style.sideContainer}>
         <TextInputField type={`email`} value={email} setValue={setEmail} name={`email`} label={`Email address`} error={error} placeholder={`Enter your email address.`} setError={setError} />
         <TextInputField type={`text`} value={name} setValue={setName} name={`name`} label={`First name`} error={error} placeholder={`Enter the student his/her first name.`} setError={setError} />

@@ -5,13 +5,30 @@
   align-items: flex-start;
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns:repeat(2, 1fr);
+  grid-template-areas: "top top" "left right";
+}
+.coverImage{
+  grid-area: top;
+  display:grid;
+  gap: .4rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+.coverImage input{
+  visibility: hidden;
+}
+.coverImage img{
+  width: 100%;
+  height: 16rem;
+  max-width:16rem;
+  object-position: center;
+  object-fit: cover;
 }
 .sideContainer{
   display: grid;
   gap: 2rem;
 }
-
 .select{
   font-size: 1.6rem;
   max-width: 36rem;
