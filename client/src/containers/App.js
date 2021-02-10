@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { NavLink, Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
 import Home from "./Home/";
 import Account from "./Account";
@@ -45,6 +45,11 @@ const App = () => {
       <Divider />
       <footer className={styles.footer}>
         <p className={styles.footerText}>Digital Graduation Expo 07.09 - 22.09</p>
+        <div className={styles.bottomFooter}>
+          <NavLink exact to={ROUTES.home} className={styles.bottomLink} activeClassName={styles.active}>home</NavLink>
+          <NavLink to={ROUTES.schedule} className={styles.bottomLink} activeClassName={styles.active}>schedule</NavLink>
+          <NavLink to={ROUTES.overview} className={styles.bottomLink} activeClassName={styles.active}>overview</NavLink>
+        </div>
       </footer>
     </div>
   );

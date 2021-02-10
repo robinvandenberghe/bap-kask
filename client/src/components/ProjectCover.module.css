@@ -46,4 +46,43 @@
   opacity: 1;
   transition: .2s ease-in-out opacity;
 }
+.infoContainer{
+  display:none;
+}
 
+@media screen and (max-width: 500px){
+  .bookmarkButton{
+    display: none;
+  }
+  .bookmarkButton.active{
+    display: none;
+  }
+  .container{
+    border: solid .2rem var(--primary-color);
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    background-color: var(--white-color);
+    align-items: center;
+  }
+  .coverImage{
+    width:8rem;
+    height:8rem;
+    filter: none;
+  }
+  .overlay{
+    display:none;
+  }
+  .infoContainer{
+    display: grid;
+    padding: .8rem;
+    gap: .8rem;
+    grid-auto-rows: max-content;
+    align-content: center;
+    font-size: 1.6rem;
+  }
+  .infoContainer .title{
+    font-size: 1.8rem;
+    font-style: italic;
+    font-weight: 500;
+  }
+}

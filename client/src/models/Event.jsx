@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeAutoObservable } from "mobx";
 
 class Event {
-  constructor(id = uuidv4(), topic, startDate = undefined, endDate = undefined, title = undefined, content = undefined, ticketInfo = undefined, address = undefined, subline = undefined) {
+  constructor(id = uuidv4(), topic = undefined, startDate = undefined, endDate = undefined, title = undefined, content = undefined, ticketInfo = undefined, address = undefined, subline = undefined) {
     this.id = id;
     this.topic = topic;
     this.startDate = startDate;
@@ -47,8 +47,6 @@ class Event {
     }
     return `${this.startDate.toLocaleDateString(`en-GB`, { weekday: `short`})} ${(`0`+this.startDate.getDate()).slice(-2)}.${(`0`+(this.startDate.getMonth()+1)).slice(-2)} - ${this.endDate.toLocaleDateString(`en-GB`, { weekday: `short`})} ${(`0`+this.endDate.getDate()).slice(-2)}.${(`0`+(this.endDate.getMonth()+1)).slice(-2)}`;
   }
-
-
 }
 
 export default Event;

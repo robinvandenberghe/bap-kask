@@ -21,11 +21,11 @@ const FDDetail = () => {
           <p>We are students who study Digital storytelling. We make all kinds of work like podcasts, youtube channels, games, instagram pages,... We would like to showcase our works a little differrent this year. We came with a cool way to let you take a look in our world.</p>
         </article>
         <article className={style.weAr}>
-          <img alt={`circle`} src={`/assets/img/weArCircle.svg`} className={style.weArCircle} />
           <div className={style.weArContent}>
             <h3>We AR the internet</h3>
             <p>With We AR the Internet we want to highlight an entire digital generation. By creating an anti establishment movement against the classical approach of design museums we are raising our voice that digital art deserves a place as well. The Internet is here and won’t leave. We create art. We belong in a museum.</p>
           </div>
+          <img alt={`circle`} src={`/assets/img/weArCircle.svg`} className={style.weArCircle} />
           <div className={style.shadowBlock} />
         </article>
       </section>

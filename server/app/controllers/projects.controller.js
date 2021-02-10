@@ -92,6 +92,17 @@ exports.findAllStudies = (req, res) => {
   }
 };
 
+exports.findAllSelections = (req, res) => {
+  try {
+    connection.query('SELECT p.*, u.name AS userName, u.surname AS userSurname FROM projectSelections AS p INNER JOIN users AS u ON p.userId = u.id ',  (error, results, fields) => {
+      if (error || !results.length || results.length === 0) throw error;
+      return res.send(results);
+    });
+  } catch (err) {
+    return res.status(500).send({err: err.sqlMessage || 'Error'});
+  }
+};
+
 exports.findOne = (req, res) => {
   try {
     const {projectId} = req.params;

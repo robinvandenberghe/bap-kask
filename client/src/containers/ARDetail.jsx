@@ -1,7 +1,5 @@
 import React from "react";
 import stylesLayout from '../styles/layout.module.css';
-import * as THREE from 'three';
-require(`aframe`);
 
 const ARDetail = () => {
   return (
@@ -13,10 +11,11 @@ const ARDetail = () => {
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
         cursor="fuse: false; rayOrigin: mouse"
         raycaster="objects: .clickable"
+        style={{width: `100%`, height:`100%`}}
         >
         <a-assets>
-          <a-asset-item id="tree" src="/assets/models/DamagedHelmet.glb"></a-asset-item>
-          {/* <a-asset-item id="video" loop="true" src="/assets/video/testmov.mp4" webkit-playsinline autoplay={true}></a-asset-item> */}
+          <a-asset-item id="tree" src="/assets/models/plaat107.glb"></a-asset-item>
+          <a-asset-item id="video" loop="true" src="/assets/video/testmov.mp4" webkit-playsinline></a-asset-item>
         </a-assets>
         <a-marker
           type='hiro'
@@ -26,19 +25,13 @@ const ARDetail = () => {
           <a-entity 
             gltf-model="#tree"
             scale="0.15 0.15 0.15"
-            position="-1 0 0"
+            position="0 0 0"
             animation-mixer
             clickhandler 
           ></a-entity>
-          <a-entity 
-            video="viddy"
-            scale="0.25 0.25 0.25"
-            position="-1 -1 0"
-            playsinline
-          ></a-entity> 
-          <a-entity  scale="1 1 1"><a-video id="videoScreen" src="#video" width="1.6" height="0.9"></a-video></a-entity>
+          {/* <a-entity  scale="1 1 1"><a-video id="videoScreen" src="#video" width="1.6" height="0.9"></a-video></a-entity> */}
         </a-marker>
-        <a-entity camera="userHeight: 1.6" ></a-entity>
+        <a-entity style={{position: `relative`, width: `100%`, height:`100%`}} camera="userHeight: 1.6" ></a-entity>
       </a-scene>
     </section>
   );

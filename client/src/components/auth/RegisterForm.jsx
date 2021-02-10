@@ -32,14 +32,14 @@ const RegisterForm = ({  history }) => {
         return setError({
           name: `name`,
           id: `EMPTY`,
-          message: `Please enter your name.`
+          message: `Please enter your first name.`
         });
       }
       if(!surname){
         return setError({
           name: `surname`,
           id: `EMPTY`,
-          message: `Please enter your surname.`
+          message: `Please enter your last name.`
         });
       }
       if(!email){
@@ -92,8 +92,8 @@ const RegisterForm = ({  history }) => {
   return (
     <form onSubmit={handleSubmit} className={stylesForm.form}>
       <h3 className={stylesTypo.sectionTitle}>Register</h3>
-      <TextInputField value={name} setValue={setName} name={`name`} placeholder={`Enter your name.`} label={`Name`} error={error} setError={setError}/>
-      <TextInputField value={surname} setValue={setSurname} name={`surname`} placeholder={`Enter your surname.`} label={`Surname`} error={error} setError={setError}/>
+      <TextInputField value={name} setValue={setName} name={`name`} placeholder={`Enter your name.`} label={`First name`} error={error} setError={setError}/>
+      <TextInputField value={surname} setValue={setSurname} name={`surname`} placeholder={`Enter your surname.`} label={`Last name`} error={error} setError={setError}/>
       <TextInputField type={`email`} value={email} setValue={setEmail} name={`email`} placeholder={`Enter your email address.`} label={`Email address`} error={error} setError={setError}/>
       <TextInputField type={`password`} value={pwd} setValue={setPwd} name={`pwd`} placeholder={`Enter your password.`} label={`Password`} error={error} setError={setError}/>
       <PasswordStrengthBar {...pwOptions}/>

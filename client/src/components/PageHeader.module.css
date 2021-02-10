@@ -1,6 +1,5 @@
 .container {
   width: 100%;
-  display: grid;
   display: flex;
   flex-flow: row wrap;
   gap: 1rem;
@@ -11,9 +10,9 @@
 }
 .logoWrapper{
   height: 100%;
-  width: 100%;
-  max-width: 24rem;
-  max-height: 6rem;
+  width: 40%;
+  max-width: 21rem;
+  max-height: 5rem;
 }
 .logoImage{
   height: 100%;
@@ -41,4 +40,9 @@
 }
 .selectedMenuItem{
   font-weight: 600;
+}
+@media screen and (max-width: 750px){
+  .textLink{
+    display: none;
+  }
 }

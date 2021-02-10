@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./containers/App";
 import * as serviceWorker from "./serviceWorker";
 import "./styles/index.css";
-import '@google/model-viewer';
+import '@google/model-viewer/dist/model-viewer.js';
 require(`dotenv`).config();
 
 ReactDOM.render(

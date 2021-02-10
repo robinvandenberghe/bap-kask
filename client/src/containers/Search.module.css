@@ -4,10 +4,13 @@
 .titleMini {
   composes: titleMini from "../styles/typo.module.css";
 }
+.wrapper{
+  grid-template-areas: '. search';
+}
 .container{
   width: 100%;
-  height:100%;
   border-left: solid .2rem var(--primary-color);
+  grid-area: search;
 }
 .searchResults{
   width: 100%;
@@ -55,6 +58,8 @@
   font-size: 2rem;
   font-style: italic;
   padding: 2rem;
+  overflow: hidden;
+  max-height: 100%;
 }
 .searchSubjects li:hover{
   cursor: pointer;
@@ -71,4 +76,86 @@
   background-color: var(--primary-color);
   vertical-align: middle;
   margin-left: .8rem;
+}
+.leftContainer{
+  position: relative;
+}
+.backgroundRaster{
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  left:0;
+  top:0;
+  padding: 1.6rem;
+}
+.filterSort{
+  display:flex;
+  padding: 1.6rem;
+  flex-flow: row wrap;
+  gap: 1.6rem;
+}
+.filterWrapper{
+  position: relative;
+}
+.filterSortButton{
+  display:grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: .8rem;
+  align-items: center;
+  border: solid .2rem var(--primary-color);
+  padding: .8rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+  position: relative;
+}
+.filterSortButton:hover, .contentList:hover{
+  cursor: pointer;
+}
+.filterSortButton img{
+  width: 2.4rem;
+  height: 2.4rem;
+  object-fit: contain;
+}
+.filterWrapper .contentList{
+  position: absolute;
+  border: .2rem solid var(--primary-color);
+  top: 0rem;
+  left: 100%;
+  z-index: 99;
+  background-color: var(--white-color);
+  display:none;
+  font-weight: 400;
+  font-size: 1.6rem;
+  width: max-content;
+}
+.contentList.active{
+  display:grid;
+
+}
+.contentList li{
+  padding: .8rem;
+}
+.contentList li.selected{
+  font-weight: 600;
+}
+@media screen and (max-width:1000px){
+  .wrapper{
+    grid-template-areas: unset;
+    grid-template-rows: max-content ;
+  }
+  .container{
+    grid-area: unset;
+    border-left: none;
+    overflow: hidden;
+  }
+  .searchBar{
+    border-left: solid .2rem var(--primary-color);
+  }
+  .collapsed{
+    height: 0;
+    padding:0;
+  }
 }

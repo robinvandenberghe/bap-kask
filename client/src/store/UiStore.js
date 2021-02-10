@@ -43,7 +43,10 @@ class UiStore {
       const people = [...new Set([...recipients ,...senders])];
       const convos = people.filter(u=>u!==this.authUser.id).map((u)=>{
         const messages = c.filter((a)=>a.sender.id===u||a.recipient.id===u);
-        return { user: messages.filter((a)=>a.sender.id!==this.authUser.id)[0].sender, messages};
+        const senderMessage = messages.filter((a)=>a.sender.id!==this.authUser.id)[0];
+        const user = senderMessage?senderMessage.sender:messages.filter((a)=>a.recipient.id!==this.authUser.id)[0].recipient;
+
+        return { user, messages};
       })
       this.setConversations(convos);
     } );
@@ -60,13 +63,19 @@ class UiStore {
     return await this.authService.getUser(id);
   }
 
-  newMessage = data => {
-    const newMessage = new Message();
-    newMessage.updateFromServer(data);
-    this.projects.push(newMessage);
-    this.authService
-      .createMessage(newMessage)
-      .then(projectValues => newMessage.updateFromServer(projectValues));
+  newMessage = async data => {
+    const r = await this.messageApi.create(data);
+    if(r.success){
+      const {id, senderId, senderName, senderSurname, senderProfileUrl, recipientId, recipientName, recipientSurname, recipientProfileUrl, sentAt, hasRead, message} = r.message;
+      data.updateFromServer({id, message, sentAt, hasRead, sender: new User(senderId, senderName, senderSurname, ``, ``, ``, senderProfileUrl), recipient: new User(recipientId, recipientName, recipientSurname, ``, ``, ``, recipientProfileUrl)});
+      const c = this.conversations.find(i=>i.user.id===data.recipient.id);
+      if(c){
+        c.messages.push(data);
+      } else {
+        this.setConversations([...this.conversations, {user: data.recipient, messages: [ data ]}]);
+      }
+    }
+    return r;
   };
 
   saveWork = async (id) => {

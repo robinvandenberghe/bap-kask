@@ -6,7 +6,8 @@
   position: relative;
   height: calc(100% -2rem);
   background: url('./raster.png') no-repeat  center;
-  background-size: contain;
+  background-size: cover;
+  background-position: center;
   margin: 2rem;
 }
 .textBlock{
@@ -35,4 +36,10 @@
 .subtitleText{
   font-size: 3.6rem;
   font-weight: 400;
+}
+
+@media screen and (max-width:500px){
+  .container{
+    display: none;
+  }
 }

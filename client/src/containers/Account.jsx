@@ -10,12 +10,13 @@ import cx from 'classnames';
 import { useHistory } from "react-router-dom";
 import ROUTES from "../constants";
 import NewProject from "../components/NewProject";
+import NewEvent from "../components/NewEvent";
 
 const Account = () => {
   const { uiStore, projectStore, eventStore } = useStores();
   const history = useHistory();
   const { name, surname, profileUrl, role } = uiStore.authUser;
-  const [ page, setPage ] = useState(`manageevents`);
+  const [ page, setPage ] = useState(`works`);
   const [ promptMessage, setPrompt ] = useState();
   let roleClass = null;
   let roleTitle = `Visitor`;
@@ -28,7 +29,7 @@ const Account = () => {
     setPrompt({message: `Are you sure you want to delete this work?`, primary: {title: `Yes`, action: ()=>projectStore.deleteProject(project)}, secondary: {title: `No`, action: ()=>setPrompt()}});
   }
   const handleDeleteEvent = (event) => {
-    setPrompt({message: `Are you sure you want to delete this event?`, primary: {title: `Yes`, action: ()=>projectStore.deleteProject(event)}, secondary: {title: `No`, action: ()=>setPrompt()}});
+    setPrompt({message: `Are you sure you want to delete this event?`, primary: {title: `Yes`, action: ()=>eventStore.deleteEvent(event)}, secondary: {title: `No`, action: ()=>setPrompt()}});
   }
 
   const ProjectEdit = ({project}) => {
@@ -52,9 +53,9 @@ const Account = () => {
   }
 
   const EventEdit = ({event}) => {
-    const { id, topic, sub, title, startEndHour, startEndDate, subline} = event;
+    const { id, topic, title, startEndHour, startEndDate, subline} = event;
     return (
-      <li className={style.projectEdit}>
+      <li className={style.eventEdit}>
         <div className={cx(style.infoFlex, style.titleName)}>
           <h4>{title}</h4>
           <div className={style.lineFlex}>
@@ -66,7 +67,7 @@ const Account = () => {
           </div>
         </div>
         <div className={cx(style.infoFlex, style.studySubject)}>
-          <span>{startEndDate}</span>
+          <span className={style.boldSpan}>{startEndDate}</span>
           <span>{startEndHour}</span>
         </div>
         <div className={style.editDelete}>
@@ -146,11 +147,16 @@ const Account = () => {
       </section>  
       :page===`manageevents`?
       <section className={style.manageWorks}>
-        <span className={style.newProject} onClick={()=>setPage(`newwork`)}>+ new event</span>
-        <h3>Events</h3>
-        <ul className={style.editList}>
+        <span className={style.newProject} onClick={()=>setPage(`newevent`)}>+ new event</span>
+        <h3 className={style.newTitle}>Events</h3>
+        <ul className={style.eventList}>
           {eventStore.events.map((event,key)=><EventEdit event={event} key={event.id} />)}
         </ul>
+      </section> 
+      :page===`newevent`?
+      <section className={style.manageWorks}>
+        <h3 className={style.newTitle}>New event</h3>
+        <NewEvent />
       </section> 
       :null}
       {promptMessage?<Prompt object={promptMessage}/>:null}

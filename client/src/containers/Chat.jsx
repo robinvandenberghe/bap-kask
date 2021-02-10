@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react";
-import { NavLink, useHistory, useParams } from "react-router-dom";
+import { NavLink, useHistory, useLocation, useParams } from "react-router-dom";
 import cx from 'classnames';
 import { useStores } from "../hooks/useStores";
 import style from "./Chat.module.css";
@@ -8,26 +8,37 @@ import stylesLayout from '../styles/layout.module.css';
 import withAuthentication from "../components/auth/WithAuthentication";
 import ROUTES from "../constants";
 import { autorun } from "mobx";
+import Message from '../models/Message';
 
 
 const Chat = () => {
+  const location = useLocation();
   const { uiStore, projectStore } = useStores();
   const { userId } = useParams();
-  const [ selected, setSelected ] = useState();
+  const [ selected, setSelected ] = useState(location&&location.state&&location.state.selected?JSON.parse(location.state.selected):undefined);
   const [ query, setQuery ] = useState(``);
   const [ filterVal, setFilter ] = useState(``);
   const [ newMessage, setMessage ] = useState(``);
   const [ split, setSplit ] = useState(true);
   const history = useHistory();
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: `smooth` })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [uiStore.conversations]);
 
   autorun(()=>{
     if(userId&&!selected)setSelected({...uiStore.conversations.find((u)=>u.user.id===userId), work: projectStore.projects.find((u)=>u.user.id===userId)});
   })
 
   const ChatPreview = ({conversation}) => {
-    const {user:{name, surname, profileUrl}, messages} = conversation;
+    const {user:{id, name, surname, profileUrl}, messages} = conversation;
     return (
-      <li className={cx(style.chatPreview, selected?style.selected:null)} onClick={()=>handleClick(conversation)}>
+      <li className={cx(style.chatPreview, selected&&selected.user.id===id?style.selected:null)} onClick={()=>handleClick(conversation)}>
         <img alt={`${name} ${surname}`} src={profileUrl?`/assets/img/users/${profileUrl}`:`/assets/img/users/default.jpg`} className={style.profileImg} />
         <div className={style.previewBox}>
           <span className={style.userName}>{name + ` ` + surname}</span>
@@ -38,7 +49,7 @@ const Chat = () => {
     );
   }
 
-  const Message = ({data}) => {
+  const MessageItem = ({data}) => {
     const {sender: {id, name, surname, profileUrl}, message, hasRead, sentAt} = data;
     return (
       <li className={cx(style.messageContainer, id!==uiStore.authUser.id?style.sender:null)}>
@@ -49,6 +60,13 @@ const Chat = () => {
         </div>
       </li>
     );
+  }
+
+  const handleSend = async () => {
+    const m = new Message();
+    m.updateFromServer({id: m.id, sender: uiStore.authUser, recipient: selected.user, message: newMessage});
+    const r = await uiStore.newMessage(m);
+    if(r.success)setMessage(``);
   }
 
   const check = () => {
@@ -98,15 +116,16 @@ const Chat = () => {
           :null}
         </div>
         <ul className={style.messages}>
-          {selected && selected.messages? selected.messages.map((item, index) => <Message data={item} key={index} />):null}
+          {selected && selected.messages? selected.messages.map((item, index) => <MessageItem data={item} key={index} />):null}
+          <li ref={messagesEndRef} />
         </ul>
         <div className={style.sendBar}>
-          <input className={style.sendInput} type={`text`} name={`searchQuery`} placeholder={`Type a message...`} value={newMessage} onChange={(e)=>setMessage(e.target.value)} />
-            <span className={style.sendButton}>Send</span>
+          <input className={style.sendInput} type={`text`} name={`newMessage`} placeholder={`Type a message...`} value={newMessage} onChange={(e)=>setMessage(e.target.value)} />
+          <span className={style.sendButton} onClick={handleSend}>Send</span>
         </div>
       </section>
-      :<div className={cx(style.chatContainer, stylesLayout.layout)} >
-          <section className={style.summaryColumn}>
+      :<div className={cx(style.chatContainer, stylesLayout.scrollLayout)} >
+          <section className={cx(style.summaryColumn)}>
             <h3>Search</h3>
             <form className={style.searchContainer} onSubmit={handleSearch}>
               <input className={style.searchInput} type={`text`} name={`searchQuery`} placeholder={`Search a conversation...`} value={query} onChange={(e)=>setQuery(e.target.value)} />
@@ -125,7 +144,7 @@ const Chat = () => {
                 <p>Select a conversation.</p>
               </section>
             :
-            <section className={style.conversation}>
+            <section className={cx(style.conversation)}>
               <div className={style.chatHeader}>
                 {selected && selected.user?
                 <>
@@ -136,12 +155,13 @@ const Chat = () => {
                 </>
                 :null}
               </div>
-              <ul className={style.messages}>
-                {selected && selected.messages? selected.messages.map((item, index) => <Message data={item} key={index} />):null}
+              <ul className={cx(style.messages)}>
+                {selected && selected.messages? selected.messages.map((item, index) => <MessageItem data={item} key={index} />):null}
+                <li ref={messagesEndRef} />
               </ul>
               <div className={style.sendBar}>
-                <input className={style.sendInput} type={`text`} name={`searchQuery`} placeholder={`Type a message...`} value={newMessage} onChange={(e)=>setMessage(e.target.value)} />
-                  <span className={style.sendButton}>Send</span>
+                <input className={style.sendInput} type={`text`} name={`newMessage`} placeholder={`Type a message...`} value={newMessage} onChange={(e)=>setMessage(e.target.value)} />
+                <span className={style.sendButton} onClick={handleSend}>Send</span>
               </div>
             </section>
           :null}

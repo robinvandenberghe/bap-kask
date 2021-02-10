@@ -104,7 +104,7 @@ const NewProject = () => {
       setTitle();
       setStudy();
       setSubject();
-      history.push(ROUTES.projectDetail.to + r.id);
+      history.push(ROUTES.projectDetail.to + r.project.id);
     }else{
       return setError({
         name: `email`,
@@ -120,6 +120,7 @@ const NewProject = () => {
         <span>Cover Image</span>
         <img src={coverUrl} alt={`cover`} />
         <input type={`file`} accept="image/*" name="cover" id="cover" onChange={handleImageInput} />
+        {error&&error.name===`cover`?<span className={style.selectError}>{error.message}</span>:null}
       </label>
       <div className={style.sideContainer}>
         <TextInputField type={`email`} value={email} setValue={setEmail} name={`email`} label={`Email address`} error={error} placeholder={`Enter your email address.`} setError={setError} />

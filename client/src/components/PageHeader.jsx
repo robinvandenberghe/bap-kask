@@ -8,8 +8,8 @@ const PageHeader = () => {
   const location = useLocation();
   return (
     <header className={style.container}>
-      <NavLink to={ROUTES.home}>
-        <h1 className={style.logoWrapper}>
+      <NavLink to={ROUTES.home} className={style.logoWrapper}>
+        <h1 >
           <img className={style.logoImage} alt='Logo KASK School of Arts' src={`/assets/img/kask-logo.png`} />
           <p className='visually-hidden'>Digital Graduation Expo - KASK School of Arts</p>
         </h1>

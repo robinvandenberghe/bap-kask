@@ -67,6 +67,14 @@
   font-weight: 400;
   width: 100%;
 }
+.dateTimeContainer{
+  display:flex;
+  flex-flow: row wrap;
+  width: 100%;
+  max-width: 36rem;
+  justify-content: space-between;
+  gap: .8rem;
+}
 
 @media screen and (max-width:700px){
   .container{
@@ -75,8 +83,5 @@
     max-width: 36rem;
     justify-self: center;
     padding-bottom: 5rem;
-  }
-  .coverImage{
-    grid-area: unset;
   }
 }

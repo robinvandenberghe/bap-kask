@@ -6,4 +6,5 @@ module.exports = app => {
   app.get('/api/events/:eventId', controller.findOne);
   app.put('/api/events/:eventId', checkToken, isAdmin, controller.update);
   app.delete('/api/events/:eventId', checkToken, isAdmin, controller.delete);
+  app.get('/api/topics', controller.findAllTopics);
 };

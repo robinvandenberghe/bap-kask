@@ -18,11 +18,14 @@
 }
 .backgroundRaster{
   width:100%;
+  min-height: 30rem;
   z-index: -1;
   position: absolute;
   top:0;
   left:50%;
   transform: translateX(-50%);
+  object-fit: cover;
+  object-position: center;
 }
 .whoAreWe{
   display: grid;
@@ -43,6 +46,7 @@
   position: relative;
   border: solid .3rem var(--primary-color);
   grid-template-columns: max-content 1fr;
+  grid-template-areas: "circle .";
   gap: 2rem;
   padding: 1.6rem;
   align-items: center;
@@ -62,6 +66,7 @@
   width: 5rem;
   height: 5rem;
   object-fit: contain;
+  grid-area: circle;
 }
 .weAr .shadowBlock{
   display: block;
@@ -134,6 +139,15 @@
 @media screen and (max-width: 750px){
   .workList{
     grid-template-columns: repeat(2, 1fr);
+  }
+  .weAr{
+    margin-top: 2rem;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
+  .weArCircle{
+    grid-area: unset;
   }
 }
 @media screen and (max-width: 500px){

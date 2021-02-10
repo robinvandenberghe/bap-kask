@@ -10,7 +10,8 @@ import {ReactComponent as Bookmarked} from './../icons/bookmarkFillWhite.svg';
 import style from './Viewport.module.css';
 import { useStores } from '../../../hooks/useStores';
 import classNames from 'classnames';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import ROUTES from '../../../constants';
 
 export const Header = ({object}) => {
   const { enabled, actions: { setOptions }, query } = useEditor((state) => ({ enabled: state.options.enabled }));
@@ -84,10 +85,10 @@ export const Header = ({object}) => {
             <Edit className={style.headerIcon}/>
             <span>edit</span>
           </div>:
-          <div className={classNames(style.headerButton, style.inverted)} onClick={() => {setOptions((options) => (options.enabled = !enabled));}}>
+          <Link to={{pathname: ROUTES.chatDetail.to+item.user.id, state: {selected: JSON.stringify({messages:[], user: item.user, work: item})} }} className={classNames(style.headerButton, style.inverted)}>
             <Chat className={style.headerIcon}/>
             <span>chat</span>
-          </div>
+          </Link >
           }     
           <div className={classNames(style.headerButton, saved? style.inverted :null)} onClick={handleBookmark}>
             {saved?<Bookmarked className={style.headerIcon}/>:<Bookmark className={style.headerIcon}/>}

@@ -24,4 +24,31 @@
   font-size: 3.2rem;
   justify-self: flex-end;
   width: max-content;
+  display: block;
+}
+.bottomFooter{
+  display: none;
+}
+.bottomLink{
+  border: .2rem solid var(--primary-color);
+  padding: .8rem;
+  font-size: 1.8rem;
+  min-width: 9rem;
+  text-align: center;
+}
+.bottomLink.active{
+  font-weight: 600;
+}
+
+@media screen and (max-width: 750px){
+  .footerText{
+    display: none;
+  }
+  .bottomFooter{
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    width:100%;
+    gap: .8rem;
+  }
 }

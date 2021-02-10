@@ -4,6 +4,7 @@ module.exports = app => {
   app.post('/api/projects', checkToken, isAdmin, controller.create);
   app.get('/api/projects', controller.findAll);
   app.get('/api/subjects', controller.findAllSubjects);
+  app.get('/api/selections', controller.findAllSelections);
   app.get('/api/studies', controller.findAllStudies);
   app.get('/api/projects/:projectId', controller.findOne);
   app.put('/api/projects/:projectId', checkToken, isAdminOrStudent, controller.update);

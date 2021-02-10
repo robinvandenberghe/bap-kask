@@ -31,7 +31,6 @@
   width: 2.4rem;
   height: 2.4rem;
   object-fit: contain;
-
 }
 .rightContainer{
   display:flex;
@@ -101,4 +100,16 @@
 }
 .toolbox .toolItem:hover{
   cursor: hover;
+}
+
+@media screen and (max-width: 750px){
+  .headerButton{
+    padding: 1rem;
+    font-size: 1.6rem;
+    gap: .4rem;
+  }
+  .headerIcon{
+    width: 1.6rem;
+    height: 1.6rem;
+  }
 }

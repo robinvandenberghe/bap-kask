@@ -13,9 +13,11 @@ class ProjectStore {
     this.api = new Api(`projects`);
     this.subjectApi = new Api(`subjects`);
     this.studyApi = new Api(`studies`);
+    this.selectionApi = new Api(`selections`);
     this.getAll();
     this.getAllStudies();
     this.getAllSubjects();
+    this.getAllSelections();
     makeAutoObservable(this);
   }
 
@@ -37,6 +39,18 @@ class ProjectStore {
     this.subjectApi.getAll().then(action(
       d => d.forEach(item => {
         this.subjects.push(item);
+      })
+    ));
+  };
+
+  getAllSelections = () => {
+    this.selectionApi.getAll().then(action(
+      d => d.forEach(item => {
+        const { projects, description, userId, userName, userSurname} = item;
+        const ar = projects.split(`;`);
+        const s = {description, user: {id: userId, name: userName, surname: userSurname}, projects: []};
+        s.projects = ar.map(a=>this.projects.find(b=>b.id===a));
+        this.selections.push(s);
       })
     ));
   };

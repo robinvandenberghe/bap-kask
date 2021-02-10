@@ -16,6 +16,12 @@
   gap: 2rem;
   padding: 2rem 0;
   grid-auto-rows: max-content;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+.summaryColumn::-webkit-scrollbar {
+  display: none;
 }
 .searchContainer{
   width: 100%;
@@ -112,8 +118,12 @@
   padding: 3.2rem;
   grid-auto-rows: max-content;
   justify-items: flex-end;
-  align-content: flex-end;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+.messages::-webkit-scrollbar {
+  display: none;
 }
 .messageContainer{
   display: flex;
@@ -139,6 +149,7 @@
   line-height: 1.5;
   height: max-content;
   background-color: var(--yellow-color);
+  min-width: 10rem;
 }
 .sender .messageBox{
   background-color: var(--white-color);
