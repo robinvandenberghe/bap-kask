@@ -38,8 +38,14 @@ require('./app/routes/auth.routes.js')(app);
 require('./app/routes/messages.routes.js')(app);
 require('./app/routes/projects.routes.js')(app);
 require('./app/routes/events.routes.js')(app);
-
-app.use(express.static(`public/`));
+app.use(express.static(`public`));
+app.get('/*', function(req, res) {
+  res.sendFile(`${__dirname}/public/`, function(err) {
+     if (err) {
+       res.status(500).send(err)
+     }
+   })
+ })
 server.listen(port, () => {
   console.log(`Server luistert op poort ${port}`);
 });
