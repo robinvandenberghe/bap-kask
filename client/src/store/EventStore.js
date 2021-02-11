@@ -50,7 +50,7 @@ class EventStore {
   };
 
   deleteEvent = event => {
-    this.events.splice(this.projects.indexOf(event), 1);
+    this.events.splice(this.events.indexOf(event), 1);
     this.api.delete(event);
   };
 }

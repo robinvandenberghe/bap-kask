@@ -26,10 +26,10 @@ const Account = () => {
   }
 
   const handleDeleteProject = (project) => {
-    setPrompt({message: `Are you sure you want to delete this work?`, primary: {title: `Yes`, action: ()=>projectStore.deleteProject(project)}, secondary: {title: `No`, action: ()=>setPrompt()}});
+    setPrompt({message: `Are you sure you want to delete this work?`, primary: {title: `Yes`, action: ()=>{projectStore.deleteProject(project); setPrompt()}}, secondary: {title: `No`, action: ()=>setPrompt()}});
   }
   const handleDeleteEvent = (event) => {
-    setPrompt({message: `Are you sure you want to delete this event?`, primary: {title: `Yes`, action: ()=>eventStore.deleteEvent(event)}, secondary: {title: `No`, action: ()=>setPrompt()}});
+    setPrompt({message: `Are you sure you want to delete this event?`, primary: {title: `Yes`, action: ()=>{eventStore.deleteEvent(event); setPrompt()}}, secondary: {title: `No`, action: ()=>setPrompt()}});
   }
 
   const ProjectEdit = ({project}) => {

@@ -143,6 +143,8 @@
   position: relative;
   width: 100%;
   max-width: 40rem;
+  word-wrap: break-word;
+  word-break: break-all;
   padding: .8rem 1.6rem;
   border: solid .2rem var(--primary-color);
   font-size: 1.6rem;
@@ -215,5 +217,16 @@
     flex-flow: column;
     width: max-content;
     align-items: flex-start;
+  }
+
+}
+@media screen and (max-width: 600px){
+  .messages{
+    padding: 3.2rem 0;
+  }
+  .sendBar{
+    padding: 0 0 .4rem;
+    gap: .4rem;
+    border: none;
   }
 }

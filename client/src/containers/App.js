@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Route, Switch } from "react-router-dom";
+import { NavLink, Route, Switch, useLocation } from "react-router-dom";
 import styles from "./App.module.css";
 import Home from "./Home/";
 import Account from "./Account";
@@ -18,11 +18,15 @@ import Chat from "./Chat";
 import FDDetail from "./FDDetail";
 
 const App = () => {
-
+  const location = useLocation();
   return (
     <div className={styles.container}>
-      <PageHeader />
-      <Divider />
+      {location.pathname!==ROUTES.arDetail?
+      <>
+        <PageHeader />
+        <Divider />
+      </>  
+      :null}
       <main className={styles.layout}>
         <Switch>
           <Route path={ROUTES.home} exact strict component={Home} />
@@ -42,15 +46,19 @@ const App = () => {
           <Route exact path={ROUTES.festivalDigital} component={FDDetail} />
         </Switch>
       </main>
-      <Divider />
-      <footer className={styles.footer}>
-        <p className={styles.footerText}>Digital Graduation Expo 07.09 - 22.09</p>
-        <div className={styles.bottomFooter}>
-          <NavLink exact to={ROUTES.home} className={styles.bottomLink} activeClassName={styles.active}>home</NavLink>
-          <NavLink to={ROUTES.schedule} className={styles.bottomLink} activeClassName={styles.active}>schedule</NavLink>
-          <NavLink to={ROUTES.overview} className={styles.bottomLink} activeClassName={styles.active}>overview</NavLink>
-        </div>
-      </footer>
+      {location.pathname!==ROUTES.arDetail?
+      <>
+        <Divider />
+        <footer className={styles.footer}>
+          <p className={styles.footerText}>Digital Graduation Expo 07.09 - 22.09</p>
+          <div className={styles.bottomFooter}>
+            <NavLink exact to={ROUTES.home} className={styles.bottomLink} activeClassName={styles.active}>home</NavLink>
+            <NavLink to={ROUTES.schedule} className={styles.bottomLink} activeClassName={styles.active}>schedule</NavLink>
+            <NavLink to={ROUTES.overview} className={styles.bottomLink} activeClassName={styles.active}>overview</NavLink>
+          </div>
+        </footer>
+      </>  
+      :null}
     </div>
   );
 }

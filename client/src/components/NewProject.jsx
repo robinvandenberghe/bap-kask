@@ -104,7 +104,7 @@ const NewProject = () => {
       setTitle();
       setStudy();
       setSubject();
-      history.push(ROUTES.projectDetail.to + r.project.id);
+      history.push(ROUTES.projectDetail.to + r.project.slug);
     }else{
       return setError({
         name: `email`,

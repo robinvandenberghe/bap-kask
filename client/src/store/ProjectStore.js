@@ -60,9 +60,8 @@ class ProjectStore {
     const newProject = new Project();
     const c = await this.uploadFile({data: {id: newProject.id, previous: undefined, type: `project`} , file: cover});
     newProject.updateFromServer({id: newProject.id, user: userObj, title, study: { id: studyId }, subject:{ id: subjectId }, coverUrl: c.fileUrl, slug });
-    console.log(newProject);
     const r = await this.api.create(newProject);
-    this._addProject(r);
+    if(r.success)this._addProject(r.project);
     return r;
   };
 

@@ -31,3 +31,12 @@ a {
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap;
 }
+#arjs-video{
+  overflow: hidden;
+}
+
+a-scene{
+  position: absolute;
+  top:0;
+  left:0;
+}
