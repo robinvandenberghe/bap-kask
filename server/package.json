@@ -1,0 +1,30 @@
+{
+  "name": "bap-kask",
+  "version": "1.0.0",
+  "description": "Bachelorproef Devine KASK",
+  "main": "index.js",
+  "repository": "https://github.com/robinvandenberghe/bap-kask.git",
+  "author": "Robin Vanden Berghe <robin.vanden.berghe@student.howest.be>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.5",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "eslint": "^5.15.3",
+    "eslint-config-devine": "^2.0.1",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

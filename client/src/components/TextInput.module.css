@@ -1,0 +1,24 @@
+.formInput{
+  composes: form_input  from "../styles/form.module.css";
+}
+.formInput:focus{
+  outline: none;
+}
+.errorInput{
+  border: .2rem solid var(--red-color);
+  color: var(--red-color);
+}
+.errorMessage{
+  color: var(--red-color);
+  font-size: 1.4rem;
+  width: 100%;
+  font-weight: 300;
+}
+.inputLabel{
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+.inputWrapper{
+  display: grid;
+  gap: .4rem;
+}

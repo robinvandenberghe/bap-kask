@@ -1,0 +1,107 @@
+.overview, .selectionItems{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.sectionGrid{
+  gap: 2rem;
+}
+.allWorks{
+  display: grid;
+  gap: 1rem;
+  border-top: solid .2rem var(--primary-color);
+  padding-top: 3rem;
+}
+.allWorks h3{
+  border-bottom: solid .2rem var(--primary-color);
+  padding-bottom: 1rem;
+  font-weight: 600;
+  font-size: 2rem;
+  width: max-content;
+}
+.selection{
+  display:grid;
+  gap: 2rem;
+  border-top: solid .2rem var(--primary-color);
+  position: relative;
+  padding-bottom: 4rem;
+}
+.selectionDescription{
+  font-size: 2rem;
+  line-height: 1.8;
+  align-self: center;
+  grid-area: description;
+}
+.selection h3{
+  padding: .8rem;
+  font-size: 2rem;
+  background-color: var(--blue-color);
+  max-width: max-content;
+  color: var(--white-color);
+  line-height: 1.2;
+}
+.selection:nth-child(1) h3{
+  background-color: var(--green-color);
+}
+.selectionItems{
+  width: 90%;
+  grid-template-areas: ". . description";
+  justify-self: flex-start;
+}
+.selection:nth-child(1){
+  border-top:none;
+}
+.selection:nth-child(1) .selectionItems{
+  grid-template-areas: ". description . ";
+  justify-self: flex-end;
+}
+.selectionRaster{
+  position: absolute;
+  z-index: -1;
+  bottom: 2rem;
+  left: 0;
+}
+.selection:nth-child(1) .selectionRaster{
+  right: 0;
+  left: unset;
+}
+
+@media screen and (max-width: 1000px){
+  .selectionItems{
+    width: 95%;
+    grid-template-areas: "description description description" ". . .";
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .selection:nth-child(1) .selectionItems{
+    grid-template-areas: "description description description" ". . .";
+  }
+  .overview{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 750px){
+  .overview{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .selectionItems{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "description ." ". .";
+  }
+  .selection:nth-child(1) .selectionItems{
+    grid-template-areas: ". description" ". .";
+  }
+}
+@media screen and (max-width: 500px){
+  .overview, .selectionItems{
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
+  .selection:nth-child(1) .selectionItems{
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
+  .selectionDescription{
+    grid-area: unset;
+  }
+}

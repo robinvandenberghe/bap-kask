@@ -1,0 +1,115 @@
+/* Algemene layout */
+.layout{
+  width: 100%;
+  position: relative;
+}
+/* Header layout */
+.headerContainer{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.headerButton{
+  border: solid .2rem var(--primary-color);
+  padding: 1rem 4rem;
+  display: grid;
+  grid-template-columns: 2.4rem max-content;
+  gap: 1rem;
+  width: max-content;
+  align-items: center;
+  font-size: 1.8rem;
+  border-top: none;
+}
+.headerButton:hover{
+  cursor:pointer;
+}
+.headerButton.inverted{
+  color:white;
+  background-color: var(--primary-color);
+}
+.headerIcon{
+  width: 2.4rem;
+  height: 2.4rem;
+  object-fit: contain;
+}
+.rightContainer{
+  display:flex;
+  flex-flow: row;
+}
+.rightContainer .headerButton:nth-child(2){
+  border-left: none;
+}
+/* Sidebar layout */
+.sidebarLayout{
+  width: 25rem;
+  border: .2rem solid var(--primary-color);
+  background-color: white;
+  position: fixed;
+  padding: 1rem;
+  gap: 1rem;
+  display: grid;
+  top:18rem;
+  right:0;
+  z-index: 99;
+  box-shadow: -.4rem .4rem 0 0 var(--primary-color);
+  -webkit-box-shadow: -.4rem .4rem 0 0 var(--primary-color);
+  -moz-box-shadow: -.4rem .4rem 0 0 var(--primary-color);
+}
+.sidebarItem{
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+}
+.sidebarItem .title{
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 1.6rem;
+}
+.sidebarItem .title:hover{
+  cursor: pointer;
+}
+
+/* Toolbox layout */
+.toolbox{
+  border: .2rem solid var(--primary-color);
+  background-color: white;
+  width: max-content;
+  padding: 1rem;
+  gap: 1rem;
+  display: grid;
+  position: fixed;
+  top:18rem;
+  left:0;
+  z-index: 99;
+  box-shadow: .4rem .4rem 0 0 var(--primary-color);
+  -webkit-box-shadow: .4rem .4rem 0 0 var(--primary-color);
+  -moz-box-shadow: .4rem .4rem 0 0 var(--primary-color);
+}
+.toolbox .divider{
+  width: 100%;
+  display:block;
+  height: .2rem;
+  background-color: var(--primary-color);
+}
+.toolbox .items{
+  display: grid;
+  gap: 1rem;
+}
+.toolbox .toolItem{
+  display: block;
+}
+.toolbox .toolItem:hover{
+  cursor: hover;
+}
+
+@media screen and (max-width: 750px){
+  .headerButton{
+    padding: 1rem;
+    font-size: 1.6rem;
+    gap: .4rem;
+  }
+  .headerIcon{
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+}

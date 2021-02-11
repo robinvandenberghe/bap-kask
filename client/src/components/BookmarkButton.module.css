@@ -1,0 +1,14 @@
+.bookmarkButton{
+  display: block;
+  padding: .4rem;
+  background-color: var(--white-color);
+  border: .2rem solid var(--primary-color);
+}
+.bookmarkButton:hover{
+  cursor: pointer;
+}
+.bookmarkButton img{
+  width: 2.4rem;
+  height: 2.4rem;
+  object-fit: contain;
+}

@@ -1,0 +1,293 @@
+
+.pageHeader{
+  border: .2rem solid var(--primary-color);
+  border-top: none;
+  display:grid;
+  gap: 5rem;
+  padding: 3rem 5rem;
+  grid-template-columns: 16rem 1fr max-content;
+  align-items: center;
+  background-image: url('profileRaster.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.profileImg{
+  border-radius: 50%;
+  width: 16rem;
+  height:16rem;
+  border: solid .8rem white;
+  overflow: hidden;
+  object-fit: cover;
+}
+ 
+.titleContainer{
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 48rem;
+  height: max-content;
+}
+.titleContainer .title{
+  padding: 2rem;
+  background-color: white;
+  border: .2rem solid var(--primary-color);
+  font-size: 2.4rem;
+  font-weight: 500;
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  align-items: center;
+  width: 100%;
+}
+.titleContainer .userRole{
+  background-color: var(--yellow-color);
+  padding: .8rem 1.6rem;
+  font-size: 1.8rem;
+  width: max-content;
+}
+.titleContainer .subTitle{
+  position: absolute;
+  top:1rem;
+  left:1rem;
+  z-index: -1;
+  width: 100%;
+  height:100%;
+  background-color: var(--yellow-color);
+  border: .2rem solid var(--primary-color);
+}
+.titleContainer .studentClass{
+  background-color: var(--green-color);
+  color: white;
+}
+.titleContainer .adminClass{
+  background-color: var(--blue-color);
+  color: white;
+}
+.profileButtons{
+  display:grid;
+  gap: .8rem;
+}
+.profileButtons .editButton{
+  background-color: var(--primary-color);
+  color: white;
+  padding: .8rem 1.6rem;
+  font-weight: 500;
+  font-size: 1.6rem;
+  width: 100%;
+  text-align: center;
+}
+.editButton:hover, .navButton:hover{
+  cursor: pointer;
+}
+.pageButtons{
+  display: flex;
+  gap: 1rem;
+  flex-flow: row wrap;
+  margin: 2rem 0;
+}
+.navButton{
+  color: var(--primary-color);
+  background-color: white;
+  border: .2rem solid var(--primary-color);
+  display: flex;
+  align-items: center;
+  padding: .6rem 1.2rem;
+  font-weight: 500;
+  font-size: 1.6rem;
+  width: max-content;
+  gap: .8rem
+}
+.navButton.active{
+  font-weight: 500;
+  background-color: var(--primary-color);
+  color:white;
+}
+.savedLabel{
+  padding: .4rem .8rem;
+  display: grid;
+  gap: .4rem;
+  background-color: white;
+  align-items: center;
+  grid-template-columns: 1fr max-content;
+  color: var(--primary-color);
+}
+.savedLabel img{
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+.savedWorks{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(24rem, 32rem));
+  justify-content: space-evenly;
+  gap: 2rem;
+}
+.manageWorks{
+  display:grid;
+  gap: 2rem;
+  justify-items: center;
+}
+.newProject{
+  padding: .8rem 1.6rem;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  font-size: 1.8rem;
+  font-weight: 600;
+  justify-self: flex-end;
+}
+.newProject:hover{
+  cursor: pointer;
+}
+.studyEdit{
+  display:grid;
+  grid-auto-rows: max-content;
+  gap: 2.4rem;
+  max-width: 120rem;
+  width: 100%;
+}
+.studyEdit h3{
+  font-size: 2rem;
+  font-weight: 600;
+}
+.editList, .eventList{
+  display:grid;
+  grid-auto-rows: max-content;
+  width:100%;
+  gap: 1.6rem;
+}
+.eventList{
+  gap: unset;
+}
+.projectEdit, .eventEdit{
+  padding: 2rem;
+  border: solid .2rem var(--primary-color);
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) auto;
+  align-items: center;
+  gap:2rem;
+}
+.eventEdit{
+  border-bottom: none;
+  grid-template-columns: 5fr 1fr auto;
+}
+.eventEdit:nth-last-child(1){
+  border-bottom: solid .2rem var(--primary-color);
+}
+.infoFlex{
+  display:grid;
+  gap: .8rem;
+  align-items: center;
+  justify-items: flex-start;
+  font-size: 1.8rem;
+}
+.titleName h4{
+  font-weight: 600;
+}
+.studySubject{
+  font-weight: 300;
+}
+.editDelete{
+  display:flex;
+  gap: .8rem;
+  flex-flow: row;
+}
+.editDelete img{
+  width: 3.2rem;
+  height: 3.2rem;
+  object-fit: contain;
+  object-position: center;
+}
+.editDelete img:hover{
+  cursor: pointer;
+}
+.newTitle{
+  font-size: 2rem;
+  font-weight: 600;
+  justify-self: flex-start;
+}
+.lineFlex{
+  display:flex;
+  flex-flow: row wrap;
+  gap: .8rem;
+  align-items: center;
+}
+.boldSpan{
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+.topicLabel{
+  padding: .4rem .8rem;
+  display:flex;
+  flex-flow: row;
+  gap: .8rem;
+  color: white;
+  align-items: center;
+  border: .2rem solid var(--primary-color);
+  width: max-content;
+}
+.container.active .topicLabel{
+  border-color: var(--white-color);
+}
+.topicLabel .bol{
+  display:block;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background-color: var(--white-color);
+}
+
+@media screen and (max-width: 900px){
+  .profileButtons{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+  .titleContainer .title{
+    grid-template-columns: 1fr;
+    gap: .8rem;
+    font-size: 2rem;
+  }
+  .titleContainer{
+   padding: .8rem; 
+  }
+  .titleContainer .subTitle{
+    width: 98%;
+    height:90%;
+  }
+}
+@media screen and (max-width: 750px){
+  .pageHeader{
+    padding: 4rem .8rem;
+    gap: 1.6rem;
+    grid-template-columns: 12rem 1fr;
+  }
+  .profileImg{
+    width:12rem;
+    height:12rem;
+    border: solid .4rem white;
+  }
+  .projectEdit, .eventEdit{
+    padding: .8rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'top top' '. .';
+    gap: .8rem;
+  }
+  .titleName{
+    grid-area: top;
+  }
+}
+@media screen and (max-width: 500px){
+  .pageHeader{
+    grid-template-columns: 10rem 1fr;
+  }
+  .profileImg{
+    width:10rem;
+    height:10rem;
+    border: solid .4rem white;
+  }
+
+}

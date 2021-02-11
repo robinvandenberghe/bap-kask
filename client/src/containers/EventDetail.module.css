@@ -1,0 +1,68 @@
+.scroll{
+  overflow-y: auto;
+  height: 100%;
+}
+.loadingContainer{
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
+  font-weight: 500;
+  font-size: 1.8rem;
+  grid-auto-rows: max-content;
+  text-align: center;
+  align-self: center;
+  width: 100%;
+  height:100%;
+}
+
+.centered{
+  align-self: center;
+}
+.container{
+  display:grid;
+  width: 100%;
+  height:100%;
+  border-left: solid .2rem var(--primary-color);
+  grid-auto-rows: max-content;
+}
+.infoContainer{
+  padding: 2rem;
+  display:grid;
+  gap: 1.6rem;
+}
+.infoContainer h2{
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+.topicLabel{
+  padding: .4rem .8rem;
+  display:flex;
+  flex-flow: row;
+  gap: .8rem;
+  color: white;
+  align-items: center;
+  border: .2rem solid var(--primary-color);
+  font-size: 1.4rem;
+  width: max-content;
+}
+.topicLabel .bol{
+  display:block;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background-color: var(--white-color);
+}
+.infoLine{
+  display:grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap:.8rem;
+  align-items: center;
+  font-size: 1.8rem;
+}
+.infoLine img{
+  width:1.6rem;
+  height:1.6rem;
+  object-fit: contain;
+}

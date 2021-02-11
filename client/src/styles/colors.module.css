@@ -1,0 +1,34 @@
+:global(:root){
+  --primary-color: #000000;
+  --gray-color: #6D6D6D;
+  --red-color: #e45656;
+  --yellow-color: #FEF0BB;
+  --green-color: rgb(30, 77, 69);
+  --blue-color: #6482B2;
+  --white-color: #ffffff;
+  --dark-color: #444444;
+  --light-color: #fff5ea;
+  --ultralight-color: #fff;
+  --gray-light-color: #e3e3e3;
+  --success-color:  #93fac5;
+}
+
+.color-primary {
+  color: var(--primary-color);
+}
+
+.color-dark {
+  color: var(--dark-color);
+}
+
+.color-light {
+  color: var(--light-color);
+}
+
+.color-gray {
+  color: var(--light-gray);
+}
+
+.color-success {
+  color: var(--light-gray);
+}

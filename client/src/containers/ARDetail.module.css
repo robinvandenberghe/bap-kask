@@ -1,0 +1,48 @@
+.overlay, .buttons{
+  position: fixed;
+  top:0;
+  left:0;
+  background: var(--white-color);
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  opacity: .3;
+}
+.buttons{
+  z-index: 11;
+  background: none;
+  opacity: 1;
+  padding: 2rem;
+}
+.overlayButton{
+  background-color: var(--white-color);
+  padding: .8rem;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1.6rem;
+  align-items: center;
+  width: max-content;
+  font-size: 1.6rem;
+}
+.overlayButton img{
+  width: 3.2rem;
+  height: 3.2rem;
+  object-fit: contain;
+  object-position: center;
+}
+.topButton{
+  position:fixed;
+  top: 2rem;
+  right:2rem;
+}
+.bottomButtons{
+  position:fixed;
+  bottom: 2rem;
+  right:2rem;
+  display:grid;
+  gap: 1.6rem;
+}
+.bookmark{
+  border:none;
+  padding:0;
+}

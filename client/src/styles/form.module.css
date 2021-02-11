@@ -1,0 +1,53 @@
+.form{
+  display:grid;
+  width: 100%;
+  max-width: 36rem;
+  gap: 2.4rem;
+}
+.authForm{
+  max-width: 36rem;
+}
+.form label {
+  display: grid;
+  font-size: var(--font-base);
+  gap: .8rem;
+}
+.form_input {
+  display: block;
+  width: 100%;
+  max-width: 36rem;
+  font-size: var(--font-base);
+  padding: .2rem .8rem;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 0;
+  border: .2rem var(--gray-color) solid;
+}
+.form_input::placeholder{
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+.pwIndicator{
+  width: 100%;
+  max-width: 36rem;
+  margin: -.8rem 0;
+}
+.button {
+  composes: button  from "./uiControls.module.css";
+}
+.button:hover{
+  cursor: pointer;
+}
+
+.secondaryButton {
+  composes: secondaryButton  from "./uiControls.module.css";
+}
+.subInfo{
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  color: var(--gray-color);
+}
+.metaAction {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 1.4rem;
+}

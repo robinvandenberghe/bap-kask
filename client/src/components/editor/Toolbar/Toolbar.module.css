@@ -1,0 +1,64 @@
+.toolbarText{
+  font-size: 1.4rem;
+  color: var(--primary-color);
+  text-align: center;
+  margin: 2rem auto;
+}
+.propGrid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+}
+.propTitle{
+  font-size: 1.4rem;
+  text-decoration: underline;
+}
+.propSummary{
+  font-size: 1.4rem;
+}
+.placeholderContainer{
+  padding: 1rem;
+  display: grid;
+  align-self: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+.toolbarItemLabel{
+  font-size: 1.2rem;
+  color: var(--gray-color);
+}
+.fileUpload{
+  display:block;
+  height: max-content;
+  width:100%;
+  background-color: var(--primary-color);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  padding: .8rem;
+}
+.fileUpload:hover{
+  cursor: pointer;
+}
+.fileUpload input{
+  display: none;
+}
+.fileUpload span{
+  color: var(--white-color);
+  font-size: 1.4rem;
+  font-weight: 500;
+  width: max-content;
+}
+.errorMessage{
+  font-size: 1.2rem;
+  color: var(--red-color);
+  width: max-content;
+  font-weight: 500;
+  max-width: 100%;
+}
+.audioInputWrapper{
+  display:grid;
+  gap: .4rem;
+}

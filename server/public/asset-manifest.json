@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/static/css/main.15eede4d.chunk.css",
+    "main.js": "/static/js/main.a71fca0c.chunk.js",
+    "main.js.map": "/static/js/main.a71fca0c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.eba8d292.js",
+    "runtime-main.js.map": "/static/js/runtime-main.eba8d292.js.map",
+    "static/js/2.33edefc3.chunk.js": "/static/js/2.33edefc3.chunk.js",
+    "static/js/2.33edefc3.chunk.js.map": "/static/js/2.33edefc3.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.15eede4d.chunk.css.map": "/static/css/main.15eede4d.chunk.css.map",
+    "static/js/2.33edefc3.chunk.js.LICENSE.txt": "/static/js/2.33edefc3.chunk.js.LICENSE.txt",
+    "static/media/arrow-up.c0c450a4.svg": "/static/media/arrow-up.c0c450a4.svg",
+    "static/media/audioFill.029e97fc.svg": "/static/media/audioFill.029e97fc.svg",
+    "static/media/back.11acc8fd.svg": "/static/media/back.11acc8fd.svg",
+    "static/media/bookmark.662d8c5a.svg": "/static/media/bookmark.662d8c5a.svg",
+    "static/media/bookmarkFillWhite.1873d9f3.svg": "/static/media/bookmarkFillWhite.1873d9f3.svg",
+    "static/media/buttonFill.483ea987.svg": "/static/media/buttonFill.483ea987.svg",
+    "static/media/chatWhiteFill.915ab0e8.svg": "/static/media/chatWhiteFill.915ab0e8.svg",
+    "static/media/container.0fb08b95.svg": "/static/media/container.0fb08b95.svg",
+    "static/media/customize.e8022b6f.svg": "/static/media/customize.e8022b6f.svg",
+    "static/media/delete.abe41a75.svg": "/static/media/delete.abe41a75.svg",
+    "static/media/edit.c4d07c3c.svg": "/static/media/edit.c4d07c3c.svg",
+    "static/media/imageFill.88c1e70a.svg": "/static/media/imageFill.88c1e70a.svg",
+    "static/media/layers.d275ba00.svg": "/static/media/layers.d275ba00.svg",
+    "static/media/move.61872aeb.svg": "/static/media/move.61872aeb.svg",
+    "static/media/ProfileDetail.module.css": "/static/media/profileRaster.48ca7b08.png",
+    "static/media/KaskContainer.module.css": "/static/media/raster.e2f80896.png",
+    "static/media/redo.d78c3546.svg": "/static/media/redo.d78c3546.svg",
+    "static/media/save.44b3244f.svg": "/static/media/save.44b3244f.svg",
+    "static/media/titleFill.c7de1b99.svg": "/static/media/titleFill.c7de1b99.svg",
+    "static/media/undo.8b53eea3.svg": "/static/media/undo.8b53eea3.svg",
+    "static/media/videoFill.8279be6a.svg": "/static/media/videoFill.8279be6a.svg",
+    "static/media/websiteFill.51303661.svg": "/static/media/websiteFill.51303661.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.eba8d292.js",
+    "static/js/2.33edefc3.chunk.js",
+    "static/css/main.15eede4d.chunk.css",
+    "static/js/main.a71fca0c.chunk.js"
+  ]
+}
