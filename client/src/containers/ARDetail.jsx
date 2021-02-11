@@ -69,9 +69,10 @@ const ARDetail = () => {
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceWidth: 600; sourceHeight: 400; displayWidth: 600; displayHeight: 400; canvasWidth: 600; canvasHeight: 400;"
         cursor="fuse: false; rayOrigin: mouse"
         raycaster="objects: .clickable"
+        class={style.sceneStyle}
         >
         <a-assets>
-          <a-asset-item id="platenspeler" src="/assets/models/Platenspeler.glb"></a-asset-item>
+          <a-asset-item id="platenspeler" src="/assets/models/Platenspeler2.gtlf"></a-asset-item>
           <a-asset-item id="video" loop="true" src="/assets/video/testmov.mp4" webkit-playsinline ></a-asset-item>
         </a-assets>
         <a-marker

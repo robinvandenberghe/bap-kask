@@ -34,9 +34,3 @@ a {
 #arjs-video{
   overflow: hidden;
 }
-
-a-scene{
-  position: absolute;
-  top:0;
-  left:0;
-}

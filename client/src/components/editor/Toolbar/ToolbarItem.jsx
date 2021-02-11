@@ -84,7 +84,7 @@ export const ToolbarItem = ({
     if(files.length > 0){
       try{
         const compressedFile = await imageCompression(files[0], {maxSizeMB: 2, maxWidthOrHeight: 1400});
-        const r = await projectStore.uploadFile({data: {id: obj.id, previous: value, type: obj.constructor.name.toLowerCase()} , file: compressedFile});
+        const r = await projectStore.uploadFile({data: {id: obj.id, previous: value, type: obj.user?`project`:`event`} , file: compressedFile});
         setProp((props) => {
           if (Array.isArray(propValue)) {
             props[propKey][index] = onChange ? onChange(r.fileUrl) : r.fileUrl;
@@ -104,7 +104,7 @@ export const ToolbarItem = ({
         if(files[0].size > 15000000){
           return setError(`The selected file is too big`);
         }
-        const r = await projectStore.uploadFile({data: {id: obj.id, previous: value, type: obj.constructor.name.toLowerCase()} , file: files[0]});
+        const r = await projectStore.uploadFile({data: {id: obj.id, previous: value, type: obj.user?`project`:`event`} , file: files[0]});
         setProp((props) => {
           if (Array.isArray(propValue)) {
             props[propKey][index] = onChange ? onChange(r.fileUrl) : r.fileUrl;
