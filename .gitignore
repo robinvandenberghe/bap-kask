@@ -108,3 +108,5 @@ dist
 *.crt
 localhost.crt
 localhost.key
+
+.DS_Store
